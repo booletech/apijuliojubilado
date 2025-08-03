@@ -64,8 +64,7 @@ public class FuncionarioLoader implements ApplicationRunner {
 			funcionario.setEndereco(endereco);
 		
 			funcionarioService.salvar(funcionario); //grava dentro do mapa
-			//imprime na tela o Funcionario completo
-			System.out.println(funcionario);
+			System.out.println(funcionario);//imprime na tela o Funcionario completo
 			
 			
 			
