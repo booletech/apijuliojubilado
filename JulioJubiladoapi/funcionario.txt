@@ -1,2 +1,10 @@
-julio;Ativo;02/07/2021;8999
-marcos;inativo;04/09/2022;7000
+Funcionario1;99648863972;funcionario1@borracharia.com;(23)98062-1170;Noite;Médio;07/06/1997;21238-286;Bangu - Rio de Janeiro;false;01/04/2023;28/01/2021;1849;Gerente de Oficina
+Funcionario2;73740514966;funcionario2@borracharia.com;(22)99704-2132;Noite;Fundamental;06/08/2000;20126-727;Duque de Caxias;true;15/09/2023;;2190;Montador de Pneus
+Funcionario3;95717134352;funcionario3@borracharia.com;(21)99573-2322;Noite;Médio;06/03/1991;24130-983;Padre Miguel - Rio de Janeiro;true;16/06/2022;;2859;Balanceador de Rodas
+Funcionario4;31226419611;funcionario4@borracharia.com;(23)99006-9704;Manhã;Técnico;14/08/1998;20218-217;São João de Meriti;false;13/10/2015;05/05/2021;3108;Balanceador de Rodas
+Funcionario5;38158586551;funcionario5@borracharia.com;(24)99515-5399;Noite;Médio;12/11/1985;22293-697;Bangu - Rio de Janeiro;false;15/12/2021;22/09/2021;2690;Auxiliar de Borracharia
+Funcionario6;85475187018;funcionario6@borracharia.com;(23)99698-2660;Noite;Fundamental;10/11/2005;26417-991;Bangu - Rio de Janeiro;false;16/10/2023;18/06/2021;5302;Estoquista
+Funcionario7;39128981649;funcionario7@borracharia.com;(23)99693-7506;Tarde;Médio;02/02/1976;24529-937;Padre Miguel - Rio de Janeiro;false;02/11/2016;09/03/2018;4513;Montador de Pneus
+Funcionario8;18760340954;funcionario8@borracharia.com;(22)99611-2403;Manhã;Médio;01/06/1991;28364-208;Nilópolis;true;19/05/2019;;2908;Mecânico Alinhador
+Funcionario9;72865677951;funcionario9@borracharia.com;(22)98484-4142;Manhã;Técnico;22/01/2000;23942-503;Santíssimo - Rio de Janeiro;true;10/12/2021;;2483;Ajudante Geral
+Funcionario10;39365586559;funcionario10@borracharia.com;(23)98506-5058;Manhã;Médio;22/07/1978;20639-594;Nilópolis;true;08/08/2018;;4934;Encarregado de Oficina

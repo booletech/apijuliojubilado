@@ -52,17 +52,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <argLine>
-                          -javaagent:C:\\Users\\jl-td\\.m2\\repository\\net\\bytebuddy\\byte-buddy-agent\\1.17.6\\byte-buddy-agent-1.17.6.jar -XX:+EnableDynamicAgentLoading -Djdk.instrument.traceUsage=false -Xshare:off
-                        -javaagent:C:\\Users\\jl-td\\.m2\\repository\\net\\bytebuddy\\byte-buddy-agent\\1.17.6\\byte-buddy-agent-1.17.6.jar -XX:+EnableDynamicAgentLoading -Djdk.instrument.traceUsage=false
-                    </argLine>
-                </configuration>
-            </plugin>
-        </plugins>
+       </plugins>
     </build>
 </project>

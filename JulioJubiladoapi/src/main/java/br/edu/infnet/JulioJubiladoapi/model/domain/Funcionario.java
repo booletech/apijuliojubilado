@@ -4,7 +4,6 @@ public class Funcionario extends Pessoa {
 	private Integer id;
 	
 	private String cargo; 
-	private String dataNascimento;
 	private double salario;
 	private boolean estaAtivo;
 	private String dataContratacao;
@@ -12,7 +11,7 @@ public class Funcionario extends Pessoa {
 	private String escolaridade;
 	private String turno;
 	private Endereco endereco;
-
+	
 	@Override
 	public String toString() {
 		return String.format("%d - %s - %s - %s - R$ %.2f - %s", 
@@ -29,13 +28,6 @@ public class Funcionario extends Pessoa {
 	}
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
-	}
-
-	public String getDataNascimento() {
-		return dataNascimento;
-	}
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	public double getSalario() {
@@ -94,6 +86,7 @@ public class Funcionario extends Pessoa {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
 	
 	
 }

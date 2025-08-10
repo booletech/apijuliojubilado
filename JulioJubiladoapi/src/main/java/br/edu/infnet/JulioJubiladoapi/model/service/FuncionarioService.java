@@ -8,8 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
-import br.edu.infnet.JulioJubiladoapi.model.domain.Endereco;
 import br.edu.infnet.JulioJubiladoapi.model.domain.Funcionario;
+import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.FuncionarioInvalidoException;
+import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.FuncionarioNaoEncontradoException;
 
 
 //Funcionario service implementa CrudService. Necessario a entidade T  o tipo da chave que representa o objeto
@@ -17,14 +18,28 @@ import br.edu.infnet.JulioJubiladoapi.model.domain.Funcionario;
 public class FuncionarioService implements CrudService<Funcionario, Integer>{
 	
 	
-	//no Map K deve ser uma classe wrapper (Integer, Long, Float, Boolean, String, Classe_criada
-	// Vamos usar Integer e Funcionario e chamaremos e mapa:
 	private final Map<Integer, Funcionario> mapa = new ConcurrentHashMap<Integer, Funcionario>();
-	private final AtomicInteger nextId = new AtomicInteger(1); //joga o id para o funcionario e depois pega id:func pra tela (getandincrement)
+	private final AtomicInteger nextId = new AtomicInteger(1); 
 	
+	private void validar(Funcionario funcionario) {
+		if(funcionario == null) {
+			throw new IllegalArgumentException("O funcionario não pode estar nulo e precisa ser criado!");
+		}
+		if (funcionario.getNome() == null || funcionario.getNome().trim().isBlank()) {
+			throw new FuncionarioInvalidoException("O nome do funcionario é uma informação obrigatória!");
+			
+		}
+		
+	}
 	
 	@Override
-	public Funcionario salvar(Funcionario funcionario) {
+	public Funcionario incluir(Funcionario funcionario) {
+		validar(funcionario);
+		//validação mais específica: Um novo funcionario não deve possuir id
+		if(funcionario.getId() != null && funcionario.getId() != 0) {
+			throw new IllegalArgumentException("Um novo funcionario não pode ter um Id na inclusão!");
+				
+		}
 		
 		funcionario.setId(nextId.getAndIncrement());
 		mapa.put(funcionario.getId(), funcionario);
@@ -34,30 +49,58 @@ public class FuncionarioService implements CrudService<Funcionario, Integer>{
 	}
 
 	@Override
-	public Funcionario obter() {
+	public Funcionario alterar(Integer id, Funcionario funcionario) {
+		validar(funcionario);
 		
-		//dados mockados	
-		Endereco endereco = new Endereco();
-		endereco.setCep("1234567");
-		endereco.setLocalidade("Rio de janeiro");
+		if(id == null || id == 0) {
+			throw new IllegalArgumentException("O ID para alteração não pode ser nulo/zero");
+			
+		}
+		obterPorId(id);
 		
-		Funcionario funcionario = new Funcionario();
-		funcionario.setNome("Julio Cesar");
-		funcionario.setEstaAtivo(true);
-		funcionario.setDataContratacao("20/08/1992");
-		funcionario.setSalario(9999);
+		funcionario.setId(id);
+		// substituição do funcionario
+		mapa.put(funcionario.getId(), funcionario);
 		
-		funcionario.setEndereco(endereco);
-
+		
 		return funcionario;
-	}
+	
+		}
 
 	@Override
 	public void excluir(Integer id) {
-		//
+		if(id == null || id == 0) {
+			throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
+		}
+		
+		if(!mapa.containsKey(id)) {
+			throw new FuncionarioNaoEncontradoException("O funcionario com id"+ id + "não foi encontrado");
+		}
+		
 		mapa.remove(id);
+	}
+	
+	
+	//Mudar o campo EhAtivo de True para false
+	public Funcionario inativar(Integer id ) {
+
+		if(id == null || id == 0) {
+			throw new IllegalArgumentException("O ID para inativação não pode ser nulo/zero");
+		}
+		Funcionario funcionario = obterPorId(id);
+		
+		if(!funcionario.isEstaAtivo()) {
+			System.out.println("Funcionario"+ funcionario.getNome() +" já está inativo!");
+			return funcionario;
+		}
+		
+		funcionario.setEstaAtivo(false);
+		mapa.put(funcionario.getId(), funcionario);
+		
+		return funcionario;
 		
 	}
+	
 
 	@Override
 	public List<Funcionario> obterLista() {
@@ -66,4 +109,17 @@ public class FuncionarioService implements CrudService<Funcionario, Integer>{
 		return new ArrayList<Funcionario>(mapa.values());
 	}
 	
+	@Override
+	public Funcionario obterPorId(Integer id) {
+		//através de um Id podemos encontrar o funcionario no mapa
+		Funcionario funcionario = mapa.get(id); // Nomeia como funcionario o get pedido 
+		
+		//verificando se funcionario é null
+		if (funcionario == null){
+			throw new IllegalArgumentException("Impossivel obter o funcionario pelo Id" + id);
+			
+		}
+		
+		return funcionario;
+	}
 }

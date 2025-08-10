@@ -6,9 +6,11 @@ public abstract class Pessoa {
 	private String email;
 	private String cpf;
 	private String telefone;
+	private String dataNascimento;
 	
 	
-	//TODO Criacao do construtor do vendedor	
+	//TODO Criacao do construtor do funcionario
+	//TODO Criação do construtor de pessoa com nome,email, cpf e telefone
 	
 	@Override
 	public String toString() {
@@ -44,6 +46,14 @@ public abstract class Pessoa {
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	
 	
