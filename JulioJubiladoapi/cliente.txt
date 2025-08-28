@@ -1,0 +1,10 @@
+Andre Cardoso;123.111.222-33;andre.cardoso@cliente.com;(21) 98111-1000;14/02/1986;12/08/2025;true;22271-080;Rua Voluntarios da Patria, 250;Apto 402;Bloco A;Botafogo;Rio de Janeiro;RJ;Rio de Janeiro;800.00;180
+Beatriz Castro;234.222.333-44;beatriz.castro@cliente.com;(21) 98222-2001;09/09/1992;05/08/2025;false;20031-170;Avenida Rio Branco, 45;Sala 305;Edificio Centro;Centro;Rio de Janeiro;RJ;Rio de Janeiro;0.00;60
+Caio Moreira;345.333.444-55;caio.moreira@cliente.com;(21) 98333-3002;22/05/1988;03/08/2025;true;24360-076;Rua Coronel Moreira Cesar, 123;Loja 2;Galeria Icarai;Icarai;Niteroi;RJ;Rio de Janeiro;600.00;140
+Daniela Araujo;456.444.555-66;daniela.araujo@cliente.com;(21) 98444-4003;11/01/1995;10/08/2025;false;24436-230;Rua Joao Caetano, 77;Casa 01;Lote 15;Centro;Sao Goncalo;RJ;Rio de Janeiro;0.00;50
+Eduardo Figueiredo;567.555.666-77;eduardo.figueiredo@cliente.com;(21) 98555-5004;27/07/1983;18/07/2025;true;26010-240;Avenida Governador Roberto Silveira, 10;Quiosque 1;Patio Central;Centro;Nova Iguacu;RJ;Rio de Janeiro;1000.00;210
+Fernanda Prado;678.666.777-88;fernanda.prado@cliente.com;(21) 98666-6005;03/03/1991;09/08/2025;true;21031-450;Rua Uranos, 950;Apto 104;Bloco B;Olaria;Rio de Janeiro;RJ;Rio de Janeiro;350.00;125
+Guilherme Teles;789.777.888-99;guilherme.teles@cliente.com;(21) 98777-7006;29/10/1987;01/08/2025;false;23550-315;Estrada de Sepetiba, 1500;Galpao 2;Modulo Leste;Santa Cruz;Rio de Janeiro;RJ;Rio de Janeiro;0.00;40
+Helena Martins;890.888.999-00;helena.martins@cliente.com;(21) 98888-8007;21/12/1993;06/08/2025;true;24310-310;Alameda Sao Boaventura, 48;Casa 3;Cond. Jardim;Santa Rosa;Niteroi;RJ;Rio de Janeiro;1200.00;275
+Igor Pacheco;901.999.000-11;igor.pacheco@cliente.com;(21) 98999-9008;05/06/1990;15/08/2025;false;20775-140;Rua Vinte e Quatro de Maio, 20;Sala 201;Ed. Central;Engenho Novo;Rio de Janeiro;RJ;Rio de Janeiro;0.00;70
+Julia Santiago;012.000.111-22;julia.santiago@cliente.com;(21) 99000-0109;18/04/1996;11/08/2025;true;22713-110;Rua Araguaia, 312;Cobertura 2;Bloco D;Freguesia;Rio de Janeiro;RJ;Rio de Janeiro;650.00;160

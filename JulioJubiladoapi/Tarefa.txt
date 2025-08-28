@@ -1,0 +1,30 @@
+Troca de pneu dianteiro;150.0;CONCLUIDA;1
+Calibragem;20.0;CONCLUIDA;1
+Calibragem;20.0;CONCLUIDA;2
+Balanceamento;80.0;ABERTA;2
+Balanceamento;80.0;CONCLUIDA;3
+Alinhamento;120.0;CONCLUIDA;3
+Alinhamento;120.0;CONCLUIDA;4
+Conserto de camara;35.0;ABERTA;4
+Conserto de camara;35.0;CONCLUIDA;5
+Rodizio de pneus;60.0;CONCLUIDA;5
+Rodizio de pneus;60.0;CONCLUIDA;6
+Substituicao de valvula;25.0;ABERTA;6
+Substituicao de valvula;25.0;CONCLUIDA;7
+Remendo de pneu;40.0;CONCLUIDA;7
+Remendo de pneu;40.0;CONCLUIDA;8
+Limpeza de aro;30.0;ABERTA;8
+Limpeza de aro;30.0;CONCLUIDA;9
+Revisao rapida;50.0;CONCLUIDA;9
+Revisao rapida;50.0;CONCLUIDA;10
+Troca de pneu dianteiro;150.0;ABERTA;10
+Troca de pneu dianteiro;150.0;CONCLUIDA;11
+Calibragem;20.0;CONCLUIDA;11
+Calibragem;20.0;CONCLUIDA;12
+Balanceamento;80.0;ABERTA;12
+Balanceamento;80.0;CONCLUIDA;13
+Alinhamento;120.0;CONCLUIDA;13
+Alinhamento;120.0;CONCLUIDA;14
+Conserto de camara;35.0;ABERTA;14
+Conserto de camara;35.0;CONCLUIDA;15
+Rodizio de pneus;60.0;CONCLUIDA;15
