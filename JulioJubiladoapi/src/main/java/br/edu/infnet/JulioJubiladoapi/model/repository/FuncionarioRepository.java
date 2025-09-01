@@ -11,5 +11,6 @@ import br.edu.infnet.JulioJubiladoapi.model.domain.Funcionario;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
 
 	Optional<Funcionario> findByCpf(String cpf);
+	
 
 }

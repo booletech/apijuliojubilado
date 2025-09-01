@@ -81,10 +81,12 @@ public class ClienteService implements CrudService<Cliente, Integer> {
 	}
 
 	// Obter cliente por ID
+	
 	@Override
+	@Transactional
 	public Cliente obterPorId(Integer id) {
 		if (id == null || id <= 0) {
-			throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
+			throw new IllegalArgumentException("O ID para CONSULTA não pode ser NULO/ZERO!");
 		}
 
 		return clienteRepository.findById(id)

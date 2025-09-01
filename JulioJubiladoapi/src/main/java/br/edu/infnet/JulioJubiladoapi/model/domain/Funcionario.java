@@ -3,6 +3,8 @@ package br.edu.infnet.JulioJubiladoapi.model.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,8 +28,9 @@ public class Funcionario extends Pessoa {
 	private boolean ativo; // Mantido como estava, pode ser setado no serviço ou Loader
 
 	// Relacionamento com Endereco
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "endereco_id", unique = true)
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "endereco_id")
 	@Valid
 	private Endereco endereco;
 
@@ -39,11 +42,14 @@ public class Funcionario extends Pessoa {
 	 * = true, fetch = FetchType.LAZY) private List<Cliente> cliente = new
 	 * ArrayList<Cliente>();
 	 */
+	
 	//
+	@JsonIgnore
 	@OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<TicketTarefa> tickettarefas = new ArrayList<>();
 
 	// relacionamento funcionario com tarefas
+	@JsonIgnore
 	@OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 

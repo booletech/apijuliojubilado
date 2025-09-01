@@ -1,11 +1,28 @@
 package br.edu.infnet.JulioJubiladoapi.model.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TicketTarefa")
@@ -28,17 +45,20 @@ public class TicketTarefa {
 	@Column(name = "valor_total", nullable = false)
 	private BigDecimal valorTotal = BigDecimal.ZERO;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cliente_id", nullable = false)
 	@Valid
+	@JsonIgnore
 	private Cliente cliente;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "funcionario_id", nullable = false)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "funcionario_id")
 	@Valid
+	@JsonIgnore
 	private Funcionario funcionario;
 
 	@OneToMany(mappedBy = "tickettarefa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Tarefa> tarefas = new ArrayList<>();
 
 	@Column(name = "data_abertura")
@@ -78,30 +98,18 @@ public class TicketTarefa {
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
-
-	public List<Tarefa> getTarefas() {
-		return tarefas;
-	}
-
-	public void setTarefas(List<Tarefa> tarefas) {
-		this.tarefas = tarefas;
-	}
+	
+	  
+	  public Cliente getCliente() { return cliente; }
+	  public void setCliente(Cliente cliente) { this.cliente = cliente; }
+	  
+	  public Funcionario getFuncionario() { return funcionario; }
+	  public void setFuncionario(Funcionario funcionario) { this.funcionario =
+	  funcionario; }
+	  
+	  public List<Tarefa> getTarefas() { return tarefas; }
+	  public void setTarefas(List<Tarefa> tarefas) { this.tarefas = tarefas; }
+	 
 
 	public String getDataAbertura() {
 		return dataAbertura;

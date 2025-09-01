@@ -65,14 +65,18 @@ public class TicketTarefaService implements CrudService<TicketTarefa, Integer> {
 	}
 
 	@Override
+	@Transactional
 	public TicketTarefa obterPorId(Integer id) {
+		
 		if (id == null || id <= 0) {
-			throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
+			
+			throw new IllegalArgumentException("O ID para verificação não pode ser NULO/ZERO!");
 		}
-
+		
 		return ticketTarefaRepository.findById(id)
 				.orElseThrow(() -> new TicketNaoEncontradoException("O ticket com id " + id + " não foi encontrado"));
-
+		
+		
 	}
 
 	public List<TicketTarefa> obterPorCpfCliente(String cpf) {

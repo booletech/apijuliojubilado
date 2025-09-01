@@ -45,7 +45,7 @@ public class FuncionarioController {
 		return ResponseEntity.ok(funcionarioAlterado);
 	}
 
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		funcionarioService.excluir(id);
 
@@ -71,8 +71,12 @@ public class FuncionarioController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public Funcionario obterPorId(@PathVariable("id") Integer id) {
-
+	public Funcionario obterPorId(@PathVariable Integer id) {
+		//Funcionario funcionario = funcionarioService.obterPorId(id);
+		
+		//System.out.println("FUNCIONARIO CONTROLLER " + funcionario);
+		
+		
 		return funcionarioService.obterPorId(id);
 	}
 }

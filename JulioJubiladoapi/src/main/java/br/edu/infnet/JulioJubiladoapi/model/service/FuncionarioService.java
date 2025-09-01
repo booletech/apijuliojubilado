@@ -94,16 +94,16 @@ public class FuncionarioService implements CrudService<Funcionario, Integer> {
 	}
 
 	@Override
+	@Transactional
 	public Funcionario obterPorId(Integer id) {
 		if (id == null || id <= 0) {
-			throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
+			throw new IllegalArgumentException("O ID para CONSULTA não pode ser NULO/ZERO!");
 		}
 
-		return funcionarioRepository.findById(id).orElseThrow(() ->
-
-		new FuncionarioNaoEncontradoException("O funcionario com id " + id + " não foi encontrado"));
-
+		return funcionarioRepository.findById(id)
+				.orElseThrow(() -> new FuncionarioNaoEncontradoException("O funcionario com id " + id + " não foi encontrado"));
 	}
+
 
 	public Funcionario obterPorCpf(String cpf) {
 

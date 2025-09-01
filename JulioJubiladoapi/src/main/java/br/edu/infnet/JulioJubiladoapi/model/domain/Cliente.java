@@ -1,9 +1,14 @@
 
 package br.edu.infnet.JulioJubiladoapi.model.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -33,7 +38,7 @@ public class Cliente extends Pessoa {
 	private String dataUltimaVisita;
 
 	// Relacionamento com Endereco
-
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id")
 	@Valid // Garante que o objeto endereço aninhado também seja validado private
@@ -42,13 +47,13 @@ public class Cliente extends Pessoa {
 	
 
 	// Relacionamento cliente com Tickettarefa (1:N)
-	//@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	//private List<TicketTarefa> tickettarefas = new ArrayList<TicketTarefa>();
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<TicketTarefa> tickettarefas = new ArrayList<TicketTarefa>();
 
 
 	// Relacionamento com cliente com tarefas (1:N) //
-	//@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	//private List<Tarefa> tarefas = new ArrayList<Tarefa>();
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 
 	@Override
 	public String obterTipo() {
