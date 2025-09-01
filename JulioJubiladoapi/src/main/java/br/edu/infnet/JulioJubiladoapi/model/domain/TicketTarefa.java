@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,20 +45,19 @@ public class TicketTarefa {
 	@Column(name = "valor_total", nullable = false)
 	private BigDecimal valorTotal = BigDecimal.ZERO;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "cliente_id", nullable = false)
 	@Valid
-	@JsonIgnore
 	private Cliente cliente;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "funcionario_id")
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "funcionario_id", nullable = false)
 	@Valid
-	@JsonIgnore
 	private Funcionario funcionario;
 
-	@OneToMany(mappedBy = "tickettarefa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "tickettarefa", orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonIgnore
+	@JsonManagedReference
 	private List<Tarefa> tarefas = new ArrayList<>();
 
 	@Column(name = "data_abertura")
@@ -66,6 +65,13 @@ public class TicketTarefa {
 
 	@Column(name = "data_fechamento")
 	private String dataFechamento;
+
+	@Override
+	public String toString() {
+		return "TicketTarefa [id=" + id + ", codigo=" + codigo + ", status=" + status + ", valorTotal=" + valorTotal
+				+ ", cliente=" + cliente + ", funcionario=" + funcionario + ", tarefas=" + tarefas + ", dataAbertura="
+				+ dataAbertura + ", dataFechamento=" + dataFechamento + "]";
+	}
 
 	public Integer getId() {
 		return id;
@@ -98,18 +104,30 @@ public class TicketTarefa {
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	
-	  
-	  public Cliente getCliente() { return cliente; }
-	  public void setCliente(Cliente cliente) { this.cliente = cliente; }
-	  
-	  public Funcionario getFuncionario() { return funcionario; }
-	  public void setFuncionario(Funcionario funcionario) { this.funcionario =
-	  funcionario; }
-	  
-	  public List<Tarefa> getTarefas() { return tarefas; }
-	  public void setTarefas(List<Tarefa> tarefas) { this.tarefas = tarefas; }
-	 
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
 
 	public String getDataAbertura() {
 		return dataAbertura;

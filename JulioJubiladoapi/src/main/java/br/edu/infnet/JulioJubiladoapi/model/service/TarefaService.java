@@ -60,6 +60,7 @@ public class TarefaService implements CrudService<Tarefa, Integer> {
 	@Override
 	@Transactional
 	public void excluir(Integer id) {
+	
 		Tarefa tarefa = obterPorId(id);
 		tarefaRepository.delete(tarefa);
 	}

@@ -47,31 +47,34 @@ public class Tarefa {
 	private String status;
 
 	// Relacionamento com TicketTarefa (N:1)
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "tickettarefa_id", nullable = false)
 	@Valid
 	@NotNull(message = "A tarefa deve estar vinculada a um ticket.")
 	private TicketTarefa tickettarefa;
 
 	// Relacionamento com Funcionario (N:1)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "funcionario_id", nullable = true)
 	@Valid
 	@NotNull(message = "A tarefa deve estar vinculada a um funcionario.")
 	private Funcionario funcionario;
 
 	// Relacionamento com Cliente (N:1)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "cliente_id", nullable = true)
 	@Valid
 	@NotNull(message = "A tarefa deve estar vinculada a um cliente.")
 	private Cliente cliente;
 
-	@Override
-	public String toString() {
-		return String.format("Tarefa{%s, descricao=%s, valor=%.2f, status=%s, ticket=%s}", super.toString(), descricao,
-				valor, status, tickettarefa);
-	}
+
+
+	/*
+	 * @Override public String toString() { return "Tarefa [id=" + id +
+	 * ", descricao=" + descricao + ", codigo=" + codigo + ", tipo=" + tipo +
+	 * ", valor=" + valor + ", status=" + status + ", tickettarefa=" + tickettarefa
+	 * + "]"; }
+	 */
 
 	public String obterTipo() {
 		return "Tarefa";

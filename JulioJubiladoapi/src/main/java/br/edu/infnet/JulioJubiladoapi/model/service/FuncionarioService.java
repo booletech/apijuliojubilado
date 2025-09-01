@@ -51,11 +51,11 @@ public class FuncionarioService implements CrudService<Funcionario, Integer> {
 			throw new IllegalArgumentException("O ID para alteração não pode ser nulo/zero");
 
 		}
-
+		
+		
 		obterPorId(id);
 		funcionario.setId(id);
 		return funcionarioRepository.save(funcionario);
-
 	}
 
 	@Override

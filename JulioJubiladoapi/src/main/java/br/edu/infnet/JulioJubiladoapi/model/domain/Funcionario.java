@@ -49,7 +49,6 @@ public class Funcionario extends Pessoa {
 	private List<TicketTarefa> tickettarefas = new ArrayList<>();
 
 	// relacionamento funcionario com tarefas
-	@JsonIgnore
 	@OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 

@@ -66,6 +66,10 @@ public class TicketTarefaLoader implements ApplicationRunner {
 
 				// Buscar Cliente
 				Cliente clienteResponsavel;
+				
+				//clienteResponsavel.setCpf(cpfCliente);
+				
+				
 				try {
 					clienteResponsavel = clienteService.obterPorCpf(cpfCliente);
 					if (clienteResponsavel == null) {
@@ -104,7 +108,7 @@ public class TicketTarefaLoader implements ApplicationRunner {
 				ticketTarefa.setDataAbertura(dataAbertura);
 				ticketTarefa.setStatus(status);
 				ticketTarefa.setValorTotal(valorTotal);
-				ticketTarefa.setFuncionario(funcionarioResponsavel);// dono: ManyToOne no Ticket
+				ticketTarefa.setFuncionario(funcionarioResponsavel);
 				ticketTarefa.setCliente(clienteResponsavel); 
 
 				if (!dataFechamento.isEmpty()) {
@@ -118,6 +122,10 @@ public class TicketTarefaLoader implements ApplicationRunner {
 					System.err.println("[ERRO] Erro ao incluir TicketTarefa " + codigo + ": " + e.getMessage());
 				}
 
+				
+			
+				
+				
 				linha = leitura.readLine();
 			}
 

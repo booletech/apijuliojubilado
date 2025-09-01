@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "49eb2cb4-cd34-44d9-bc9c-525c93279504",
+		"name": "api-JulioCesar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47351319",
+		"_collection_link": "https://www.postman.com/julio-jubilado/api-juliojubilado/collection/gpfpkci/api-juliocesar?action=share&source=collection_link&creator=47351319"
+	},
+	"item": [
+		{
+			"name": "funcionario",
+			"item": [
+				{
+					"name": "obterPorIdFuncionario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterListaFuncionarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirFuncionario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Funcionario_novo_incluso 222\",\r\n    \"email\": \"funcionario_novo_incluso@borracharia.com\",\r\n    \"cpf\": \"43215432654\",\r\n    \"telefone\": \"(22)454545454545\",\r\n    \"dataNascimento\": \"04/08/1987\",\r\n    \"cargo\": \"Montador de Pneus\",\r\n    \"salario\": 3000.0,\r\n    \"estaAtivo\": true,\r\n    \"dataContratacao\": \"15/09/2023\",\r\n    \"dataDemissao\": \"\",\r\n    \"escolaridade\": \"Ensino médio\",\r\n    \"turno\": \"Noite\",\r\n    \"endereco\": {\r\n        \"cep\": \"20126-727\",\r\n        \"localidade\": \"Duque de Caxias\",\r\n        \"bairro\": \"Vila margarida\",\r\n        \"estado\": \"Rio de janeiro\",\r\n        \"uf\": \"RJ\",\r\n        \"logradouro\": \"Rua tal de tal\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarFuncionario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Ana Souza  NOVA\",\r\n    \"email\": \"ana.souza@borracharia.com\",\r\n    \"cpf\": \"104.332.181-96\",\r\n    \"telefone\": \"(21) 90520-1488\",\r\n    \"dataNascimento\": \"08/06/1988\",\r\n    \"salario\": 7823.0,\r\n    \"ativo\": true,\r\n    \"endereco\": {\r\n        \"id\": 1,\r\n        \"cep\": \"22290-240\",\r\n        \"logradouro\": \"Rua A\",\r\n        \"complemento\": \"Apto 101\",\r\n        \"numero\": \"8379\",\r\n        \"bairro\": \"Botafogo\",\r\n        \"localidade\": \"Rio de Janeiro\",\r\n        \"uf\": \"RJ\",\r\n        \"estado\": \"Rio de Janeiro\"\r\n    },\r\n    \"cargo\": \"Gerente\",\r\n    \"turno\": \"Manhã\",\r\n    \"escolaridade\": \"Médio Completo\",\r\n    \"dataContratacao\": \"11/01/2018\",\r\n    \"dataDemissao\": \"31/12/2099\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inativarFuncionario",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1/inativar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1",
+								"inativar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirFuncionario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cliente",
+			"item": [
+				{
+					"name": "obterListaCliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorIdCliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirCliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Andre xxxxxx\",\r\n        \"email\": \"andre.xxxxxxxx@cliente.com\",\r\n        \"cpf\": \"123.111.222-99\",\r\n        \"telefone\": \"(21) 98111-9000\",\r\n        \"dataNascimento\": \"14/02/1999\",\r\n        \"dataUltimaVisita\": \"12/08/2023\",\r\n        \"limiteCredito\": 800,\r\n        \"pontosFidelidade\": 180,\r\n        \"possuiFiado\": true,\r\n        \"endereco\": {\r\n            \"cep\": \"22271-080\",\r\n            \"logradouro\": \"Rua Voluntarios da Patria, 99999\",\r\n            \"complemento\": \"Apto 402\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarCliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Andre xxxxxx\",\r\n        \"email\": \"andre.xxxxxxxx@cliente.com\",\r\n        \"cpf\": \"123.111.222-99\",\r\n        \"telefone\": \"(21) 98111-9000\",\r\n        \"dataNascimento\": \"14/02/1999\",\r\n        \"dataUltimaVisita\": \"12/08/2023\",\r\n        \"limiteCredito\": 800,\r\n        \"pontosFidelidade\": 180,\r\n        \"possuiFiado\": true,\r\n        \"endereco\": {\r\n            \"cep\": \"22271-080\",\r\n            \"logradouro\": \"Rua Voluntarios da Patria, 99999\",\r\n            \"complemento\": \"Apto 402\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"flamengo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fiadoCliente",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/4/fiado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"4",
+								"fiado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirCliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ticketsTarefa",
+			"item": [
+				{
+					"name": "obterPorIdTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterListaTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirTicketsTarefa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"codigo\": \"TKT-0007\",\r\n    \"status\": \"EM_EXECUCAO\",\r\n    \"valorTotal\": 480.99,\r\n    \"cliente\": {\r\n        \"id\": 2,\r\n        \"nome\": \"Renata Moraes\",\r\n        \"email\": \"renata.moraes@email.com\",\r\n        \"cpf\": \"222.333.444-55\",\r\n        \"telefone\": \"(21) 97777-2222\",\r\n        \"dataNascimento\": \"22/03/1990\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 0,\r\n        \"dataUltimaVisita\": null,\r\n        \"endereco\": {\r\n            \"id\": 17,\r\n            \"cep\": \"22031-070\",\r\n            \"logradouro\": \"Rua B\",\r\n            \"complemento\": \"Apto 12\",\r\n            \"numero\": \"220\",\r\n            \"bairro\": \"Copacabana\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 2,\r\n        \"nome\": \"João Lima\",\r\n        \"email\": \"joao.lima@borracharia.com\",\r\n        \"cpf\": \"863.794.026-54\",\r\n        \"telefone\": \"(21) 92547-4527\",\r\n        \"dataNascimento\": \"28/02/1982\",\r\n        \"salario\": 7445.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 2,\r\n            \"cep\": \"22031-070\",\r\n            \"logradouro\": \"Rua B\",\r\n            \"complemento\": \"Apto 202\",\r\n            \"numero\": \"6324\",\r\n            \"bairro\": \"Copacabana\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Borracheiro\",\r\n        \"turno\": \"Tarde\",\r\n        \"escolaridade\": \"Médio Completo\",\r\n        \"dataContratacao\": \"09/11/2013\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    },\r\n    \"dataAbertura\": \"03/08/2025\",\r\n    \"dataFechamento\": \"31/12/2099\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarTicketstarefa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"TKT-0007\",\r\n    \"status\": \"EM_EXECUCAO\",\r\n    \"valorTotal\": 500.00,\r\n    \"cliente\": {\r\n        \"id\": 2,\r\n        \"nome\": \"Renata Moraes\",\r\n        \"email\": \"renata.moraes@email.com\",\r\n        \"cpf\": \"222.333.444-55\",\r\n        \"telefone\": \"(21) 97777-2222\",\r\n        \"dataNascimento\": \"22/03/1990\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 0,\r\n        \"dataUltimaVisita\": null,\r\n        \"endereco\": {\r\n            \"id\": 17,\r\n            \"cep\": \"22031-070\",\r\n            \"logradouro\": \"Rua B\",\r\n            \"complemento\": \"Apto 12\",\r\n            \"numero\": \"220\",\r\n            \"bairro\": \"Copacabana\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 2,\r\n        \"nome\": \"João Lima\",\r\n        \"email\": \"joao.lima@borracharia.com\",\r\n        \"cpf\": \"863.794.026-54\",\r\n        \"telefone\": \"(21) 92547-4527\",\r\n        \"dataNascimento\": \"28/02/1982\",\r\n        \"salario\": 7445.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 2,\r\n            \"cep\": \"22031-070\",\r\n            \"logradouro\": \"Rua B\",\r\n            \"complemento\": \"Apto 202\",\r\n            \"numero\": \"6324\",\r\n            \"bairro\": \"Copacabana\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Borracheiro\",\r\n        \"turno\": \"Tarde\",\r\n        \"escolaridade\": \"Médio Completo\",\r\n        \"dataContratacao\": \"09/11/2013\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    },\r\n    \"dataAbertura\": \"03/08/2025\",\r\n    \"dataFechamento\": \"31/12/2099\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirTicketstarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tarefas",
+			"item": [
+				{
+					"name": "obterListaTarefas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorIdTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirTarefa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"Balanceamento\",\r\n    \"codigo\": null,\r\n    \"tipo\": \"PNEUS_RODAS\",\r\n    \"valor\": 100.00,\r\n    \"status\": \"EM_EXECUCAO\",\r\n    \"tickettarefa\": {\r\n        \"id\": 1,\r\n        \"codigo\": \"TKT-0001\",\r\n        \"status\": \"ABERTO\",\r\n        \"valorTotal\": 250.00,\r\n        \"cliente\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Paulo Andrade\",\r\n            \"email\": \"paulo.andrade@email.com\",\r\n            \"cpf\": \"111.222.333-44\",\r\n            \"telefone\": \"(21) 98888-1111\",\r\n            \"dataNascimento\": \"15/01/1985\",\r\n            \"limiteCredito\": 0.0,\r\n            \"possuiFiado\": false,\r\n            \"pontosFidelidade\": 0,\r\n            \"dataUltimaVisita\": null,\r\n            \"endereco\": {\r\n                \"id\": 16,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A\",\r\n                \"complemento\": \"Casa 1\",\r\n                \"numero\": \"100\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            }\r\n        },\r\n        \"funcionario\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Ana Souza\",\r\n            \"email\": \"ana.souza@borracharia.com\",\r\n            \"cpf\": \"104.332.181-96\",\r\n            \"telefone\": \"(21) 90520-1488\",\r\n            \"dataNascimento\": \"08/06/1988\",\r\n            \"salario\": 7823.0,\r\n            \"ativo\": true,\r\n            \"endereco\": {\r\n                \"id\": 1,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A\",\r\n                \"complemento\": \"Apto 101\",\r\n                \"numero\": \"8379\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            },\r\n            \"cargo\": \"Gerente\",\r\n            \"turno\": \"Manhã\",\r\n            \"escolaridade\": \"Médio Completo\",\r\n            \"dataContratacao\": \"11/01/2018\",\r\n            \"dataDemissao\": \"31/12/2099\"\r\n        },\r\n        \"dataAbertura\": \"01/08/2025\",\r\n        \"dataFechamento\": \"31/12/2099\"\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"104.332.181-96\",\r\n        \"telefone\": \"(21) 90520-1488\",\r\n        \"dataNascimento\": \"08/06/1988\",\r\n        \"salario\": 7823.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 1,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A\",\r\n            \"complemento\": \"Apto 101\",\r\n            \"numero\": \"8379\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Médio Completo\",\r\n        \"dataContratacao\": \"11/01/2018\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    },\r\n    \"cliente\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Paulo Andrade\",\r\n        \"email\": \"paulo.andrade@email.com\",\r\n        \"cpf\": \"111.222.333-44\",\r\n        \"telefone\": \"(21) 98888-1111\",\r\n        \"dataNascimento\": \"15/01/1985\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 0,\r\n        \"dataUltimaVisita\": null,\r\n        \"endereco\": {\r\n            \"id\": 16,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A\",\r\n            \"complemento\": \"Casa 1\",\r\n            \"numero\": \"100\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarTarefa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"Balanceamento\",\r\n    \"codigo\": null,\r\n    \"tipo\": \"PNEUS_RODAS\",\r\n    \"valor\": 200.00,\r\n    \"status\": \"EM_EXECUCAO\",\r\n    \"tickettarefa\": {\r\n        \"id\": 1,\r\n        \"codigo\": \"TKT-0001\",\r\n        \"status\": \"ABERTO\",\r\n        \"valorTotal\": 250.00,\r\n        \"cliente\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Paulo Andrade\",\r\n            \"email\": \"paulo.andrade@email.com\",\r\n            \"cpf\": \"111.222.333-44\",\r\n            \"telefone\": \"(21) 98888-1111\",\r\n            \"dataNascimento\": \"15/01/1985\",\r\n            \"limiteCredito\": 0.0,\r\n            \"possuiFiado\": false,\r\n            \"pontosFidelidade\": 0,\r\n            \"dataUltimaVisita\": null,\r\n            \"endereco\": {\r\n                \"id\": 16,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A\",\r\n                \"complemento\": \"Casa 1\",\r\n                \"numero\": \"100\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            }\r\n        },\r\n        \"funcionario\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Ana Souza\",\r\n            \"email\": \"ana.souza@borracharia.com\",\r\n            \"cpf\": \"104.332.181-96\",\r\n            \"telefone\": \"(21) 90520-1488\",\r\n            \"dataNascimento\": \"08/06/1988\",\r\n            \"salario\": 7823.0,\r\n            \"ativo\": true,\r\n            \"endereco\": {\r\n                \"id\": 1,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A\",\r\n                \"complemento\": \"Apto 101\",\r\n                \"numero\": \"8379\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            },\r\n            \"cargo\": \"Gerente\",\r\n            \"turno\": \"Manhã\",\r\n            \"escolaridade\": \"Médio Completo\",\r\n            \"dataContratacao\": \"11/01/2018\",\r\n            \"dataDemissao\": \"31/12/2099\"\r\n        },\r\n        \"dataAbertura\": \"01/08/2025\",\r\n        \"dataFechamento\": \"31/12/2099\"\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"104.332.181-96\",\r\n        \"telefone\": \"(21) 90520-1488\",\r\n        \"dataNascimento\": \"08/06/1988\",\r\n        \"salario\": 7823.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 1,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A\",\r\n            \"complemento\": \"Apto 101\",\r\n            \"numero\": \"8379\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Médio Completo\",\r\n        \"dataContratacao\": \"11/01/2018\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    },\r\n    \"cliente\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Paulo Andrade\",\r\n        \"email\": \"paulo.andrade@email.com\",\r\n        \"cpf\": \"111.222.333-44\",\r\n        \"telefone\": \"(21) 98888-1111\",\r\n        \"dataNascimento\": \"15/01/1985\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 0,\r\n        \"dataUltimaVisita\": null,\r\n        \"endereco\": {\r\n            \"id\": 16,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A\",\r\n            \"complemento\": \"Casa 1\",\r\n            \"numero\": \"100\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExcluirTarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

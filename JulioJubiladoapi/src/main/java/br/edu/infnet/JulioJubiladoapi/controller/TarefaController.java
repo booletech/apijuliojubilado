@@ -31,17 +31,22 @@ public class TarefaController {
 
 	@PostMapping
 	public ResponseEntity<Tarefa> incluir(@Valid @RequestBody Tarefa tarefa) {
+		
+		System.out.println("CHEGUEI AQUI" + tarefa);
+		
 		Tarefa novaTarefa = tarefaService.incluir(tarefa);
+		
+		System.out.println("CHEGUEI AQUI" + tarefa);
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaTarefa);
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Tarefa> alterar(@PathVariable Integer id, @RequestBody Tarefa tarefa) {
 		Tarefa tarefaAlterada = tarefaService.alterar(id, tarefa);
 		return ResponseEntity.ok(tarefaAlterada);
 	}
 
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		tarefaService.excluir(id);
 		return ResponseEntity.noContent().build();
