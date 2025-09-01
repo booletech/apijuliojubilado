@@ -1,10 +1,10 @@
-Andre Cardoso;123.111.222-33;andre.cardoso@cliente.com;(21) 98111-1000;14/02/1986;12/08/2025;true;22271-080;Rua Voluntarios da Patria, 250;Apto 402;Bloco A;Botafogo;Rio de Janeiro;RJ;Rio de Janeiro;800.00;180
-Beatriz Castro;234.222.333-44;beatriz.castro@cliente.com;(21) 98222-2001;09/09/1992;05/08/2025;false;20031-170;Avenida Rio Branco, 45;Sala 305;Edificio Centro;Centro;Rio de Janeiro;RJ;Rio de Janeiro;0.00;60
-Caio Moreira;345.333.444-55;caio.moreira@cliente.com;(21) 98333-3002;22/05/1988;03/08/2025;true;24360-076;Rua Coronel Moreira Cesar, 123;Loja 2;Galeria Icarai;Icarai;Niteroi;RJ;Rio de Janeiro;600.00;140
-Daniela Araujo;456.444.555-66;daniela.araujo@cliente.com;(21) 98444-4003;11/01/1995;10/08/2025;false;24436-230;Rua Joao Caetano, 77;Casa 01;Lote 15;Centro;Sao Goncalo;RJ;Rio de Janeiro;0.00;50
-Eduardo Figueiredo;567.555.666-77;eduardo.figueiredo@cliente.com;(21) 98555-5004;27/07/1983;18/07/2025;true;26010-240;Avenida Governador Roberto Silveira, 10;Quiosque 1;Patio Central;Centro;Nova Iguacu;RJ;Rio de Janeiro;1000.00;210
-Fernanda Prado;678.666.777-88;fernanda.prado@cliente.com;(21) 98666-6005;03/03/1991;09/08/2025;true;21031-450;Rua Uranos, 950;Apto 104;Bloco B;Olaria;Rio de Janeiro;RJ;Rio de Janeiro;350.00;125
-Guilherme Teles;789.777.888-99;guilherme.teles@cliente.com;(21) 98777-7006;29/10/1987;01/08/2025;false;23550-315;Estrada de Sepetiba, 1500;Galpao 2;Modulo Leste;Santa Cruz;Rio de Janeiro;RJ;Rio de Janeiro;0.00;40
-Helena Martins;890.888.999-00;helena.martins@cliente.com;(21) 98888-8007;21/12/1993;06/08/2025;true;24310-310;Alameda Sao Boaventura, 48;Casa 3;Cond. Jardim;Santa Rosa;Niteroi;RJ;Rio de Janeiro;1200.00;275
-Igor Pacheco;901.999.000-11;igor.pacheco@cliente.com;(21) 98999-9008;05/06/1990;15/08/2025;false;20775-140;Rua Vinte e Quatro de Maio, 20;Sala 201;Ed. Central;Engenho Novo;Rio de Janeiro;RJ;Rio de Janeiro;0.00;70
-Julia Santiago;012.000.111-22;julia.santiago@cliente.com;(21) 99000-0109;18/04/1996;11/08/2025;true;22713-110;Rua Araguaia, 312;Cobertura 2;Bloco D;Freguesia;Rio de Janeiro;RJ;Rio de Janeiro;650.00;160
+Paulo Andrade;111.222.333-44;15/01/1985;paulo.andrade@email.com;(21) 98888-1111;1500.00;true;120;01/08/2025;;22290-240;Rua A;Casa 1;100;Botafogo;Rio de Janeiro;RJ;Rio de Janeiro
+Renata Moraes;222.333.444-55;22/03/1990;renata.moraes@email.com;(21) 97777-2222;0;false;45;05/07/2025;;22031-070;Rua B;Apto 12;220;Copacabana;Rio de Janeiro;RJ;Rio de Janeiro
+Thiago Nunes;333.444.555-66;09/11/1982;thiago.nunes@email.com;(21) 96666-3333;800.50;true;300;20/06/2025;;20520-054;Rua C;Apto 44;330;Tijuca;Rio de Janeiro;RJ;Rio de Janeiro
+Aline Barros;444.555.666-77;28/07/1996;aline.barros@email.com;(21) 95555-4444;0;false;80;15/08/2025;;22411-003;Rua D;Bloco A;440;Ipanema;Rio de Janeiro;RJ;Rio de Janeiro
+Marcelo Vieira;555.666.777-88;03/02/1979;marcelo.vieira@email.com;(21) 94444-5555;500.00;true;20;10/08/2025;;22250-040;Rua E;Casa 12;550;Flamengo;Rio de Janeiro;RJ;Rio de Janeiro
+Beatriz Ramos;666.777.888-99;12/05/1993;beatriz.ramos@email.com;(21) 93333-6666;0;false;15;12/07/2025;;22430-060;Rua F;Apto 34;660;Leblon;Rio de Janeiro;RJ;Rio de Janeiro
+Fábio Lopes;777.888.999-00;19/09/1987;fabio.lopes@email.com;(21) 92222-7777;300.00;true;60;21/08/2025;;20735-120;Rua G;Casa 2;770;Méier;Rio de Janeiro;RJ;Rio de Janeiro
+Carolina Pires;888.999.000-11;30/04/1992;carolina.pires@email.com;(21) 91111-8888;0;false;10;18/08/2025;;20010-030;Rua H;Sala 5;880;Centro;Rio de Janeiro;RJ;Rio de Janeiro
+Eduardo Tavares;999.000.111-22;07/06/1984;eduardo.tavares@email.com;(21) 90000-9999;1200.00;true;200;25/08/2025;;20021-140;Rua I;Loja 3;990;Lapa;Rio de Janeiro;RJ;Rio de Janeiro
+Juliana Castro;000.111.222-33;11/12/1995;juliana.castro@email.com;(21) 98989-0000;0;false;5;27/08/2025;;22240-003;Rua J;Apto 202;1010;Laranjeiras;Rio de Janeiro;RJ;Rio de Janeiro

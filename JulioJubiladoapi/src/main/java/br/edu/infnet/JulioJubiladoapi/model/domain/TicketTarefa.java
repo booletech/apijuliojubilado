@@ -1,108 +1,122 @@
 package br.edu.infnet.JulioJubiladoapi.model.domain;
 
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
 @Entity
+@Table(name = "TicketTarefa")
 public class TicketTarefa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @NotBlank(message = "A data de abertura é obrigatória.")
-    @Pattern(regexp = "^\\d{2}/\\d{2}/\\d{4}$", message = "Data de abertura inválida. Use o formato dd/MM/yyyy.")
-    private String dataAbertura;
+	@Column(name = "codigo", nullable = false, unique = true, length = 30)
+	private String codigo;
 
-    @Pattern(regexp = "^$|^\\d{2}/\\d{2}/\\d{4}$", message = "Data de fechamento inválida. Use o formato dd/MM/yyyy.")
-    private String dataFechamento;
+	@NotNull(message = "O status é obrigatório!")
+	@Enumerated(EnumType.STRING)
+	private StatusTicket status;
 
-    @NotBlank(message = "O status é obrigatório.")
-    @Size(min = 3, max = 20, message = "Status deve ter entre 3 e 20 caracteres.")
-    private String status;
+	@NotNull(message = "O valor total dos serviços é obrigatório!")
+	@DecimalMin(value = "0.0", message = "O valor total deve ser maior ou igual a zero!")
+	@Digits(integer = 10, fraction = 2, message = "Máx. 10 inteiros e 2 decimais")
+	@Column(name = "valor_total", nullable = false)
+	private BigDecimal valorTotal = BigDecimal.ZERO;
 
-    @NotNull(message = "O valor total é obrigatório!")
-    @Min(value = 0, message = "Valor total não pode ser negativo.")
-    private double valorTotal;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "cliente_id", nullable = false)
+	@Valid
+	private Cliente cliente;
 
-    // relacão ManytoOne com Cliente
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    @Valid
-    @NotNull(message = "O cliente é obrigatório.")
-    private Cliente cliente;
-    
-    
-    //relação ManyToOne com Funcionario
-    @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = false)
-    @Valid
-    @NotNull(message = "O funcionário responsável é obrigatório.")
-    private Funcionario funcionario;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "funcionario_id", nullable = false)
+	@Valid
+	private Funcionario funcionario;
 
-    //relacaoonetomany com tarefa
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Valid
-    private List<Tarefa> tarefas = new ArrayList<>();
+	@OneToMany(mappedBy = "tickettarefa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Tarefa> tarefas = new ArrayList<>();
 
-    
-    
-    
-    @Override
-    public String toString() {
-        return String.format(
-            "TicketTarefa{id=%s, dataAbertura=%s, dataFechamento=%s, status=%s, valorTotal=%.2f, cliente=%s, funcionario=%s}",
-            id, dataAbertura, dataFechamento, status, valorTotal, cliente, funcionario
-        );
-    }
+	@Column(name = "data_abertura")
+	private String dataAbertura;
 
-    public String obterTipo() {
-        return "TicketTarefa";
-    }
-    
-    
-    public void addTarefa(Tarefa t) {
-        t.setTicket(this);        // garante vínculo
-        this.tarefas.add(t);
-    }
-    public void removeTarefa(Tarefa t) {
-        this.tarefas.remove(t);   // orphanRemoval remove do BD
-        t.setTicket(null);
-    }
-    
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+	@Column(name = "data_fechamento")
+	private String dataFechamento;
 
-    public String getDataAbertura() { return dataAbertura; }
-    public void setDataAbertura(String dataAbertura) { this.dataAbertura = dataAbertura; }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getDataFechamento() { return dataFechamento; }
-    public void setDataFechamento(String dataFechamento) { this.dataFechamento = dataFechamento; }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+	public String getCodigo() {
+		return codigo;
+	}
 
-    public double getValorTotal() { return valorTotal; }
-    public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+	public StatusTicket getStatus() {
+		return status;
+	}
 
-    public Funcionario getFuncionario() { return funcionario; }
-    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }
+	public void setStatus(StatusTicket status) {
+		this.status = status;
+	}
+
+	public BigDecimal getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
+
+	public String getDataAbertura() {
+		return dataAbertura;
+	}
+
+	public void setDataAbertura(String dataAbertura) {
+		this.dataAbertura = dataAbertura;
+	}
+
+	public String getDataFechamento() {
+		return dataFechamento;
+	}
+
+	public void setDataFechamento(String dataFechamento) {
+		this.dataFechamento = dataFechamento;
+	}
+
 }

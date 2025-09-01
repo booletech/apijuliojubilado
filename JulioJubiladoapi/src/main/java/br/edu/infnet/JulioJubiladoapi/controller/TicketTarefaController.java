@@ -21,43 +21,43 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/tickets")
 public class TicketTarefaController {
 
-    // Construtor (Injeção de dependência)
-    // final -> imutabilidade e segurança; a dependência é obrigatória
-    private final TicketTarefaService ticketService;
+	// Construtor (Injeção de dependência)
+	// final -> imutabilidade e segurança; a dependência é obrigatória
+	private final TicketTarefaService ticketService;
 
-    public TicketTarefaController(TicketTarefaService ticketService) {
-        this.ticketService = ticketService;
-    }
+	public TicketTarefaController(TicketTarefaService ticketService) {
+		this.ticketService = ticketService;
+	}
 
-    @PostMapping
-    public ResponseEntity<TicketTarefa> incluir(@Valid @RequestBody TicketTarefa ticket) {
-        TicketTarefa novo = ticketService.incluir(ticket);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novo);
-    }
+	@PostMapping
+	public ResponseEntity<TicketTarefa> incluir(@Valid @RequestBody TicketTarefa ticket) {
+		TicketTarefa novo = ticketService.incluir(ticket);
+		return ResponseEntity.status(HttpStatus.CREATED).body(novo);
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TicketTarefa> alterar(@PathVariable Integer id, @RequestBody TicketTarefa ticket) {
-        TicketTarefa alterado = ticketService.alterar(id, ticket);
-        return ResponseEntity.ok(alterado);
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<TicketTarefa> alterar(@PathVariable Integer id, @RequestBody TicketTarefa ticket) {
+		TicketTarefa alterado = ticketService.alterar(id, ticket);
+		return ResponseEntity.ok(alterado);
+	}
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
-        ticketService.excluir(id);
-        return ResponseEntity.noContent().build();
-    }
+	@DeleteMapping("{id}")
+	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+		ticketService.excluir(id);
+		return ResponseEntity.noContent().build();
+	}
 
-    @GetMapping
-    public ResponseEntity<List<TicketTarefa>> obterLista() {
-        List<TicketTarefa> lista = ticketService.obterLista();
-        if (lista.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(lista);
-    }
+	@GetMapping
+	public ResponseEntity<List<TicketTarefa>> obterLista() {
+		List<TicketTarefa> lista = ticketService.obterLista();
+		if (lista.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
 
-    @GetMapping("/{id}")
-    public TicketTarefa obterPorId(@PathVariable("id") Integer id) {
-        return ticketService.obterPorId(id);
-    }
+	@GetMapping("/{id}")
+	public TicketTarefa obterPorId(@PathVariable("id") Integer id) {
+		return ticketService.obterPorId(id);
+	}
 }

@@ -21,76 +21,58 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/funcionarios")
 public class FuncionarioController {
-	
-	
-	
-	//Construtor (Injeção de dependência)
-	//final -> Devido a imutabilidade e segurança no código; a dependência é obrigatória;
+
+	// Construtor (Injeção de dependência)
+	// final -> Devido a imutabilidade e segurança no código; a dependência é
+	// obrigatória;
 	private final FuncionarioService funcionarioService;
-	
+
 	public FuncionarioController(FuncionarioService funcionarioService) {
 		this.funcionarioService = funcionarioService;
 	}
-	
-	
-	
-	
+
 	@PostMapping
-	public ResponseEntity<Funcionario>  incluir(@Valid @RequestBody Funcionario funcionario) {
+	public ResponseEntity<Funcionario> incluir(@Valid @RequestBody Funcionario funcionario) {
 		Funcionario novoFuncionario = funcionarioService.incluir(funcionario);
-			
-		return  ResponseEntity.status(HttpStatus.CREATED).body(novoFuncionario);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(novoFuncionario);
 	}
-	
-	
-	
+
 	@PutMapping(value = "/{id}")
-	public  ResponseEntity<Funcionario> alterar(@PathVariable Integer id, @RequestBody Funcionario funcionario) {
+	public ResponseEntity<Funcionario> alterar(@PathVariable Integer id, @RequestBody Funcionario funcionario) {
 		Funcionario funcionarioAlterado = funcionarioService.alterar(id, funcionario);
-		
-		return ResponseEntity.ok(funcionarioAlterado);	
+
+		return ResponseEntity.ok(funcionarioAlterado);
 	}
-	
-	
-	
-	
+
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		funcionarioService.excluir(id);
-		
+
 		return ResponseEntity.noContent().build();
-		
+
 	}
-	
-	
-	
-	
+
 	@PatchMapping(value = "/{id}/inativar")
-	public ResponseEntity<Funcionario> inativar(@PathVariable  Integer id ) {
+	public ResponseEntity<Funcionario> inativar(@PathVariable Integer id) {
 		Funcionario funcionario = funcionarioService.inativar(id);
-		
+
 		return ResponseEntity.ok(funcionario);
 	}
-	
-	
-	
-	
+
 	@GetMapping
-	public ResponseEntity<List<Funcionario>>  obterLista(){	
+	public ResponseEntity<List<Funcionario>> obterLista() {
 		List<Funcionario> lista = funcionarioService.obterLista();
-		if(lista.isEmpty()){
+		if (lista.isEmpty()) {
 			return ResponseEntity.noContent().build();
-			
+
 		}
 		return ResponseEntity.ok(lista);
 	}
-	
-	
-	
-	
-	@GetMapping(value = "/{id}") 
-	public Funcionario obterPorId(@PathVariable("id")  Integer id) {
-		
+
+	@GetMapping(value = "/{id}")
+	public Funcionario obterPorId(@PathVariable("id") Integer id) {
+
 		return funcionarioService.obterPorId(id);
 	}
 }

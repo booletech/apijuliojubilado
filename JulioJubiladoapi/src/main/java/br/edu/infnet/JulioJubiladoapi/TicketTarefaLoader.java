@@ -2,6 +2,7 @@ package br.edu.infnet.JulioJubiladoapi;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.boot.ApplicationArguments;
@@ -11,80 +12,131 @@ import org.springframework.stereotype.Component;
 
 import br.edu.infnet.JulioJubiladoapi.model.domain.Cliente;
 import br.edu.infnet.JulioJubiladoapi.model.domain.Funcionario;
+import br.edu.infnet.JulioJubiladoapi.model.domain.StatusTicket;
 import br.edu.infnet.JulioJubiladoapi.model.domain.TicketTarefa;
-import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.TicketInvalidoException;
+import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.ClienteNaoEncontradoException;
+import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.FuncionarioNaoEncontradoException;
 import br.edu.infnet.JulioJubiladoapi.model.service.ClienteService;
 import br.edu.infnet.JulioJubiladoapi.model.service.FuncionarioService;
 import br.edu.infnet.JulioJubiladoapi.model.service.TicketTarefaService;
 
-@Component
 @Order(3)
+@Component
 public class TicketTarefaLoader implements ApplicationRunner {
 
 	private final TicketTarefaService ticketTarefaService;
 	private final ClienteService clienteService;
 	private final FuncionarioService funcionarioService;
 
-	public TicketTarefaLoader(TicketTarefaService ticketTarefaService, ClienteService clienteService, FuncionarioService funcionarioService) {
+	public TicketTarefaLoader(TicketTarefaService ticketTarefaService, ClienteService clienteService,
+			FuncionarioService funcionarioService) {
 		this.ticketTarefaService = ticketTarefaService;
 		this.clienteService = clienteService;
 		this.funcionarioService = funcionarioService;
 	}
 
-	public static void main(String[] args) { }
-
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		
+		try (FileReader arquivo = new FileReader("TicketTarefa.txt");
+				BufferedReader leitura = new BufferedReader(arquivo)) {
 
-		FileReader arquivo = new FileReader("TicketTarefa.txt");
-		BufferedReader leitura = new BufferedReader(arquivo);
-		String linha = leitura.readLine();
-		String[] campos = null;
+			System.out.println("[TicketTarefaLoader] Iniciando carregamento de tickets...");
 
-		while (linha != null) {
+			String linha = leitura.readLine();
+			while (linha != null) {
+				if (linha.trim().isEmpty()) {
+					linha = leitura.readLine();
+					continue;
+				}
 
-			campos = linha.split(";");
+				String[] campos = linha.split(";");
+				if (campos.length < 7) {
+					System.err.println("[ERRO] Linha inválida (esperado 7 campos): " + linha);
+					linha = leitura.readLine();
+					continue;
+				}
 
-			// Formato esperado:
-			// dataAbertura;status;valorTotal;clienteId;funcionarioId;dataFechamento(opcional)
-			String dataAbertura   = campos[0];
-			String status         = campos[1];
-			double valorTotal     = Double.valueOf(campos[2]);
-			Integer clienteId     = Integer.valueOf(campos[3]);
-			Integer funcionarioId = Integer.valueOf(campos[4]);
-			String dataFechamento = (campos.length > 5) ? campos[5] : "";
+				final String codigo = campos[0].trim();
+				final String cpfFuncionario = campos[1].trim();
+				final String dataAbertura = campos[2].trim();
+				final StatusTicket status = parseStatus(campos[3]);
+				final BigDecimal valorTotal = parseBig(campos[4]);
+				final String cpfCliente = campos[5].trim();
+				final String dataFechamento = campos[6].trim();
 
-			Cliente cliente = clienteService.obterPorId(clienteId);
-			Funcionario funcionario = funcionarioService.obterPorId(funcionarioId);
+				// Buscar Cliente
+				Cliente clienteResponsavel;
+				try {
+					clienteResponsavel = clienteService.obterPorCpf(cpfCliente);
+					if (clienteResponsavel == null) {
+						System.err.println(
+								"[ERRO] Cliente CPF " + cpfCliente + " não encontrado para o ticket " + codigo);
+						linha = leitura.readLine();
+						continue;
+					}
+				} catch (ClienteNaoEncontradoException e) {
+					System.err.println("[ERRO] Cliente CPF " + cpfCliente + " não encontrado para o ticket " + codigo);
+					linha = leitura.readLine();
+					continue;
+				}
 
-			TicketTarefa ticket = new TicketTarefa();
-			ticket.setDataAbertura(dataAbertura);
-			ticket.setStatus(status);
-			ticket.setValorTotal(valorTotal);
-			ticket.setCliente(cliente);
-			ticket.setFuncionario(funcionario);
-			if (dataFechamento != null && !dataFechamento.trim().isEmpty()) {
-				ticket.setDataFechamento(dataFechamento);
+				// Buscar Funcionário
+				Funcionario funcionarioResponsavel = null;
+				try {
+					funcionarioResponsavel = funcionarioService.obterPorCpf(cpfFuncionario);
+					if (funcionarioResponsavel == null) {
+						System.err.println(
+								"[ERRO] Funcionário CPF " + cpfFuncionario + " não encontrado para o ticket " + codigo);
+						linha = leitura.readLine();
+						continue;
+					}
+				} catch (FuncionarioNaoEncontradoException e) {
+					System.err.println(
+							"[ERRO] Funcionário CPF " + cpfFuncionario + " não encontrado para o ticket " + codigo);
+					linha = leitura.readLine();
+					continue;
+				}
+
+				// 2) Montar o TicketTarefa setando os lados donos
+
+				TicketTarefa ticketTarefa = new TicketTarefa();
+				ticketTarefa.setCodigo(codigo);
+				ticketTarefa.setDataAbertura(dataAbertura);
+				ticketTarefa.setStatus(status);
+				ticketTarefa.setValorTotal(valorTotal);
+				ticketTarefa.setFuncionario(funcionarioResponsavel);// dono: ManyToOne no Ticket
+				ticketTarefa.setCliente(clienteResponsavel); 
+
+				if (!dataFechamento.isEmpty()) {
+					ticketTarefa.setDataFechamento(dataFechamento);
+				}
+
+				try {
+					ticketTarefaService.incluir(ticketTarefa);
+					System.out.println("[OK] Ticket " + codigo + " incluído com sucesso.");
+				} catch (Exception e) {
+					System.err.println("[ERRO] Erro ao incluir TicketTarefa " + codigo + ": " + e.getMessage());
+				}
+
+				linha = leitura.readLine();
 			}
 
-			try {
-				ticketTarefaService.incluir(ticket);
-			} catch (TicketInvalidoException e) {
-				System.err.println("Problema na inclusão do ticket: " + e.getMessage());
-			} catch (Exception e) {
-				System.err.println("Deu Erro! " + e.getMessage());
-			}
-
-			linha = leitura.readLine();
+			List<TicketTarefa> tickets = ticketTarefaService.obterLista();
+			System.out.println("--- [TicketTarefaLoader] Carregamento concluído. ---");
+			tickets.forEach(System.out::println);
 		}
-
-		// consulta a todos os tickets
-		List<TicketTarefa> tickets = ticketTarefaService.obterLista();
-		tickets.forEach(System.out::println);
-
-		leitura.close();
 	}
 
-	
+	private static StatusTicket parseStatus(String raw) {
+		if (raw == null)
+			return null;
+		return StatusTicket.valueOf(raw.trim().toUpperCase());
+	}
+
+	private static BigDecimal parseBig(String raw) {
+		if (raw == null)
+			return null;
+
+		return new BigDecimal(raw.trim().replace(",", "."));
+	}
 }

@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d81e1a2c-ceed-4fcc-b0d8-af2471467224",
+		"_postman_id": "49eb2cb4-cd34-44d9-bc9c-525c93279504",
 		"name": "api-JulioCesar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "46312676",
-		"_collection_link": "https://juliocesardasilvajubilado.postman.co/workspace/Julio-Cesar-da-Silva-Jubilado's~858e6360-49b0-482e-8464-622ef131c00c/collection/46312676-d81e1a2c-ceed-4fcc-b0d8-af2471467224?action=share&source=collection_link&creator=46312676"
+		"_exporter_id": "47351319",
+		"_collection_link": "https://www.postman.com/julio-jubilado/api-juliojubilado/collection/gpfpkci/api-juliocesar?action=share&source=collection_link&creator=47351319"
 	},
 	"item": [
 		{
@@ -320,6 +320,136 @@
 			]
 		},
 		{
+			"name": "ticketsTarefa",
+			"item": [
+				{
+					"name": "obterPorIdTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterListaTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirTicketsTarefa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"dataAbertura\": \"28/08/2025\",\r\n    \"dataFechamento\": null,\r\n    \"status\": \"ABERTO\",\r\n    \"valorTotal\": 0.0,\r\n    \"cliente\": {\r\n        \"id\": 4,\r\n        \"nome\": \"Daniela Goncalo\",\r\n        \"email\": \"daniela.araujo@cliente.com\",\r\n        \"cpf\": \"456.444.555-66\",\r\n        \"telefone\": \"(21) 98444-4003\",\r\n        \"dataNascimento\": \"11/01/1995\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 50,\r\n        \"dataUltimaVisita\": \"10/08/2025\",\r\n        \"endereco\": {\r\n            \"id\": 4,\r\n            \"cep\": \"24436-230\",\r\n            \"logradouro\": \"Rua Joao Caetano, 77\",\r\n            \"complemento\": \"Casa 01\",\r\n            \"numero\": \"Lote 15\",\r\n            \"bairro\": \"Centro\",\r\n            \"localidade\": \"Sao Goncalo\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"010.121.232-33\",\r\n        \"telefone\": \"(21) 98765-4321\",\r\n        \"dataNascimento\": \"12/04/1985\",\r\n        \"salario\": 7500.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 11,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A, 123\",\r\n            \"complemento\": \"Apto 301\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Pós-Graduação\",\r\n        \"dataContratacao\": \"10/01/2015\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarTicketstarefa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"dataAbertura\": \"12/09/2025\",\r\n    \"dataFechamento\": \"28/08/2025\",\r\n    \"status\": \"FECHADO\",\r\n    \"valorTotal\": 120.00,\r\n    \"cliente\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Andre C\",\r\n        \"email\": \"andre.cardoso@cliente.com\",\r\n        \"cpf\": \"123.111.222-33\",\r\n        \"telefone\": \"(21) 98111-1000\",\r\n        \"dataNascimento\": \"14/02/1986\",\r\n        \"limiteCredito\": 800.0,\r\n        \"possuiFiado\": true,\r\n        \"pontosFidelidade\": 180,\r\n        \"dataUltimaVisita\": \"12/08/2025\",\r\n        \"endereco\": {\r\n            \"id\": 1,\r\n            \"cep\": \"22271-080\",\r\n            \"logradouro\": \"Rua Voluntarios da Patria, 250\",\r\n            \"complemento\": \"Apto 402\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"010.121.232-33\",\r\n        \"telefone\": \"(21) 98765-4321\",\r\n        \"dataNascimento\": \"12/04/1985\",\r\n        \"salario\": 7500.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 11,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A, 123\",\r\n            \"complemento\": \"Apto 301\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Pós-Graduação\",\r\n        \"dataContratacao\": \"10/01/2015\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirTicketstarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "tarefas",
 			"item": [
 				{
@@ -337,6 +467,27 @@
 							"path": [
 								"api",
 								"tarefas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorIdTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"4"
 							]
 						}
 					},

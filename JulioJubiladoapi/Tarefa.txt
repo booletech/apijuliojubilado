@@ -1,30 +1,5 @@
-Troca de pneu dianteiro;150.0;CONCLUIDA;1
-Calibragem;20.0;CONCLUIDA;1
-Calibragem;20.0;CONCLUIDA;2
-Balanceamento;80.0;ABERTA;2
-Balanceamento;80.0;CONCLUIDA;3
-Alinhamento;120.0;CONCLUIDA;3
-Alinhamento;120.0;CONCLUIDA;4
-Conserto de camara;35.0;ABERTA;4
-Conserto de camara;35.0;CONCLUIDA;5
-Rodizio de pneus;60.0;CONCLUIDA;5
-Rodizio de pneus;60.0;CONCLUIDA;6
-Substituicao de valvula;25.0;ABERTA;6
-Substituicao de valvula;25.0;CONCLUIDA;7
-Remendo de pneu;40.0;CONCLUIDA;7
-Remendo de pneu;40.0;CONCLUIDA;8
-Limpeza de aro;30.0;ABERTA;8
-Limpeza de aro;30.0;CONCLUIDA;9
-Revisao rapida;50.0;CONCLUIDA;9
-Revisao rapida;50.0;CONCLUIDA;10
-Troca de pneu dianteiro;150.0;ABERTA;10
-Troca de pneu dianteiro;150.0;CONCLUIDA;11
-Calibragem;20.0;CONCLUIDA;11
-Calibragem;20.0;CONCLUIDA;12
-Balanceamento;80.0;ABERTA;12
-Balanceamento;80.0;CONCLUIDA;13
-Alinhamento;120.0;CONCLUIDA;13
-Alinhamento;120.0;CONCLUIDA;14
-Conserto de camara;35.0;ABERTA;14
-Conserto de camara;35.0;CONCLUIDA;15
-Rodizio de pneus;60.0;CONCLUIDA;15
+Troca de pneu;120.00;EM_EXECUCAO;TKT-0001;111.222.333-44;104.332.181-96;PNEUS_RODAS
+Balanceamento;80.00;EM_EXECUCAO;TKT-0001;111.222.333-44;104.332.181-96;PNEUS_RODAS
+Alinhamento;150.00;ORCADO;TKT-0002;222.333.444-55;863.794.026-54;PNEUS_RODAS
+Conserto de camara;60.00;CONCLUIDO;TKT-0005;000.111.222-33;171.822.782-48;REPAROS_VULCANIZACAO
+Calibragem;30.00;ABERTO;TKT-0003;333.444.555-66;407.816.184-95;PREVENTIVO_DIAGNOSTICO

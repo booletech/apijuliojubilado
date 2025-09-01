@@ -16,109 +16,87 @@ import br.edu.infnet.JulioJubiladoapi.model.domain.exceptions.FuncionarioNaoEnco
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
-	//tratamento para exceção de validação
-	
+
+	// tratamento para exceção de validação
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+		Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-	}  
-	
-	
-	
-	
-	
-	
-        
-      //FUNCIONARIO INVALIDO;
-         
-        @ExceptionHandler(FuncionarioInvalidoException.class)
-        public ResponseEntity<Map<String, String>> handleValidationExceptions(FuncionarioInvalidoException ex) {
-            Map<String, String> errors = new HashMap<>();
-            
-            //datahora do erro
-            errors.put("Data/Hora", LocalDateTime.now().toString());
-            //status (tipo do erro)
-            errors.put("Status", HttpStatus.BAD_REQUEST.toString());
-            //mensagem de erro
-            errors.put("mensagem:", ex.getMessage());
-            
-            
-            
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        
-        }
-      
-        
-        
-        //FUNCIONARIO NÃO ENCONTRADO
-        
-        @ExceptionHandler(FuncionarioNaoEncontradoException.class)
-        public ResponseEntity<Map<String, String>> handleValidationExceptions(FuncionarioNaoEncontradoException ex) {
-            Map<String, String> errors = new HashMap<>();
-            
-            //datahora do erro
-            errors.put("Data/Hora", LocalDateTime.now().toString());
-            //status (tipo do erro)
-            errors.put("Status", HttpStatus.NOT_FOUND.toString());
-            //mensagem de erro
-            errors.put("mensagem:", ex.getMessage());
-            
-            
-            
-            return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
-        }
-  
-        //tratamento para exceções de argumentos inválidos;
-		//IllegalArgumentException
-        
-        @ExceptionHandler(IllegalArgumentException.class)
-        public ResponseEntity<Map<String, String>> handleValidationExceptions(IllegalArgumentException ex) {
-            Map<String, String> errors = new HashMap<>();
-            
-            //datahora do erro
-            errors.put("Data/Hora", LocalDateTime.now().toString());
-            //status (tipo do erro)
-            errors.put("Status", HttpStatus.BAD_REQUEST.toString());
-            //mensagem de erro
-            errors.put("mensagem:", ex.getMessage());
-            
-            
-            
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        
-        }
-        
-        
-        
-        //tratamento para exceções genéricas 
-        @ExceptionHandler(Exception.class)
-        public ResponseEntity<Map<String, String>> handleValidationExceptions(Exception ex) {
-            Map<String, String> errors = new HashMap<>();
-            
-            //datahora do erro
-            errors.put("Data/Hora", LocalDateTime.now().toString());
-            //status (tipo do erro)
-            errors.put("Status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
-            //mensagem de erro
-            errors.put("mensagem:", ex.getMessage());
-            
-            
-            
-            return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
-        
-        }
-        
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+	}
+
+	// FUNCIONARIO INVALIDO;
+
+	@ExceptionHandler(FuncionarioInvalidoException.class)
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(FuncionarioInvalidoException ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		// datahora do erro
+		errors.put("Data/Hora", LocalDateTime.now().toString());
+		// status (tipo do erro)
+		errors.put("Status", HttpStatus.BAD_REQUEST.toString());
+		// mensagem de erro
+		errors.put("mensagem:", ex.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+	}
+
+	// FUNCIONARIO NÃO ENCONTRADO
+
+	@ExceptionHandler(FuncionarioNaoEncontradoException.class)
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(FuncionarioNaoEncontradoException ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		// datahora do erro
+		errors.put("Data/Hora", LocalDateTime.now().toString());
+		// status (tipo do erro)
+		errors.put("Status", HttpStatus.NOT_FOUND.toString());
+		// mensagem de erro
+		errors.put("mensagem:", ex.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+	}
+
+	// tratamento para exceções de argumentos inválidos;
+	// IllegalArgumentException
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(IllegalArgumentException ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		// datahora do erro
+		errors.put("Data/Hora", LocalDateTime.now().toString());
+		// status (tipo do erro)
+		errors.put("Status", HttpStatus.BAD_REQUEST.toString());
+		// mensagem de erro
+		errors.put("mensagem:", ex.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
+	}
+
+	// tratamento para exceções genéricas
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Map<String, String>> handleValidationExceptions(Exception ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		// datahora do erro
+		errors.put("Data/Hora", LocalDateTime.now().toString());
+		// status (tipo do erro)
+		errors.put("Status", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+		// mensagem de erro
+		errors.put("mensagem:", ex.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
+
+	}
+
 }
-	
-	
-
-

@@ -13,82 +13,89 @@ import jakarta.transaction.Transactional;
 @Service
 public class ClienteService implements CrudService<Cliente, Integer> {
 
-    private final ClienteRepository clienteRepository;
+	private final ClienteRepository clienteRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+	public ClienteService(ClienteRepository clienteRepository) {
+		this.clienteRepository = clienteRepository;
+	}
 
-    // Validação do cliente
-    private void validar(Cliente cliente) {
-        if (cliente == null) {
-            throw new IllegalArgumentException("O cliente não pode estar nulo e precisa ser criado!");
-        }
-        if (cliente.getNome() == null || cliente.getNome().trim().isEmpty()) {
-            throw new ClienteInvalidoException("O nome do cliente é uma informação obrigatória!");
-        }
-    }
+	// Validação do cliente
+	private void validar(Cliente cliente) {
+		if (cliente == null) {
+			throw new IllegalArgumentException("O cliente não pode estar nulo e precisa ser criado!");
+		}
+		if (cliente.getNome() == null || cliente.getNome().trim().isEmpty()) {
+			throw new ClienteInvalidoException("O nome do cliente é uma informação obrigatória!");
+		}
+	}
 
-    // Incluir cliente
-    @Override
-    @Transactional
-    public Cliente incluir(Cliente cliente) {
-        validar(cliente);
-        if (cliente.getId() != null && cliente.getId() > 0) {
-            throw new IllegalArgumentException("Um novo cliente não pode ter um Id na inclusão!");
-        }
-        return clienteRepository.save(cliente);
-    }
+	// Incluir cliente
+	@Override
+	@Transactional
+	public Cliente incluir(Cliente cliente) {
+		validar(cliente);
+		if (cliente.getId() != null && cliente.getId() > 0) {
+			throw new IllegalArgumentException("Um novo cliente não pode ter um Id na inclusão!");
+		}
+		return clienteRepository.save(cliente);
+	}
 
-    // Alterar cliente
-    @Override
-    @Transactional
-    public Cliente alterar(Integer id, Cliente cliente) {
-        validar(cliente);
-        if (id == null || id == 0) {
-            throw new IllegalArgumentException("O ID para alteração não pode ser nulo/zero");
-        }
-        obterPorId(id);
-        cliente.setId(id);
-        return clienteRepository.save(cliente);
-    }
+	// Alterar cliente
+	@Override
+	@Transactional
+	public Cliente alterar(Integer id, Cliente cliente) {
+		validar(cliente);
+		if (id == null || id == 0) {
+			throw new IllegalArgumentException("O ID para alteração não pode ser nulo/zero");
+		}
+		obterPorId(id);
+		cliente.setId(id);
+		return clienteRepository.save(cliente);
+	}
 
-    // Excluir cliente
-    @Override
-    @Transactional
-    public void excluir(Integer id) {
-        Cliente cliente = obterPorId(id);
-        clienteRepository.delete(cliente);
-    }
+	// Excluir cliente
 
-    // Alternar fiado
-    @Transactional
-    public Cliente alternarFiado(Integer id) {
-        if (id == null || id == 0) {
-            throw new IllegalArgumentException("O ID para alteração de fiado não pode ser nulo/zero");
-        }
+	@Transactional
+	public void excluir(Integer id) {
+		Cliente cliente = obterPorId(id);
+		clienteRepository.delete(cliente);
+	}
 
-        Cliente cliente = obterPorId(id);
-        cliente.setPossuiFiado(!cliente.isPossuiFiado());
+	// Alternar fiado
+	@Transactional
+	public Cliente alternarFiado(Integer id) {
+		if (id == null || id == 0) {
+			throw new IllegalArgumentException("O ID para alteração de fiado não pode ser nulo/zero");
+		}
 
-        return clienteRepository.save(cliente);
-    }
+		Cliente cliente = obterPorId(id);
+		cliente.setPossuiFiado(!cliente.isPossuiFiado());
 
-    // Obter lista de clientes
-    @Override
-    public List<Cliente> obterLista() {
-        return clienteRepository.findAll();
-    }
+		return clienteRepository.save(cliente);
+	}
 
-    // Obter cliente por ID
-    @Override
-    public Cliente obterPorId(Integer id) {
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
-        }
+	// Obter lista de clientes
+	@Override
+	public List<Cliente> obterLista() {
+		return clienteRepository.findAll();
+	}
 
-        return clienteRepository.findById(id).orElseThrow(() ->
-            new ClienteNaoEncontradoException("O cliente com id " + id + " não foi encontrado")
-        );
-    }
+	// Obter cliente por ID
+	@Override
+	public Cliente obterPorId(Integer id) {
+		if (id == null || id <= 0) {
+			throw new IllegalArgumentException("O ID para EXCLUSÃO não pode ser NULO/ZERO!");
+		}
+
+		return clienteRepository.findById(id)
+				.orElseThrow(() -> new ClienteNaoEncontradoException("O cliente com id " + id + " não foi encontrado"));
+	}
+
+	public Cliente obterPorCpf(String cpf) {
+
+		return clienteRepository.findByCpf(cpf).orElseThrow(
+				() -> new ClienteNaoEncontradoException("O Funcionario com o cpf " + cpf + " não foi encontrado"));
+
+	}
+
 }
