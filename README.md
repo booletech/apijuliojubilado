@@ -19,17 +19,6 @@ O foco desta etapa é especificar, por meio de testes unitários, o comportament
 - **Testes:** JUnit 5 (Jupiter)  
 - **IDE recomendada:** Eclipse ou IntelliJ  
 
----
-
-## 📂 Estrutura de pastas relevante
-src/
-├── main/
-│ └── java/br/edu/infnet/juliopedidoapi/model/domain/
-│ ├── ItemPedido.java
-│ └── Tarefa.java
-└── test/
-└── java/br/edu/infnet/juliopedidoapi/
-└── ItemPedidoTest.java
 
 
 ---
