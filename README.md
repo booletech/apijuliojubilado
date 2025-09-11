@@ -33,14 +33,46 @@ src/
 
 
 ---
+✅ Cenários de teste implementados (DADO / QUANDO / ENTÃO)
 
-## ⚡ Como reproduzir o RED
-1. **Forçar falha no método de domínio**:
-   ```java
-   // src/main/java/br/edu/infnet/juliopedidoapi/model/domain/ItemPedido.java
-   public BigDecimal calcularSubtotal() {
-       throw new UnsupportedOperationException("calcular subtotal ainda não implementado (RED)");
-   }
+Subtotal válido
+DADO um ItemPedido com quantidade = 10 e tarefa com valor = 50.00
+QUANDO calcularSubtotal() é chamado
+ENTÃO o subtotal esperado é 500.00
+
+Quantidade zero
+DADO quantidade = 0 e tarefa válida
+QUANDO calcularSubtotal() é chamado
+ENTÃO o subtotal esperado é 0
+
+Tarefa nula
+DADO tarefa = null e quantidade = 4
+QUANDO calcularSubtotal() é chamado
+ENTÃO o subtotal esperado é 0
+
+Quantidade negativa
+DADO quantidade = -1 e tarefa válida
+QUANDO calcularSubtotal() é chamado
+ENTÃO o subtotal esperado é 0
+
+Valor da tarefa nulo
+DADO quantidade = 4 e tarefa com valor = null
+QUANDO calcularSubtotal() é chamado
+ENTÃO o subtotal esperado é 0
+
+
+🧩 Classes envolvidas nesta etapa
+Modelo: Tarefa
+Serviço: PedidoService (ainda não implementado nesta etapa; reservado para GREEN/REFACTOR)
+
+📌 Escopo da entrega
+Implementação de testes unitários para o cálculo do subtotal (ItemPedido.calcularSubtotal()).
+Etapa atual: RED (falha proposital).
+Fora do escopo: total do pedido, descontos e validações adicionais (serão tratados em etapas futuras).
+
+🚀 Próximos passos
+GREEN: implementar o método calcularSubtotal() para atender aos 5 cenários.
+REFACTOR: limpar código duplicado, organizar fixtures e integrar gradualmente ao PedidoService.
 
 
 
