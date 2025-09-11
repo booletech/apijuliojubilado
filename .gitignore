@@ -1,1 +1,13 @@
-/.metadata/
+# Eclipse/IDE
+.metadata/
+.settings/
+.classpath
+.project
+
+# Java/Maven
+target/
+bin/
+
+# JetBrains
+.idea/
+*.iml
