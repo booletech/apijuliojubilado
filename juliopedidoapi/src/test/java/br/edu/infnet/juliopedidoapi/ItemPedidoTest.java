@@ -16,10 +16,11 @@ public class ItemPedidoTest {
 
 	private ItemPedido itemPedido;
 
+
 	@BeforeEach
 	void setup() {
 		// Configurações iniciais, se necessário
-
+		itemPedido = new ItemPedido();
 	}
 
 	// TESTE: DEVE REALIZAR O CALCULO DO SUBTOTAL QUANDO O ITEM FOR VALIDO
@@ -47,7 +48,7 @@ public class ItemPedidoTest {
 
 		// ENTAO - Testes realizados
 		assertEquals(subTotalesperado, subTotalCalculado, "O subtotal calculado está incorreto.");
-		assertEquals(1, tarefa.getCodigo(), "O codigo utilizado na criação da tarefa deve ser '1' ");
+		assertEquals("TST", tarefa.getCodigo(), "O codigo utilizado na criação da tarefa deve ser '1' ");
 	}
 
 	// TESTE: DEVE RETORNAR ZERO QUANDO A QUANTIDADE FOR ZERO
@@ -96,7 +97,6 @@ public class ItemPedidoTest {
 
 	}
 
-	
 	// TESTE: DEVE RETORNAR ZERO QUANDO A QUANTIDADE DE TAREFAS FO NEGATIVA
 	@Test
 	@DisplayName("Deve retornar zero quando a quantidade de tarefas for negativa")

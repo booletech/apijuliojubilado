@@ -1,7 +1,6 @@
 package br.edu.infnet.juliopedidoapi.model.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Tarefa {
 	
