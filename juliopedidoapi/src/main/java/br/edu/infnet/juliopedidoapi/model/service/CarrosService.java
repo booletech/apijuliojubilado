@@ -1,7 +1,9 @@
 package br.edu.infnet.juliopedidoapi.model.service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -25,16 +27,7 @@ public class CarrosService {
         validarParametro(brandName, "Nome do fabricante não pode ser nulo ou vazio");
 
         List<CarrosRetornoQueryResult> marcas = fipeFeignClient.listarMarcas(vehicleType);
-        if (marcas == null || marcas.isEmpty()) return null;
-
-        CarrosRetornoQueryResult match = marcas.stream()
-                .filter(b -> b.getName() != null && brandName.equalsIgnoreCase(b.getName()))
-                .findFirst()
-                .orElseGet(() -> marcas.stream()
-                        .filter(b -> b.getName() != null && b.getName().toLowerCase().contains(brandName.toLowerCase()))
-                        .findFirst()
-                        .orElse(marcas.get(0)));
-
+        CarrosRetornoQueryResult match = encontrarPorNome(marcas, brandName, CarrosRetornoQueryResult::getName);
         return match != null ? match.getCode() : null;
     }
 
@@ -43,18 +36,9 @@ public class CarrosService {
         validarParametro(brandId, "ID do fabricante não pode ser nulo ou vazio");
         validarParametro(modelName, "Nome do modelo não pode ser nulo ou vazio");
 
-        return fipeFeignClient.obterModelosPorMarca(vehicleType, brandId).stream()
-                .filter(model -> modelName.equalsIgnoreCase(model.getName()))
-                .map(CarrosRetornoModelo::getCode)
-                .findFirst()
-                .orElseGet(() -> {
-                    // fallback: contains
-                    return fipeFeignClient.obterModelosPorMarca(vehicleType, brandId).stream()
-                            .filter(m -> m.getName() != null && m.getName().toLowerCase().contains(modelName.toLowerCase()))
-                            .map(CarrosRetornoModelo::getCode)
-                            .findFirst()
-                            .orElse(null);
-                });
+        List<CarrosRetornoModelo> modelos = fipeFeignClient.obterModelosPorMarca(vehicleType, brandId);
+        CarrosRetornoModelo match = encontrarPorNome(modelos, modelName, CarrosRetornoModelo::getName);
+        return match != null ? match.getCode() : null;
     }
 
     public CarrosRetornoQueryResult obterModeloPorFabricante(String vehicleType, String brandName) {
@@ -66,15 +50,7 @@ public class CarrosService {
         }
         List<CarrosRetornoModelo> modelos = fipeFeignClient.obterModelosPorMarca(vehicleType, brandId);
 
-        if (modelos != null && !modelos.isEmpty()) {
-            List<String> nomes = modelos.stream()
-                    .map(CarrosRetornoModelo::getName)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-            retorno.setListadeveiculos(nomes.isEmpty() ? List.of() : nomes);
-        } else {
-            retorno.setListadeveiculos(List.of());
-        }
+        retorno.setListadeveiculos(extrairNomesDosModelos(modelos));
         return retorno;
     }
 
@@ -87,30 +63,77 @@ public class CarrosService {
     }
 
     public List<CarrosRetornoQueryResult> listarFabricantes(String vehicleType) {
-        return fipeFeignClient.listarMarcas(vehicleType).stream()
-                .map(brand -> {
-                    CarrosRetornoQueryResult result = new CarrosRetornoQueryResult();
-                    result.setName(brand.getName());
-                    return result;
-                })
+        validarParametro(vehicleType, "Tipo de veículo não pode ser nulo ou vazio");
+        List<CarrosRetornoQueryResult> marcas = fipeFeignClient.listarMarcas(vehicleType);
+        if (marcas == null) {
+            return List.of();
+        }
+        return marcas.stream()
+                .filter(Objects::nonNull)
+                .map(this::copiarMarca)
                 .collect(Collectors.toList());
     }
 
     public List<CarrosRetornoQueryResult> obterAnosPorModeloNome(String vehicleType, String brandId, String modelName) {
         List<CarrosRetornoModelo> modelos = fipeFeignClient.obterModelosPorMarca(vehicleType, brandId);
-        if (modelos == null) return List.of();
-        String modelId = modelos.stream()
-                .filter(model -> modelName.equalsIgnoreCase(model.getName()))
-                .map(CarrosRetornoModelo::getCode)
-                .findFirst()
-                .orElse(null);
-        if (modelId == null) return List.of();
-        return fipeFeignClient.obterAnosPorMarcaEModelo(vehicleType, brandId, modelId);
+        CarrosRetornoModelo match = encontrarPorNome(modelos, modelName, CarrosRetornoModelo::getName);
+        if (match == null) return List.of();
+        return fipeFeignClient.obterAnosPorMarcaEModelo(vehicleType, brandId, match.getCode());
     }
 
     private void validarParametro(String parametro, String mensagemErro) {
         if (!StringUtils.hasText(parametro)) {
             throw new IllegalArgumentException(mensagemErro);
         }
+    }
+
+    private <T> T encontrarPorNome(List<T> itens, String nomeBuscado, Function<T, String> extratorNome) {
+        if (itens == null || itens.isEmpty()) {
+            return null;
+        }
+
+        String nomeNormalizado = nomeBuscado.toLowerCase(Locale.ROOT);
+
+        return itens.stream()
+                .filter(item -> nomesIguais(extratorNome.apply(item), nomeBuscado))
+                .findFirst()
+                .orElseGet(() -> itens.stream()
+                        .filter(item -> contemTrecho(extratorNome.apply(item), nomeNormalizado))
+                        .findFirst()
+                        .orElse(null));
+    }
+
+    private List<String> extrairNomesDosModelos(List<CarrosRetornoModelo> modelos) {
+        if (modelos == null || modelos.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> nomes = modelos.stream()
+                .map(CarrosRetornoModelo::getName)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        return nomes.isEmpty() ? List.of() : nomes;
+    }
+
+    private CarrosRetornoQueryResult copiarMarca(CarrosRetornoQueryResult marca) {
+        if (marca == null) {
+            return null;
+        }
+
+        CarrosRetornoQueryResult copia = new CarrosRetornoQueryResult();
+        copia.setCode(marca.getCode());
+        copia.setName(marca.getName());
+        copia.setAno(marca.getAno());
+        copia.setListadeveiculos(marca.getListadeveiculos());
+        return copia;
+    }
+
+    private boolean nomesIguais(String valor, String esperado) {
+        return valor != null && valor.equalsIgnoreCase(esperado);
+    }
+
+    private boolean contemTrecho(String valor, String trechoNormalizado) {
+        return valor != null && valor.toLowerCase(Locale.ROOT).contains(trechoNormalizado);
     }
 }
