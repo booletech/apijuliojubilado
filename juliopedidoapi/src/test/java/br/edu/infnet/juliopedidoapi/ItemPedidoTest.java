@@ -1,6 +1,7 @@
 package br.edu.infnet.juliopedidoapi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -33,9 +34,8 @@ public class ItemPedidoTest {
 		// especifico)
 		Tarefa tarefa = new Tarefa(1, "Teste", "TST", TipoTarefa.ALINHAMENTO, new BigDecimal("50.00"), "ABERTO");
 
-		// inicializa o item do pedido
-		itemPedido.calcularSubtotal();
-		ItemPedido itemPedido = new ItemPedido();
+                // inicializa o item do pedido
+                ItemPedido itemPedido = new ItemPedido();
 		itemPedido.setTarefa(tarefa); // Define a tarefa com valor
 		itemPedido.setQuantidade(10); // Define a quantidade
 
@@ -104,9 +104,8 @@ public class ItemPedidoTest {
 
 		// DADO
 
-		// inicializa o item do pedido
-		itemPedido.calcularSubtotal();
-		ItemPedido itemPedido = new ItemPedido();
+                // inicializa o item do pedido
+                ItemPedido itemPedido = new ItemPedido();
 		itemPedido.setQuantidade(-1); // Define a quantidade
 
 		// O que é esperado:
@@ -127,24 +126,26 @@ public class ItemPedidoTest {
 	@DisplayName("Deve retornar zero quando o valor da tarefa for nulo")
 	public void deveRetornarZero_quandoValorTarefaForNulo() {
 
-		new Tarefa(1, "Teste", "TST", TipoTarefa.MONTAGEM_PNEU, null, "ABERTO");
+                Tarefa tarefa = new Tarefa(1, "Teste", "TST", TipoTarefa.MONTAGEM_PNEU, null, "ABERTO");
 
-		// inicializa o item do pedido
-		itemPedido.calcularSubtotal();
-		ItemPedido itemPedido = new ItemPedido();
+                // inicializa o item do pedido
+                ItemPedido itemPedido = new ItemPedido();
 
-		itemPedido.setTarefa(null); // Define a tarefa como nula
-		itemPedido.setQuantidade(4); // Define a quantidade
+                itemPedido.setTarefa(tarefa); // Mantém a tarefa, porém com valor nulo
+                itemPedido.setQuantidade(4); // Define a quantidade
 
-		// O que é esperado:
-		BigDecimal subTotalesperado = BigDecimal.ZERO;
+                // O que é esperado:
+                BigDecimal subTotalesperado = BigDecimal.ZERO;
 
-		// QUANDO - o método calcular subtotal for chamado
-		BigDecimal subTotalCalculado = itemPedido.calcularSubtotal();
+                // QUANDO - o método calcular subtotal for chamado
+                BigDecimal subTotalCalculado = itemPedido.calcularSubtotal();
 
-		// ENTAO
-		assertEquals(subTotalesperado, subTotalCalculado,
-				"O subtotal calculado deve ser zero quando a tarefa estiver nula.");
+                // ENTAO
+                assertEquals(subTotalesperado, subTotalCalculado,
+                                "O subtotal calculado deve ser zero quando o valor da tarefa estiver nulo.");
+                assertNotNull(itemPedido.getTarefa(), "A tarefa deve estar presente para validar o valor nulo.");
+                assertEquals(tarefa, itemPedido.getTarefa(),
+                                "A tarefa associada deve ser a mesma com valor nulo informado.");
 
 	}
 
