@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import br.edu.infnet.JulioJubiladoapi.model.service.FuncionarioService;
 
 @Order(2)
 @Component
+@ConditionalOnProperty(name = "feature.fileLoaders.enabled", havingValue = "true", matchIfMissing = false)
 public class ClienteLoader implements ApplicationRunner {
 
     private final ClienteService clienteService;
@@ -39,16 +41,20 @@ public class ClienteLoader implements ApplicationRunner {
         while (linha != null) {
 
             campos = linha.split(";");
-
+            if (campos.length < 17) {
+                System.err.println("  [ERRO] Linha ignorada: número insuficiente de campos (" + campos.length + ") - " + linha);
+                linha = leitura.readLine();
+                continue;
+            }
             Endereco endereco = new Endereco();
-            endereco.setCep(campos[10]);
-            endereco.setLogradouro(campos[11]);
-            endereco.setComplemento(campos[12]);
-            endereco.setNumero(campos[13]);
-            endereco.setBairro(campos[14]);
-            endereco.setLocalidade(campos[15]);
-            endereco.setUf(campos[16]);
-            endereco.setEstado(campos[17]);
+            endereco.setCep(campos[9]);
+            endereco.setLogradouro(campos[10]);
+            endereco.setComplemento(campos[11]);
+            endereco.setNumero(campos[12]);
+            endereco.setBairro(campos[13]);
+            endereco.setLocalidade(campos[14]);
+            endereco.setUf(campos[15]);
+            endereco.setEstado(campos[16]);
 
             Cliente cliente = new Cliente();
             cliente.setNome(campos[0]);

@@ -18,7 +18,7 @@ public class ItemPedidoTest {
 
 
 	@BeforeEach
-	void setup() {
+	public void setup() {
 		// Configurações iniciais, se necessário
 		itemPedido = new ItemPedido();
 	}
@@ -27,7 +27,7 @@ public class ItemPedidoTest {
 
 	@Test
 	@DisplayName("Deve realizar o calculo do subtotal quando o item for valido")
-	void deveCalcularSubtotal_quandoItemPedidoforValido() {
+	public void deveCalcularSubtotal_quandoItemPedidoforValido() {
 
 		// DADO: Um item de pedido com produto e quantidade válidos (este tem um valor
 		// especifico)
@@ -55,7 +55,7 @@ public class ItemPedidoTest {
 
 	@Test
 	@DisplayName("Deve retornar zero quando a quantidade for zero")
-	void deveRetornarZero_quandoQuantidadeforZero() {
+	public void deveRetornarZero_quandoQuantidadeforZero() {
 
 		// inicializa o item do pedido
 		ItemPedido itemPedido = new ItemPedido();
@@ -77,7 +77,7 @@ public class ItemPedidoTest {
 
 	@Test
 	@DisplayName("Deve retornar zero quando a Tarefa for nula")
-	void deveRetornarZero_quandoTarefaForNulo() {
+	public void deveRetornarZero_quandoTarefaForNulo() {
 
 		// DADO
 
@@ -100,7 +100,7 @@ public class ItemPedidoTest {
 	// TESTE: DEVE RETORNAR ZERO QUANDO A QUANTIDADE DE TAREFAS FO NEGATIVA
 	@Test
 	@DisplayName("Deve retornar zero quando a quantidade de tarefas for negativa")
-	void deveRetornarZero_quandoTarefaFornegativa() {
+	public void deveRetornarZero_quandoTarefaFornegativa() {
 
 		// DADO
 
@@ -125,7 +125,7 @@ public class ItemPedidoTest {
 
 	@Test
 	@DisplayName("Deve retornar zero quando o valor da tarefa for nulo")
-	void deveRetornarZero_quandoValorTarefaForNulo() {
+	public void deveRetornarZero_quandoValorTarefaForNulo() {
 
 		new Tarefa(1, "Teste", "TST", TipoTarefa.MONTAGEM_PNEU, null, "ABERTO");
 

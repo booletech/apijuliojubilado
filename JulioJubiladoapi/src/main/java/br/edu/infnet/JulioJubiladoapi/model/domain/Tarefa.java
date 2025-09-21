@@ -69,12 +69,12 @@ public class Tarefa {
 
 
 
-	/*
-	 * @Override public String toString() { return "Tarefa [id=" + id +
-	 * ", descricao=" + descricao + ", codigo=" + codigo + ", tipo=" + tipo +
-	 * ", valor=" + valor + ", status=" + status + ", tickettarefa=" + tickettarefa
-	 * + "]"; }
-	 */
+	  
+	  @Override public String toString() { return "Tarefa [id=" + id +
+	  ", descricao=" + descricao + ", codigo=" + codigo + ", tipo=" + tipo +
+	  ", valor=" + valor + ", status=" + status + ", tickettarefa=" + tickettarefa
+	  + "]"; }
+	 
 
 	public String obterTipo() {
 		return "Tarefa";
