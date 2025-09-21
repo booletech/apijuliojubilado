@@ -47,9 +47,9 @@ public class EnderecoRetorno {
 		return localidade;
 	}
 
-	public void setLocalidde(String localidade) {
-		this.localidade = localidade;
-	}
+        public void setLocalidade(String localidade) {
+                this.localidade = localidade;
+        }
 
 	public String getUf() {
 		return uf;
