@@ -21,7 +21,7 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("/{cep}")
+    @GetMapping("/cep/{cep}")
     public ResponseEntity<LocalidadePedido> obterLocalidade(@PathVariable String cep) {
         LocalidadePedido localidadepedido = pedidoService.obterLocalidade(cep);
         return ResponseEntity.ok(localidadepedido);
@@ -33,13 +33,13 @@ public class PedidoController {
         return ResponseEntity.ok(fabricantes);
     }
 
-    @GetMapping("/modelos/{tipoVeiculo}/{nomeFabricante}")
+    @GetMapping("/fabricantes/{tipoVeiculo}/{nomeFabricante}")
     public ResponseEntity<Map<String, Object>> listarModelosPorFabricante(@PathVariable String tipoVeiculo, @PathVariable String nomeFabricante) {
         Map<String, Object> modelos = pedidoService.listarModelosPorFabricante(tipoVeiculo, nomeFabricante);
         return ResponseEntity.ok(modelos);
     }
 
-    @GetMapping("/anos/{tipoVeiculo}/{nomeFabricante}/{nomeModelo}")
+    @GetMapping("/fabricantes/{tipoVeiculo}/{nomeFabricante}/{nomeModelo}/anos")
     public ResponseEntity<List<Map<String, Object>>> listarAnosPorModelo(@PathVariable String tipoVeiculo, @PathVariable String nomeFabricante, @PathVariable String nomeModelo) {
         List<Map<String, Object>> anos = pedidoService.listarAnosPorModelo(tipoVeiculo, nomeFabricante, nomeModelo);
         return ResponseEntity.ok(anos);

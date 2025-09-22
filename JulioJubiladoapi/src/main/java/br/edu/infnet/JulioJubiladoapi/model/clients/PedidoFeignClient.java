@@ -18,13 +18,13 @@ public interface PedidoFeignClient {
     @GetMapping("/api/veiculos/{vehicleType}/marcas")
     List<Map<String, Object>> listarMarcas(@PathVariable("vehicleType") String vehicleType);
 
-    // GET /api/veiculos/{vehicleType}/marcas/nome/{brandName}/modelos
-    @GetMapping("/api/veiculos/{vehicleType}/marcas/nome/{brandName}/modelos")
+    // GET /api/veiculos/{vehicleType}/{brandName}/modelos
+    @GetMapping("/api/veiculos/{vehicleType}/{brandName}/modelos")
     Map<String, Object> listarModelosPorMarcaNome(@PathVariable("vehicleType") String vehicleType,
                                                   @PathVariable("brandName") String brandName);
 
-    // GET /api/veiculos/{vehicleType}/marcas/nome/{brandName}/modelos/nome/{modelName}/anos
-    @GetMapping("/api/veiculos/{vehicleType}/marcas/nome/{brandName}/modelos/nome/{modelName}/anos")
+    // GET /api/veiculos/{vehicleType}/{brandName}/{modelName}/anos
+    @GetMapping("/api/veiculos/{vehicleType}/{brandName}/{modelName}/anos")
     List<Map<String, Object>> listarAnosPorModeloNome(@PathVariable("vehicleType") String vehicleType,
                                                       @PathVariable("brandName") String brandName,
                                                       @PathVariable("modelName") String modelName);

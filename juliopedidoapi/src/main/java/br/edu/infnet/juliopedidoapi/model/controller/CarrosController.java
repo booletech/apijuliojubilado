@@ -30,7 +30,7 @@ public class CarrosController {
     }
 
     // Lista de modelos por nome do fabricante
-    @GetMapping("/{vehicleType}/marcas/nome/{brandName}/modelos")
+    @GetMapping("/{vehicleType}/{brandName}/modelos")
     public ResponseEntity<?> modelosPorNomeDeMarca(
             @PathVariable String vehicleType,
             @PathVariable String brandName) {
@@ -47,8 +47,8 @@ public class CarrosController {
         }
     }
 
-    // Lista anos disponíveis para um modelo (aceitando nomes em vez de IDs)
-    @GetMapping("/{vehicleType}/marcas/nome/{brandName}/modelos/nome/{modelName}/anos")
+    // Lista anos disponíveis para um modelo
+    @GetMapping("/{vehicleType}/{brandName}/{modelName}/anos")
     public ResponseEntity<?> anosPorModelo(
             @PathVariable String vehicleType,
             @PathVariable String brandName,
