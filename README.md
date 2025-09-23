@@ -80,10 +80,3 @@ Desenvolver um sistema de **cadastro e gerenciamento** de tarefas e atendimentos
 - Redução de **erros** e **retrabalho** no controle de informações.  
 - **Relatórios** mais fáceis e melhores **decisões operacionais**.
 
----
-
-## Projeto
-Para acessar o projeto Java desenvolvido, utilize o caminho/artefato **`Julioapi`** no ambiente do curso/repositório.  
-> Caso este README esteja em um monorepo, alinhe o link relativo para o módulo correspondente (ex.: `./Julioapi/`).
-
----
