@@ -5,86 +5,98 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "enderecos")
 public class Endereco {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
 
-	private String cep;
-	private String logradouro;
-	private String complemento;
-	private String bairro;
-	private String localidade;
-	private String uf;
-	private String estado;
+        private String cep;
+        private String logradouro;
+        private String complemento;
+        private String bairro;
+        private String localidade;
+        private String uf;
+        private String estado;
 
-	// Getters e Setters
-	public Integer getId() {
-		return id;
-	}
+        @Size(max = 100, message = "Número deve ter até 100 caracteres.")
+        private String numero;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+        // Getters e Setters
+        public Integer getId() {
+                return id;
+        }
 
-	public String getCep() {
-		return cep;
-	}
+        public void setId(Integer id) {
+                this.id = id;
+        }
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+        public String getCep() {
+                return cep;
+        }
 
-	public String getLogradouro() {
-		return logradouro;
-	}
+        public void setCep(String cep) {
+                this.cep = cep;
+        }
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
+        public String getLogradouro() {
+                return logradouro;
+        }
 
-	public String getComplemento() {
-		return complemento;
-	}
+        public void setLogradouro(String logradouro) {
+                this.logradouro = logradouro;
+        }
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
+        public String getComplemento() {
+                return complemento;
+        }
 
-	public String getBairro() {
-		return bairro;
-	}
+        public void setComplemento(String complemento) {
+                this.complemento = complemento;
+        }
 
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
+        public String getBairro() {
+                return bairro;
+        }
 
-	public String getLocalidade() {
-		return localidade;
-	}
+        public void setBairro(String bairro) {
+                this.bairro = bairro;
+        }
 
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
-	}
+        public String getLocalidade() {
+                return localidade;
+        }
 
-	public String getUf() {
-		return uf;
-	}
+        public void setLocalidade(String localidade) {
+                this.localidade = localidade;
+        }
 
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
+        public String getUf() {
+                return uf;
+        }
 
-	public String getEstado() {
-		return estado;
-	}
+        public void setUf(String uf) {
+                this.uf = uf;
+        }
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
+        public String getEstado() {
+                return estado;
+        }
+
+        public void setEstado(String estado) {
+                this.estado = estado;
+        }
+
+        public String getNumero() {
+                return numero;
+        }
+
+        public void setNumero(String numero) {
+                this.numero = numero;
+        }
 
 }

@@ -1,25 +1,28 @@
-package br.edu.infnet.mono.model.domain;
+package br.edu.infnet.mono.model.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import br.edu.infnet.mono.model.domain.Veiculos;
 
-@Entity
-@Table(name = "veiculos")
-public class Veiculos {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class VeiculoResponseDTO {
     private Integer id;
-
     private String fabricante;
     private String modelo;
     private String anoModelo;
     private String codigo;
     private String modeloCodigo;
     private String anoCodigo;
+
+    public VeiculoResponseDTO(Veiculos veiculo) {
+        if (veiculo == null) {
+            return;
+        }
+        this.id = veiculo.getId();
+        this.fabricante = veiculo.getFabricante();
+        this.modelo = veiculo.getModelo();
+        this.anoModelo = veiculo.getAnoModelo();
+        this.codigo = veiculo.getCodigo();
+        this.modeloCodigo = veiculo.getModeloCodigo();
+        this.anoCodigo = veiculo.getAnoCodigo();
+    }
 
     public Integer getId() {
         return id;
