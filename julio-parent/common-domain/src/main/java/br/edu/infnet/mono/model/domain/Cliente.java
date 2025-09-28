@@ -27,6 +27,10 @@ public class Cliente extends Pessoa {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "veiculo_id")
+    private Veiculos veiculo;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<TicketTarefa> tickettarefas = new ArrayList<>();
 
@@ -91,6 +95,14 @@ public class Cliente extends Pessoa {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Veiculos getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculos veiculo) {
+        this.veiculo = veiculo;
     }
 
     public List<TicketTarefa> getTickettarefas() {

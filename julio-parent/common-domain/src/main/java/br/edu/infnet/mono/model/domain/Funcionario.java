@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Funcionario extends Pessoa {
@@ -27,6 +28,8 @@ public class Funcionario extends Pessoa {
     @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Tarefa> tarefas = new ArrayList<>();
 
+    private String matricula;
+
     private String cargo;
 
     private String turno;
@@ -39,6 +42,9 @@ public class Funcionario extends Pessoa {
 
     private String dataDemissao;
 
+    @Transient
+    private String cepInput;
+
     @Override
     public String obterTipo() {
         return "Funcionario";
@@ -48,8 +54,9 @@ public class Funcionario extends Pessoa {
     public String toString() {
         String enderecoInfo = (endereco == null) ? "null" : ("Endereco{id=" + endereco.getId() + "}");
         return String.format(
-                "Funcionario{%s, cargo=%s, turno=%s, escolaridade=%s, dataNascimento=%s, salario=%.2f, ativo=%s, dataContratacao=%s, dataDemissao=%s, endereco=%s}",
-                super.toString(), cargo, turno, escolaridade, dataNascimento, salario, ativo, dataContratacao,
+                "Funcionario{%s, matricula=%s, cargo=%s, turno=%s, escolaridade=%s, dataNascimento=%s, salario=%.2f, ativo=%s, dataContratacao=%s, dataDemissao=%s, endereco=%s}",
+                super.toString(), matricula, cargo, turno, escolaridade, dataNascimento, salario, ativo,
+                dataContratacao,
                 dataDemissao, enderecoInfo);
     }
 
@@ -67,6 +74,14 @@ public class Funcionario extends Pessoa {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getCargo() {
@@ -115,6 +130,14 @@ public class Funcionario extends Pessoa {
 
     public void setDataDemissao(String dataDemissao) {
         this.dataDemissao = dataDemissao;
+    }
+
+    public String getCepInput() {
+        return cepInput;
+    }
+
+    public void setCepInput(String cepInput) {
+        this.cepInput = cepInput;
     }
 
     public Endereco getEndereco() {

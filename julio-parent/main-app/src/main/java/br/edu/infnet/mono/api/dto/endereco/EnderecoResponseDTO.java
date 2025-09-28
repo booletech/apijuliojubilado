@@ -10,6 +10,7 @@ public class EnderecoResponseDTO {
     private String localidade;
     private String uf;
     private String estado;
+    private String numero;
 
     public Integer getId() {
         return id;
@@ -73,5 +74,13 @@ public class EnderecoResponseDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 }

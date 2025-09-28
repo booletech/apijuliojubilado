@@ -1,8 +1,6 @@
 package br.edu.infnet.mono.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.mono.api.dto.cliente.ClienteRequestDTO;
 import br.edu.infnet.mono.api.dto.cliente.ClienteResponseDTO;
-import br.edu.infnet.mono.model.domain.Cliente;
 import br.edu.infnet.mono.service.ClienteService;
 import jakarta.validation.Valid;
 
@@ -33,49 +30,28 @@ public class ClienteController {
 
     @GetMapping
     public List<ClienteResponseDTO> listar() {
-        return clienteService.findAll().stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList());
+        return clienteService.findAll();
     }
 
     @GetMapping("/{id}")
     public ClienteResponseDTO buscarPorId(@PathVariable Integer id) {
-        Cliente cliente = clienteService.findById(id);
-        return toResponse(cliente);
+        return clienteService.findById(id);
     }
 
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> criar(@Valid @RequestBody ClienteRequestDTO requestDTO) {
-        Cliente cliente = toEntity(requestDTO);
-        Cliente criado = clienteService.create(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(criado));
+        ClienteResponseDTO criado = clienteService.create(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
     @PutMapping("/{id}")
     public ClienteResponseDTO atualizar(@PathVariable Integer id, @Valid @RequestBody ClienteRequestDTO requestDTO) {
-        Cliente cliente = toEntity(requestDTO);
-        Cliente atualizado = clienteService.update(id, cliente);
-        return toResponse(atualizado);
+        return clienteService.update(id, requestDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Integer id) {
         clienteService.delete(id);
-    }
-
-    private Cliente toEntity(ClienteRequestDTO requestDTO) {
-        Cliente cliente = new Cliente();
-        cliente.setCpf(requestDTO.getCpf());
-        cliente.setNome(requestDTO.getNome());
-        return cliente;
-    }
-
-    private ClienteResponseDTO toResponse(Cliente cliente) {
-        ClienteResponseDTO responseDTO = new ClienteResponseDTO();
-        responseDTO.setId(cliente.getId());
-        responseDTO.setCpf(cliente.getCpf());
-        responseDTO.setNome(cliente.getNome());
-        return responseDTO;
     }
 }

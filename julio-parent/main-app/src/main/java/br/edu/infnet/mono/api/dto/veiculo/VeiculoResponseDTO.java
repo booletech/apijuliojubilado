@@ -1,17 +1,7 @@
-package br.edu.infnet.mono.model.domain;
+package br.edu.infnet.mono.api.dto.veiculo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class VeiculoResponseDTO {
 
-@Entity
-@Table(name = "veiculos")
-public class Veiculos {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String fabricante;

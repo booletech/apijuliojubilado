@@ -14,6 +14,8 @@ public class EnderecoRequestDTO {
 
     private String complemento;
 
+    private String numero;
+
     @NotBlank(message = "O bairro é obrigatório.")
     private String bairro;
 
@@ -48,6 +50,14 @@ public class EnderecoRequestDTO {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getBairro() {
