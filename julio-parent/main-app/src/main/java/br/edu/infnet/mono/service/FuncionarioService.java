@@ -3,12 +3,16 @@ package br.edu.infnet.mono.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import br.edu.infnet.mono.api.dto.endereco.EnderecoRequestDTO;
 import br.edu.infnet.mono.api.dto.endereco.EnderecoResponseDTO;
 import br.edu.infnet.mono.api.dto.funcionario.FuncionarioRequestDTO;
 import br.edu.infnet.mono.api.dto.funcionario.FuncionarioResponseDTO;
+import br.edu.infnet.mono.clients.ViaCepClient;
+import br.edu.infnet.mono.clients.ViaCepClient.ViaCepResponse;
 import br.edu.infnet.mono.model.domain.Endereco;
 import br.edu.infnet.mono.model.domain.Funcionario;
 import br.edu.infnet.mono.repository.FuncionarioRepository;
@@ -17,10 +21,14 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class FuncionarioService {
 
-    private final FuncionarioRepository funcionarioRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(FuncionarioService.class);
 
-    public FuncionarioService(FuncionarioRepository funcionarioRepository) {
+    private final FuncionarioRepository funcionarioRepository;
+    private final ViaCepClient viaCepClient;
+
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, ViaCepClient viaCepClient) {
         this.funcionarioRepository = funcionarioRepository;
+        this.viaCepClient = viaCepClient;
     }
 
     public List<FuncionarioResponseDTO> findAll() {
@@ -77,33 +85,64 @@ public class FuncionarioService {
         funcionario.setDataContratacao(requestDTO.getDataContratacao());
         funcionario.setDataDemissao(requestDTO.getDataDemissao());
 
-        EnderecoRequestDTO enderecoRequest = requestDTO.getEndereco();
-        if (enderecoRequest != null) {
-            Endereco endereco = toEnderecoEntity(enderecoRequest);
-            Endereco enderecoExistente = funcionario.getEndereco();
-            if (enderecoExistente != null) {
-                endereco.setId(enderecoExistente.getId());
-            }
-            funcionario.setEndereco(endereco);
-        } else {
-            funcionario.setEndereco(null);
-        }
+        Endereco endereco = mergeEndereco(funcionario.getEndereco(), requestDTO.getCepInput(), requestDTO.getEndereco());
+        funcionario.setEndereco(endereco);
     }
 
-    private Endereco toEnderecoEntity(EnderecoRequestDTO enderecoRequest) {
-        if (enderecoRequest == null) {
-            return null;
+    private Endereco mergeEndereco(Endereco atual, String cepEntrada, EnderecoRequestDTO enderecoRequest) {
+        Endereco endereco = atual != null ? atual : new Endereco();
+        boolean possuiDados = atual != null;
+
+        String cepNormalizado = normalizarCep(cepEntrada);
+        if (cepNormalizado != null) {
+            try {
+                ViaCepResponse viaCep = viaCepClient.buscarEnderecoPorCep(cepNormalizado);
+                if (viaCep != null && !viaCep.isErro()) {
+                    endereco.setCep(viaCep.getCep());
+                    endereco.setLogradouro(viaCep.getLogradouro());
+                    endereco.setComplemento(viaCep.getComplemento());
+                    endereco.setBairro(viaCep.getBairro());
+                    endereco.setLocalidade(viaCep.getLocalidade());
+                    endereco.setUf(viaCep.getUf());
+                    possuiDados = true;
+                }
+            } catch (Exception ex) {
+                LOGGER.warn("Não foi possível buscar endereço no ViaCEP para o CEP {}: {}", cepEntrada, ex.getMessage());
+            }
         }
 
-        Endereco endereco = new Endereco();
-        endereco.setCep(enderecoRequest.getCep());
-        endereco.setLogradouro(enderecoRequest.getLogradouro());
-        endereco.setComplemento(enderecoRequest.getComplemento());
-        endereco.setBairro(enderecoRequest.getBairro());
-        endereco.setLocalidade(enderecoRequest.getLocalidade());
-        endereco.setUf(enderecoRequest.getUf());
-        endereco.setEstado(enderecoRequest.getEstado());
-        return endereco;
+        if (enderecoRequest != null) {
+            if (notBlank(enderecoRequest.getCep())) {
+                endereco.setCep(enderecoRequest.getCep());
+                possuiDados = true;
+            }
+            if (notBlank(enderecoRequest.getLogradouro())) {
+                endereco.setLogradouro(enderecoRequest.getLogradouro());
+                possuiDados = true;
+            }
+            if (enderecoRequest.getComplemento() != null) {
+                endereco.setComplemento(enderecoRequest.getComplemento());
+                possuiDados = true;
+            }
+            if (notBlank(enderecoRequest.getBairro())) {
+                endereco.setBairro(enderecoRequest.getBairro());
+                possuiDados = true;
+            }
+            if (notBlank(enderecoRequest.getLocalidade())) {
+                endereco.setLocalidade(enderecoRequest.getLocalidade());
+                possuiDados = true;
+            }
+            if (notBlank(enderecoRequest.getUf())) {
+                endereco.setUf(enderecoRequest.getUf());
+                possuiDados = true;
+            }
+            if (enderecoRequest.getEstado() != null) {
+                endereco.setEstado(enderecoRequest.getEstado());
+                possuiDados = true;
+            }
+        }
+
+        return possuiDados ? endereco : null;
     }
 
     private FuncionarioResponseDTO toResponse(Funcionario funcionario) {
@@ -142,5 +181,13 @@ public class FuncionarioService {
         responseDTO.setUf(endereco.getUf());
         responseDTO.setEstado(endereco.getEstado());
         return responseDTO;
+    }
+
+    private String normalizarCep(String cep) {
+        return cep == null ? null : cep.replaceAll("[^0-9]", "");
+    }
+
+    private boolean notBlank(String valor) {
+        return valor != null && !valor.isBlank();
     }
 }
