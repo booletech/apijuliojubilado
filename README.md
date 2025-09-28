@@ -89,12 +89,12 @@ Desenvolver um sistema de **cadastro e gerenciamento** de tarefas e atendimentos
 O projeto está estruturado como um *multi-module Maven* dentro de `julio-parent`, o que permite separar responsabilidades e publicar componentes reutilizáveis. Os módulos principais são:
 
 ### `common-domain`
-- **Responsabilidade**: Consolidar as entidades de domínio compartilhadas (`Cliente`, `Funcionario`, `Endereco` e `Veiculos`) com todas as anotações JPA e regras de validação. 
-- **Dependências**: expõe um *JAR* contendo o domínio e depende apenas das APIs de `jakarta.persistence`, `jakarta.validation` e do módulo `external-api` para reaproveitar DTOs que fazem ponte com integrações externas. 
+- **Responsabilidade**: Consolidar as entidades de domínio compartilhadas (`Cliente`, `Funcionario`, `Endereco` e `Veiculos`) apenas com anotações JPA. Os objetos permanecem "puros", sem regras de validação, para que possam ser reutilizados em diferentes aplicações.
+- **Dependências**: expõe um *JAR* contendo o domínio e depende exclusivamente da API de `jakarta.persistence`. As validações ficam na aplicação principal, portanto o módulo não traz `jakarta.validation` nem conhece os DTOs do `external-api`.
 
 ### `external-api`
-- **Responsabilidade**: Centralizar clientes HTTP declarativos (OpenFeign) que encapsulam chamadas às APIs públicas de CEP e FIPE, bem como os DTOs de resposta dessas integrações. 
-- **Dependências**: utiliza apenas `spring-cloud-starter-openfeign` para habilitar os clientes HTTP e não conhece o restante da aplicação. 
+- **Responsabilidade**: Centralizar clientes HTTP declarativos (OpenFeign) que encapsulam chamadas às APIs públicas de CEP e FIPE, bem como os DTOs de resposta dessas integrações. A estrutura do módulo já está criada, mas os clientes e DTOs ainda não foram implementados.
+- **Dependências**: utiliza apenas `spring-cloud-starter-openfeign` para habilitar os clientes HTTP e não conhece o restante da aplicação.
 
 ### `main-app`
 - **Responsabilidade**: Entregar a API REST principal, unindo domínio, integrações externas, persistência em H2 e recursos web. Aqui ficam controladores, serviços, repositórios e arquivos de *seed* para testes locais. 
@@ -105,23 +105,25 @@ Essa organização reduz acoplamento entre camadas, facilita a evolução indepe
 ---
 
 ## DTOs, Validações e Mapeamentos
-- **DTOs de Entrada/Saída**: As respostas das APIs externas chegam como DTOs especializados. O `ViaCepClient` expõe a classe interna `ViaCepResponse`, enquanto as marcas da tabela FIPE são representadas por `FipeMarcaDTO`. Esses objetos são transportados apenas entre as camadas de integração e o serviço orquestrador, evitando que estruturas externas vazem para o domínio. 
-- **Validações de Domínio**: Ao receber dados de criação/atualização, o módulo `main-app` aplica `jakarta.validation` sobre as entidades do domínio. Exemplo: `Funcionario` exige CPF, e-mail, matrícula, salário não negativo e formato específico para datas e telefone, enquanto `Cliente` valida obrigatoriedade e formato do CPF. Essas regras garantem que apenas dados consistentes sejam persistidos ou enriquecidos com informações externas. 
-- **Mapeamento para o Domínio**: Após chamadas ao ViaCEP, o serviço da aplicação preenche o objeto `Endereco` associado ao `Funcionario`. O CEP digitado (`cepInput`) é mantido como campo `@Transient`, permitindo validar o formato antes de buscar o endereço e transferir os dados retornados (`logradouro`, `bairro`, `localidade`, `uf`) para a entidade persistente. Esse padrão mantém o domínio limpo e persistível, enquanto o DTO permanece um detalhe da integração. 
-- **Conversões com Respositórios**: Os repositórios Spring Data operam sobre as entidades já normalizadas, expondo consultas por CPF e matrícula para reutilização em serviços que tratam cadastros e agregados. 
+- **Validação nos DTOs**: As regras de consistência residem nos DTOs do `main-app`, que recebem anotações de `jakarta.validation` para garantir formatos e obrigatoriedades antes de qualquer interação com o domínio. As entidades de `common-domain` não possuem validação embutida.
+- **Mapeamento Manual**: Os controladores REST convertem manualmente os DTOs em entidades e vice-versa. `ClienteController` popula apenas `nome` e `cpf`, enquanto `FuncionarioController` replica campo a campo e instancia o `Endereco` aninhado conforme o DTO recebido.
+- **Limitações Atuais**: Sem um mapper dedicado (MapStruct ou equivalente), o código repete conversões e nem todos os atributos do domínio são cobertos nos fluxos atuais — por exemplo, campos de fidelidade e relacionamento de `Cliente` permanecem sem preenchimento. Além disso, o campo `cepInput` é apenas armazenado; não há enriquecimento automático de endereço a partir de integrações externas.
+- **Evolução Planejada**: A intenção é introduzir componentes de mapeamento e validação mais próximos do domínio após os ajustes necessários, reduzindo duplicação de lógica nos controladores.
 
 ---
 
 ## Orquestração e Execução
-- **Fluxo de Orquestração**: A camada de serviço da `main-app` (a ser implementada junto aos endpoints) combina os dados internos com as integrações externas através das dependências de módulo. O ciclo típico é: validar o DTO de entrada → consultar/atualizar entidades pelo repositório → chamar `ViaCepClient` para preencher endereço e `FipeClient` para enriquecer informações veiculares → consolidar a resposta de saída com os dados persistidos. O uso de OpenFeign simplifica a chamada remota, enquanto o domínio mantém consistência para gravação no banco H2.
+- **Fluxo de Orquestração**: Atualmente, o ciclo passa por: validar o DTO com `@Valid` nos controladores → converter manualmente o DTO em entidade → delegar ao serviço correspondente → persistir ou atualizar via repositórios Spring Data → converter a entidade resultante em DTO de resposta. Não há chamadas externas no meio desse fluxo.
 - **Execução Local**:
   1. Instale as dependências e gere os artefatos dos módulos com `./mvnw clean install` na raiz `julio-parent`.
   2. Suba somente a aplicação principal com `./mvnw -pl main-app spring-boot:run`, o que automaticamente carrega `common-domain` e `external-api` do repositório local Maven.
-  3. A API inicia na porta padrão `8080`; o endpoint `GET /` responde com um *health check* simples (`Hello World!`). 
+  3. A API inicia na porta padrão `8080`; o endpoint `GET /` responde com um *health check* simples (`Hello World!`).
+- **Serviços Internos**: `ClienteService` atua somente sobre o `ClienteRepository`, oferecendo operações CRUD básicas sem ajustes adicionais. `FuncionarioService` replica os dados recebidos para a entidade persistida, inclusive tratando o `Endereco` associado quando existe registro anterior, mas não dispara enriquecimentos com CEP ou FIPE.
+- **Integrações Pendentes**: A camada de orquestração ainda não utiliza `ViaCepClient` nem `FipeClient`. Os módulos e dependências estão preparados, porém as chamadas externas serão documentadas quando estiverem disponíveis.
+
 - **Testes Modulares**:
   - Execute `./mvnw test` para rodar os testes unitários/integrados dos módulos.
-  - Para testar somente as integrações externas, é possível usar `./mvnw -pl external-api test`, isolando as chamadas Feign.
-  - Ao validar regras de domínio (como as anotações de `Funcionario`), combine `spring-boot-starter-validation` com cenários de *Bean Validation* em testes unitários, garantindo que os DTOs preenchidos pela camada web atinjam o domínio de forma correta.
+  - Quando as integrações externas forem implementadas, `./mvnw -pl external-api test` permitirá executá-las de forma isolada.
 
 Esses passos permitem evoluir o sistema de forma incremental, mantendo a arquitetura modular e garantindo que cada camada seja testável de forma independente.
 
