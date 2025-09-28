@@ -39,6 +39,8 @@ public class Funcionario extends Pessoa {
 
     private String dataDemissao;
 
+    private String cepInput;
+
     @Override
     public String obterTipo() {
         return "Funcionario";
@@ -48,9 +50,9 @@ public class Funcionario extends Pessoa {
     public String toString() {
         String enderecoInfo = (endereco == null) ? "null" : ("Endereco{id=" + endereco.getId() + "}");
         return String.format(
-                "Funcionario{%s, cargo=%s, turno=%s, escolaridade=%s, dataNascimento=%s, salario=%.2f, ativo=%s, dataContratacao=%s, dataDemissao=%s, endereco=%s}",
+                "Funcionario{%s, cargo=%s, turno=%s, escolaridade=%s, dataNascimento=%s, salario=%.2f, ativo=%s, dataContratacao=%s, dataDemissao=%s, cepInput=%s, endereco=%s}",
                 super.toString(), cargo, turno, escolaridade, dataNascimento, salario, ativo, dataContratacao,
-                dataDemissao, enderecoInfo);
+                dataDemissao, cepInput, enderecoInfo);
     }
 
     public double getSalario() {
@@ -123,6 +125,14 @@ public class Funcionario extends Pessoa {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public String getCepInput() {
+        return cepInput;
+    }
+
+    public void setCepInput(String cepInput) {
+        this.cepInput = cepInput;
     }
 
     public List<TicketTarefa> getTickettarefas() {
