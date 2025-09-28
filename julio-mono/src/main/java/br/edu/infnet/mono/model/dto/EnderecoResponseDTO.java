@@ -1,6 +1,5 @@
 package br.edu.infnet.mono.model.dto;
 
-import br.edu.infnet.mono.model.clients.ViaCepClient;
 import br.edu.infnet.mono.model.domain.Endereco;
 import jakarta.validation.constraints.Size;
 
@@ -17,6 +16,7 @@ public class EnderecoResponseDTO {
 	private String numero;
 
 	public EnderecoResponseDTO(Endereco endereco) {
+		if (endereco == null) return;
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
 		this.complemento = endereco.getComplemento();
@@ -25,16 +25,6 @@ public class EnderecoResponseDTO {
 		this.uf = endereco.getUf();
 		this.estado = endereco.getEstado();
 		this.numero = endereco.getNumero();
-
-	}
-
-	public void copyfromViaCepResponse(ViaCepClient.ViaCepResponse response) {
-		this.cep = response.getCep();
-		this.logradouro = response.getLogradouro();
-		this.complemento = response.getComplemento();
-		this.bairro = response.getBairro();
-		this.localidade = response.getLocalidade();
-		this.uf = response.getUf();
 	}
 
 	public String getCep() {

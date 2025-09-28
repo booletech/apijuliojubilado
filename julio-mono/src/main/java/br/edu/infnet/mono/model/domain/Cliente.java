@@ -1,4 +1,3 @@
-
 package br.edu.infnet.mono.model.domain;
 
 import java.util.ArrayList;
@@ -44,7 +43,10 @@ public class Cliente extends Pessoa {
 	@Valid // Garante que o objeto endereço aninhado também seja validado private
 	Endereco endereco;
 
-	
+	// Relacionamento com Veiculo (1:1)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "veiculo_id")
+	private Veiculos veiculo;
 
 	// Relacionamento cliente com Tickettarefa (1:N)
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -115,6 +117,14 @@ public class Cliente extends Pessoa {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public Veiculos getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculos veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	/*

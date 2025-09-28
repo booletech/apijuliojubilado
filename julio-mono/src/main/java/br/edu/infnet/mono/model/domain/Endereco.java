@@ -27,12 +27,52 @@ public class Endereco {
 	private String numero;
 
 	public void copyFromViaCepResponse(ViaCepClient.ViaCepResponse response) {
-        this.cep = response.getCep();
+        if (response == null) {
+            return;
+        }
+        // normalize cep (remove '-') and copy fields from external response
+        this.cep = response.getCep() != null ? response.getCep().replace("-", "") : null;
         this.logradouro = response.getLogradouro();
         this.complemento = response.getComplemento();
         this.bairro = response.getBairro();
         this.localidade = response.getLocalidade();
         this.uf = response.getUf();
+        // set a human-friendly state name based on UF, if possible
+        this.estado = this.uf != null ? mapUfToEstado(this.uf) : null;
+    }
+
+    private String mapUfToEstado(String uf) {
+        if (uf == null) return null;
+        return switch (uf.toUpperCase()) {
+            case "AC" -> "Acre";
+            case "AL" -> "Alagoas";
+            case "AP" -> "Amapá";
+            case "AM" -> "Amazonas";
+            case "BA" -> "Bahia";
+            case "CE" -> "Ceará";
+            case "DF" -> "Distrito Federal";
+            case "ES" -> "Espírito Santo";
+            case "GO" -> "Goiás";
+            case "MA" -> "Maranhão";
+            case "MT" -> "Mato Grosso";
+            case "MS" -> "Mato Grosso do Sul";
+            case "MG" -> "Minas Gerais";
+            case "PA" -> "Pará";
+            case "PB" -> "Paraíba";
+            case "PR" -> "Paraná";
+            case "PE" -> "Pernambuco";
+            case "PI" -> "Piauí";
+            case "RJ" -> "Rio de Janeiro";
+            case "RN" -> "Rio Grande do Norte";
+            case "RS" -> "Rio Grande do Sul";
+            case "RO" -> "Rondônia";
+            case "RR" -> "Roraima";
+            case "SC" -> "Santa Catarina";
+            case "SP" -> "São Paulo";
+            case "SE" -> "Sergipe";
+            case "TO" -> "Tocantins";
+            default -> uf;
+        };
     }
 	
 	// Getters e Setters

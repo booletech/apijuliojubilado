@@ -15,62 +15,96 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.mono.model.domain.Cliente;
+import br.edu.infnet.mono.model.domain.Endereco;
+import br.edu.infnet.mono.model.domain.Veiculos;
+import br.edu.infnet.mono.model.dto.ClienteRequestDTO;
+import br.edu.infnet.mono.model.dto.ClienteResponseDTO;
+import br.edu.infnet.mono.model.dto.EnderecoRequestDTO;
+import br.edu.infnet.mono.model.dto.VeiculoRequestDTO;
 import br.edu.infnet.mono.model.service.ClienteService;
 import jakarta.validation.Valid;
 
 @RestController
-
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-	// Injeção de dependência por construtor (final = obrigatória/imutável)
-	private final ClienteService clienteService;
+    private final ClienteService clienteService;
 
-	public ClienteController(ClienteService clienteService) {
-		this.clienteService = clienteService;
-	}
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 
-	@PostMapping
-	public ResponseEntity<Cliente> incluir(@Valid @RequestBody Cliente cliente) {
-		Cliente novoCliente = clienteService.incluir(cliente);
+    @PostMapping
+    public ResponseEntity<ClienteResponseDTO> incluir(@Valid @RequestBody ClienteRequestDTO dto) {
+        Cliente cliente = toEntity(dto);
+        Cliente novoCliente = clienteService.incluir(cliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ClienteResponseDTO(novoCliente));
+    }
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> alterar(@PathVariable Integer id, @Valid @RequestBody ClienteRequestDTO dto) {
+        Cliente cliente = toEntity(dto);
+        Cliente clienteAlterado = clienteService.alterar(id, cliente);
+        return ResponseEntity.ok(new ClienteResponseDTO(clienteAlterado));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> alterar(@PathVariable Integer id, @RequestBody Cliente cliente) {
-		Cliente clienteAlterado = clienteService.alterar(id, cliente);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+        clienteService.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
 
-		return ResponseEntity.ok(clienteAlterado);
-	}
+    @PatchMapping("/{id}/fiado")
+    public ResponseEntity<ClienteResponseDTO> alternarFiado(@PathVariable Integer id) {
+        Cliente atualizado = clienteService.alternarFiado(id);
+        return ResponseEntity.ok(new ClienteResponseDTO(atualizado));
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
-		clienteService.excluir(id);
+    @GetMapping
+    public ResponseEntity<List<ClienteResponseDTO>> obterLista() {
+        List<Cliente> lista = clienteService.obterLista();
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<ClienteResponseDTO> dtoList = lista.stream().map(ClienteResponseDTO::new).toList();
+        return ResponseEntity.ok(dtoList);
+    }
 
-		return ResponseEntity.noContent().build();
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> obterPorId(@PathVariable Integer id) {
+        Cliente cliente = clienteService.obterPorId(id);
+        return ResponseEntity.ok(new ClienteResponseDTO(cliente));
+    }
 
-	@PatchMapping("/{id}/fiado")
-	public ResponseEntity<Cliente> alternarFiado(@PathVariable Integer id) {
-		Cliente atualizado = clienteService.alternarFiado(id);
+    // Helpers: map DTO -> entity
+    private Cliente toEntity(ClienteRequestDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.getNome());
+        cliente.setCpf(dto.getCpf());
+        cliente.setEmail(dto.getEmail());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setLimiteCredito(dto.getLimiteCredito() != null ? dto.getLimiteCredito() : 0.0);
+        cliente.setDataNascimento(dto.getDataNascimento());
 
-		return ResponseEntity.ok(atualizado);
-	}
+        EnderecoRequestDTO endDto = dto.getEndereco();
+        if (endDto != null) {
+            Endereco endereco = new Endereco();
+            endereco.setCep(endDto.getCep());
+            endereco.setNumero(endDto.getNumero());
+            cliente.setEndereco(endereco);
+        }
 
-	@GetMapping
-	public ResponseEntity<List<Cliente>> obterLista() {
-		List<Cliente> lista = clienteService.obterLista();
-		if (lista.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
+        VeiculoRequestDTO veicDto = dto.getVeiculo();
+        if (veicDto != null) {
+            Veiculos veiculo = new Veiculos();
+            veiculo.setCodigo(veicDto.getCodigo());
+            veiculo.setModeloCodigo(veicDto.getModeloCodigo());
+            veiculo.setAnoCodigo(veicDto.getAnoCodigo());
+            veiculo.setModelo(veicDto.getModelo());
+            veiculo.setAnoModelo(veicDto.getAnoModelo());
+            cliente.setVeiculo(veiculo);
+        }
 
-		return ResponseEntity.ok(lista);
-	}
-
-	@GetMapping("/{id}")
-	public Cliente obterPorId(@PathVariable Integer id) {
-
-		return clienteService.obterPorId(id);
-	}
+        return cliente;
+    }
 }

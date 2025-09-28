@@ -24,48 +24,56 @@ public class FuncionarioService {
         this.funcionarioRepository = funcionarioRepository;
         this.viaCepClient = viaCepClient;
     }
-
-   
+    
+    
+    private Endereco copyFromViaCepResponse(ViaCepClient.ViaCepResponse viaCepResponse) {
+        if (viaCepResponse == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CEP inválido ou não encontrado.");
+        }
+        Endereco endereco = new Endereco();
+        // reuse domain helper to populate fields
+        endereco.copyFromViaCepResponse(viaCepResponse);
+        return endereco;
+    }
+    
     public FuncionarioResponseDTO incluir(FuncionarioRequestDTO funcionarioRequestDto) {
-    	funcionarioRepository.findByCpf(funcionarioRequestDto.getCpf())
-      .ifPresent(f -> { throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado.");
-		});
-		funcionarioRepository.findByMatricula(funcionarioRequestDto.getMatricula())
-		.ifPresent(f -> { throw new ResponseStatusException(HttpStatus.CONFLICT, "Matrícula já cadastrada."); 
-		
-		});
+        funcionarioRepository.findByCpf(funcionarioRequestDto.getCpf())
+          .ifPresent(f -> { throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado.");
+        });
+        funcionarioRepository.findByMatricula(funcionarioRequestDto.getMatricula())
+        .ifPresent(f -> { throw new ResponseStatusException(HttpStatus.CONFLICT, "Matrícula já cadastrada."); 
+        
+        });
 
-		
-		String cepLimpo = funcionarioRequestDto.getCep().replace("-", "");
-		ViaCepClient.ViaCepResponse viaCepResponse = viaCepClient.buscarEnderecoPorCep(cepLimpo);
-		
-		if (viaCepResponse == null || viaCepResponse.isErro()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CEP inválido ou não encontrado: " + funcionarioRequestDto.getCep());
-		}
-		
-		Endereco endereco = new Endereco();
-		endereco.copyFromViaCepResponse(viaCepResponse);
-		
-		Funcionario funcionario = new Funcionario();
-		funcionario.setNome(funcionarioRequestDto.getNome());
-		funcionario.setCpf(funcionarioRequestDto.getCpf());
-		funcionario.setEmail(funcionarioRequestDto.getEmail());
-		funcionario.setTelefone(funcionarioRequestDto.getTelefone());
-		funcionario.setMatricula(funcionarioRequestDto.getMatricula());
-		funcionario.setSalario(funcionarioRequestDto.getSalario());
-		funcionario.setCargo(funcionarioRequestDto.getCargo());
-		funcionario.setTurno(funcionarioRequestDto.getTurno());
-		funcionario.setEscolaridade(funcionarioRequestDto.getEscolaridade());
-		funcionario.setDataNascimento(funcionarioRequestDto.getDataNascimento());
-		funcionario.setDataContratacao(funcionarioRequestDto.getDataContratacao());
-		funcionario.setDataDemissao(funcionarioRequestDto.getDataDemissao());
-		funcionario.setAtivo(true);
-		funcionario.setEndereco(endereco);
-		
-		
-		Funcionario novofuncionario = funcionarioRepository.save(funcionario); 
-		
-		return new FuncionarioResponseDTO(novofuncionario);
+        String cepLimpo = funcionarioRequestDto.getCep().replace("-", "");
+        ViaCepClient.ViaCepResponse viaCepResponse = viaCepClient.buscarEnderecoPorCep(cepLimpo);
+        
+        if (viaCepResponse == null || viaCepResponse.isErro()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CEP inválido ou não encontrado: " + funcionarioRequestDto.getCep());
+        }
+        
+        Endereco endereco = copyFromViaCepResponse(viaCepResponse);
+        
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(funcionarioRequestDto.getNome());
+        funcionario.setCpf(funcionarioRequestDto.getCpf());
+        funcionario.setEmail(funcionarioRequestDto.getEmail());
+        funcionario.setTelefone(funcionarioRequestDto.getTelefone());
+        funcionario.setMatricula(funcionarioRequestDto.getMatricula());
+        funcionario.setSalario(funcionarioRequestDto.getSalario());
+        funcionario.setCargo(funcionarioRequestDto.getCargo());
+        funcionario.setTurno(funcionarioRequestDto.getTurno());
+        funcionario.setEscolaridade(funcionarioRequestDto.getEscolaridade());
+        funcionario.setDataNascimento(funcionarioRequestDto.getDataNascimento());
+        funcionario.setDataContratacao(funcionarioRequestDto.getDataContratacao());
+        funcionario.setDataDemissao(funcionarioRequestDto.getDataDemissao());
+        funcionario.setAtivo(true);
+        funcionario.setEndereco(endereco);
+
+        
+        Funcionario novofuncionario = funcionarioRepository.save(funcionario); 
+        
+        return new FuncionarioResponseDTO(novofuncionario);
     }
 
     @Transactional
@@ -133,6 +141,7 @@ public class FuncionarioService {
         if (funcionario.getEmail() == null || funcionario.getEmail().trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O e-mail do funcionário é obrigatório.");
         }
-        // Adicione outras validações conforme necessário
+    
     }
+    
 }

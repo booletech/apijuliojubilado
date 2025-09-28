@@ -1,12 +1,12 @@
 package br.edu.infnet.mono.model.dto;
 
-public class FipeMarcaDTO {
+public class FipeResponseDTO {
     private String nome;
     private String codigo;
 
-    public FipeMarcaDTO() {}
+    public FipeResponseDTO() {}
 
-    public FipeMarcaDTO(String codigo, String nome) {
+    public FipeResponseDTO(String codigo, String nome) {
         this.codigo = codigo;
         this.nome = nome;
     }
