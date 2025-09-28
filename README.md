@@ -93,7 +93,7 @@ O projeto está estruturado como um *multi-module Maven* dentro de `julio-parent
 - **Dependências**: expõe um *JAR* contendo o domínio e depende exclusivamente da API de `jakarta.persistence`. As validações ficam na aplicação principal, portanto o módulo não traz `jakarta.validation` nem conhece os DTOs do `external-api`.
 
 ### `external-api`
-- **Responsabilidade**: Centralizar clientes HTTP declarativos (OpenFeign) que encapsulam chamadas às APIs públicas de CEP e FIPE, bem como os DTOs de resposta dessas integrações. A estrutura do módulo já está criada, mas os clientes e DTOs ainda não foram implementados.
+- **Responsabilidade**: Centralizar clientes HTTP declarativos (OpenFeign) que encapsulam chamadas às APIs públicas de CEP e FIPE, bem como os DTOs de resposta dessas integrações. `ViaCepClient` e `FipeClient` já estão implementados, porém ainda não são invocados pelos serviços do `main-app`.
 - **Dependências**: utiliza apenas `spring-cloud-starter-openfeign` para habilitar os clientes HTTP e não conhece o restante da aplicação.
 
 ### `main-app`
@@ -106,20 +106,21 @@ Essa organização reduz acoplamento entre camadas, facilita a evolução indepe
 
 ## DTOs, Validações e Mapeamentos
 - **Validação nos DTOs**: As regras de consistência residem nos DTOs do `main-app`, que recebem anotações de `jakarta.validation` para garantir formatos e obrigatoriedades antes de qualquer interação com o domínio. As entidades de `common-domain` não possuem validação embutida.
-- **Mapeamento Manual**: Os controladores REST convertem manualmente os DTOs em entidades e vice-versa. `ClienteController` popula apenas `nome` e `cpf`, enquanto `FuncionarioController` replica campo a campo e instancia o `Endereco` aninhado conforme o DTO recebido.
-- **Limitações Atuais**: Sem um mapper dedicado (MapStruct ou equivalente), o código repete conversões e nem todos os atributos do domínio são cobertos nos fluxos atuais — por exemplo, campos de fidelidade e relacionamento de `Cliente` permanecem sem preenchimento. Além disso, o campo `cepInput` é apenas armazenado; não há enriquecimento automático de endereço a partir de integrações externas.
-- **Evolução Planejada**: A intenção é introduzir componentes de mapeamento e validação mais próximos do domínio após os ajustes necessários, reduzindo duplicação de lógica nos controladores.
+- **Mapeamento nos Serviços**: A conversão entre DTOs e entidades é centralizada em `ClienteService` e `FuncionarioService`. Esses serviços recebem os objetos validados, realizam o mapeamento para o modelo de domínio e, quando necessário, constroem entidades aninhadas como `Endereco`.
+- **Controladores como Orquestradores**: `ClienteController` e `FuncionarioController` apenas disparam as validações e delegam aos serviços, evitando duplicação de lógica de conversão nas camadas web.
+- **Limitações Atuais**: Sem um mapper dedicado (MapStruct ou equivalente), parte dos campos ainda depende de conversões manuais dentro dos serviços, e alguns atributos do domínio permanecem sem preenchimento — por exemplo, campos de fidelidade e relacionamento de `Cliente`. Além disso, o campo `cepInput` continua armazenado sem enriquecimento automático de endereço a partir de integrações externas.
+- **Evolução Planejada**: A intenção é introduzir componentes de mapeamento e validação mais próximos do domínio após os ajustes necessários, reduzindo duplicação dentro dos serviços e preparando o caminho para enriquecimento automático.
 
 ---
 
 ## Orquestração e Execução
-- **Fluxo de Orquestração**: Atualmente, o ciclo passa por: validar o DTO com `@Valid` nos controladores → converter manualmente o DTO em entidade → delegar ao serviço correspondente → persistir ou atualizar via repositórios Spring Data → converter a entidade resultante em DTO de resposta. Não há chamadas externas no meio desse fluxo.
+- **Fluxo de Orquestração**: Atualmente, o ciclo passa por: validar o DTO com `@Valid` nos controladores → delegar ao serviço correspondente → mapear o DTO para entidade dentro do serviço → persistir ou atualizar via repositórios Spring Data → converter a entidade resultante em DTO de resposta. Ainda não há chamadas externas no meio desse fluxo.
 - **Execução Local**:
   1. Instale as dependências e gere os artefatos dos módulos com `./mvnw clean install` na raiz `julio-parent`.
   2. Suba somente a aplicação principal com `./mvnw -pl main-app spring-boot:run`, o que automaticamente carrega `common-domain` e `external-api` do repositório local Maven.
   3. A API inicia na porta padrão `8080`; o endpoint `GET /` responde com um *health check* simples (`Hello World!`).
-- **Serviços Internos**: `ClienteService` atua somente sobre o `ClienteRepository`, oferecendo operações CRUD básicas sem ajustes adicionais. `FuncionarioService` replica os dados recebidos para a entidade persistida, inclusive tratando o `Endereco` associado quando existe registro anterior, mas não dispara enriquecimentos com CEP ou FIPE.
-- **Integrações Pendentes**: A camada de orquestração ainda não utiliza `ViaCepClient` nem `FipeClient`. Os módulos e dependências estão preparados, porém as chamadas externas serão documentadas quando estiverem disponíveis.
+- **Serviços Internos**: `ClienteService` atua somente sobre o `ClienteRepository`, oferecendo operações CRUD básicas e concentrando a lógica de conversão DTO↔entidade. `FuncionarioService` replica os dados recebidos para a entidade persistida, trata o `Endereco` associado quando existe registro anterior e permanece responsável por futuros enriquecimentos.
+- **Integrações Pendentes**: A camada de orquestração já possui `ViaCepClient` e `FipeClient` disponíveis no módulo `external-api`, mas ainda não os utiliza. Assim que o enriquecimento de endereço por CEP ou consulta de dados veiculares for implementado, os serviços deverão acionar esses clientes após o mapeamento inicial e antes da persistência, ajustando a entidade com os dados retornados.
 
 - **Testes Modulares**:
   - Execute `./mvnw test` para rodar os testes unitários/integrados dos módulos.
