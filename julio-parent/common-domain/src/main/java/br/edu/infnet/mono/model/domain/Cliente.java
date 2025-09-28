@@ -1,31 +1,111 @@
 package br.edu.infnet.mono.model.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente {
+public class Cliente extends Pessoa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private double limiteCredito;
 
-    @NotBlank
-    private String cpf;
+    private boolean possuiFiado;
 
-    private String nome;
+    private int pontosFidelidade;
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    private String dataNascimento;
 
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    private String dataUltimaVisita;
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<TicketTarefa> tickettarefas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    @Override
+    public String obterTipo() {
+        return "Cliente";
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Cliente{%s, dataNascimento=%s, dataUltimaVisita=%s, limiteCredito=%.2f, possuiFiado=%s, pontosFidelidade=%d, endereco=%s}",
+                super.toString(), dataNascimento, dataUltimaVisita, limiteCredito, possuiFiado, pontosFidelidade, endereco);
+    }
+
+    public double getLimiteCredito() {
+        return limiteCredito;
+    }
+
+    public void setLimiteCredito(double limiteCredito) {
+        this.limiteCredito = limiteCredito;
+    }
+
+    public boolean isPossuiFiado() {
+        return possuiFiado;
+    }
+
+    public void setPossuiFiado(boolean possuiFiado) {
+        this.possuiFiado = possuiFiado;
+    }
+
+    public int getPontosFidelidade() {
+        return pontosFidelidade;
+    }
+
+    public void setPontosFidelidade(int pontosFidelidade) {
+        this.pontosFidelidade = pontosFidelidade;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getDataUltimaVisita() {
+        return dataUltimaVisita;
+    }
+
+    public void setDataUltimaVisita(String dataUltimaVisita) {
+        this.dataUltimaVisita = dataUltimaVisita;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<TicketTarefa> getTickettarefas() {
+        return tickettarefas;
+    }
+
+    public void setTickettarefas(List<TicketTarefa> tickettarefas) {
+        this.tickettarefas = tickettarefas;
+    }
+
+    public List<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
+    }
 }
