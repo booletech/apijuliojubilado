@@ -1,0 +1,10 @@
+Paulo Andrade;11122233344;15/01/1985;paulo.andrade@email.com;(21) 98888-1111;1500.00;true;120;01/08/2025;22290-240;Rua A;Casa 1;100;Botafogo;Rio de Janeiro;RJ;Rio de Janeiro
+Renata Moraes;22233344455;22/03/1990;renata.moraes@email.com;(21) 97777-2222;0;false;45;05/07/2025;22031-070;Rua B;Apto 12;220;Copacabana;Rio de Janeiro;RJ;Rio de Janeiro
+Thiago Nunes;33344455566;09/11/1982;thiago.nunes@email.com;(21) 96666-3333;800.50;true;300;20/06/2025;20520-054;Rua C;Apto 44;330;Tijuca;Rio de Janeiro;RJ;Rio de Janeiro
+Aline Barros;44455566677;28/07/1996;aline.barros@email.com;(21) 95555-4444;0;false;80;15/08/2025;22411-003;Rua D;Bloco A;440;Ipanema;Rio de Janeiro;RJ;Rio de Janeiro
+Marcelo Vieira;55566677788;03/02/1979;marcelo.vieira@email.com;(21) 94444-5555;500.00;true;20;10/08/2025;22250-040;Rua E;Casa 12;550;Flamengo;Rio de Janeiro;RJ;Rio de Janeiro
+Beatriz Ramos;66677788899;12/05/1993;beatriz.ramos@email.com;(21) 93333-6666;0;false;15;12/07/2025;22430-060;Rua F;Apto 34;660;Leblon;Rio de Janeiro;RJ;Rio de Janeiro
+Fábio Lopes;77788899900;19/09/1987;fabio.lopes@email.com;(21) 92222-7777;300.00;true;60;21/08/2025;20735-120;Rua G;Casa 2;770;Méier;Rio de Janeiro;RJ;Rio de Janeiro
+Carolina Pires;88899900011;30/04/1992;carolina.pires@email.com;(21) 91111-8888;0;false;10;18/08/2025;20010-030;Rua H;Sala 5;880;Centro;Rio de Janeiro;RJ;Rio de Janeiro
+Eduardo Tavares;99900011122;07/06/1984;eduardo.tavares@email.com;(21) 90000-9999;1200.00;true;200;25/08/2025;20021-140;Rua I;Loja 3;990;Lapa;Rio de Janeiro;RJ;Rio de Janeiro
+Juliana Castro;00011122233;11/12/1995;juliana.castro@email.com;(21) 98989-0000;0;false;5;27/08/2025;22240-003;Rua J;Apto 202;1010;Laranjeiras;Rio de Janeiro;RJ;Rio de Janeiro
