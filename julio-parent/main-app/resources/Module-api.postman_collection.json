@@ -1,0 +1,1062 @@
+{
+	"info": {
+		"_postman_id": "60e0389d-eaea-4173-a8ec-10deed9960cc",
+		"name": "Module-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46312676",
+		"_collection_link": "https://juliocesardasilvajubilado.postman.co/workspace/Julio-Cesar-da-Silva-Jubilado's~858e6360-49b0-482e-8464-622ef131c00c/collection/46312676-60e0389d-eaea-4173-a8ec-10deed9960cc?action=share&source=collection_link&creator=46312676"
+	},
+	"item": [
+		{
+			"name": "funcionario",
+			"item": [
+				{
+					"name": "obterPorIdFuncionario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterListaFuncionarios",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirFuncionario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Teste Security 3\",\r\n    \"cpf\": \"111.222.333-55\",\r\n    \"email\": \"teste@borracharia.com\",\r\n    \"telefone\": \"(21) 99999-9999\",\r\n    \"matricula\": \"MAT005\",\r\n    \"salario\": 3000.0,\r\n    \"cargo\": \"Atendente\",\r\n    \"turno\": \"Manhã\",\r\n    \"escolaridade\": \"Ensino Médio\",\r\n    \"dataNascimento\": \"15/05/1990\",\r\n    \"dataContratacao\": \"01/10/2025\",\r\n    \"dataDemissao\": \"\",\r\n    \"cep\": \"20040-020\",\r\n    \"numero\": 100,\r\n    \"complemento\": \"Apto 101\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarFuncionario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"nome\": \"Ana Souza de freitas\",\r\n    \"cpf\": \"104.332.181-96\",\r\n    \"email\": \"ana.souza@borracharia.com\",\r\n    \"telefone\": \"(21) 90520-1488\",\r\n    \"matricula\": \"7823\",\r\n    \"salario\": 5200.0,\r\n    \"ativo\": true,\r\n    \"cepInput\": null,\r\n    \"cargo\": \"Gerente\",\r\n    \"turno\": \"Manhã\",\r\n    \"escolaridade\": \"Médio Completo\",\r\n    \"dataNascimento\": \"08/06/1988\",\r\n    \"dataContratacao\": \"11/01/2018\",\r\n    \"dataDemissao\": \"31/12/2099\",\r\n    \"endereco\": {\r\n        \"cep\": \"22290-240\",\r\n        \"logradouro\": \"Avenida Pasteur\",\r\n        \"complemento\": \"até 213/214\",\r\n        \"bairro\": \"Botafogo\",\r\n        \"localidade\": \"Rio de Janeiro\",\r\n        \"uf\": \"RJ\",\r\n        \"numero\": 8379\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inativarFuncionario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1/inativar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1",
+								"inativar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirFuncionario",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cliente",
+			"item": [
+				{
+					"name": "obterListaCliente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorIdCliente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirCliente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Andre xxxxxx\",\r\n        \"email\": \"andre.xxxxxxxx@cliente.com\",\r\n        \"cpf\": \"123.111.222-99\",\r\n        \"telefone\": \"(21) 98111-9000\",\r\n        \"dataNascimento\": \"14/02/1999\",\r\n        \"dataUltimaVisita\": \"12/08/2023\",\r\n        \"limiteCredito\": 800,\r\n        \"pontosFidelidade\": 180,\r\n        \"possuiFiado\": true,\r\n        \"endereco\": {\r\n            \"cep\": \"22271-080\",\r\n            \"logradouro\": \"Rua Voluntarios da Patria, 99999\",\r\n            \"complemento\": \"Apto 402\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarCliente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 12,\r\n    \"nome\": \"Andre xxxxxx ALTERADO\",\r\n    \"cpf\": \"123.111.222-99\",\r\n    \"email\": \"andre.xxxxxxxx@cliente.com\",\r\n    \"telefone\": \"(21) 98111-9000\",\r\n    \"limiteCredito\": 0.0,\r\n    \"dataNascimento\": \"14/02/1999\",\r\n    \"endereco\": {\r\n        \"cep\": \"22271-080\",\r\n        \"logradouro\": null,\r\n        \"complemento\": null,\r\n        \"bairro\": null,\r\n        \"localidade\": null,\r\n        \"uf\": null\r\n    },\r\n    \"veiculo\": {\r\n        \"id\": null,\r\n        \"fabricante\": null,\r\n        \"modelo\": null,\r\n        \"anoModelo\": null,\r\n        \"codigo\": null,\r\n        \"modeloCodigo\": null,\r\n        \"anoCodigo\": null\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirCliente",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/clientes/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"clientes",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ticketsTarefa",
+			"item": [
+				{
+					"name": "obterPorIdTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterListaTicketsTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirTicketsTarefa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"dataAbertura\": \"28/08/2025\",\r\n    \"dataFechamento\": null,\r\n    \"status\": \"ABERTO\",\r\n    \"valorTotal\": 0.0,\r\n    \"cliente\": {\r\n        \"id\": 4,\r\n        \"nome\": \"Daniela Goncalo\",\r\n        \"email\": \"daniela.araujo@cliente.com\",\r\n        \"cpf\": \"456.444.555-66\",\r\n        \"telefone\": \"(21) 98444-4003\",\r\n        \"dataNascimento\": \"11/01/1995\",\r\n        \"limiteCredito\": 0.0,\r\n        \"possuiFiado\": false,\r\n        \"pontosFidelidade\": 50,\r\n        \"dataUltimaVisita\": \"10/08/2025\",\r\n        \"endereco\": {\r\n            \"id\": 4,\r\n            \"cep\": \"24436-230\",\r\n            \"logradouro\": \"Rua Joao Caetano, 77\",\r\n            \"complemento\": \"Casa 01\",\r\n            \"numero\": \"Lote 15\",\r\n            \"bairro\": \"Centro\",\r\n            \"localidade\": \"Sao Goncalo\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"010.121.232-33\",\r\n        \"telefone\": \"(21) 98765-4321\",\r\n        \"dataNascimento\": \"12/04/1985\",\r\n        \"salario\": 7500.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 11,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A, 123\",\r\n            \"complemento\": \"Apto 301\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Pós-Graduação\",\r\n        \"dataContratacao\": \"10/01/2015\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarTicketstarefa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"dataAbertura\": \"12/09/2025\",\r\n    \"dataFechamento\": \"28/08/2025\",\r\n    \"status\": \"FECHADO\",\r\n    \"valorTotal\": 120.00,\r\n    \"cliente\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Andre C\",\r\n        \"email\": \"andre.cardoso@cliente.com\",\r\n        \"cpf\": \"123.111.222-33\",\r\n        \"telefone\": \"(21) 98111-1000\",\r\n        \"dataNascimento\": \"14/02/1986\",\r\n        \"limiteCredito\": 800.0,\r\n        \"possuiFiado\": true,\r\n        \"pontosFidelidade\": 180,\r\n        \"dataUltimaVisita\": \"12/08/2025\",\r\n        \"endereco\": {\r\n            \"id\": 1,\r\n            \"cep\": \"22271-080\",\r\n            \"logradouro\": \"Rua Voluntarios da Patria, 250\",\r\n            \"complemento\": \"Apto 402\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        }\r\n    },\r\n    \"funcionario\": {\r\n        \"id\": 1,\r\n        \"nome\": \"Ana Souza\",\r\n        \"email\": \"ana.souza@borracharia.com\",\r\n        \"cpf\": \"010.121.232-33\",\r\n        \"telefone\": \"(21) 98765-4321\",\r\n        \"dataNascimento\": \"12/04/1985\",\r\n        \"salario\": 7500.0,\r\n        \"ativo\": true,\r\n        \"endereco\": {\r\n            \"id\": 11,\r\n            \"cep\": \"22290-240\",\r\n            \"logradouro\": \"Rua A, 123\",\r\n            \"complemento\": \"Apto 301\",\r\n            \"numero\": \"Bloco A\",\r\n            \"bairro\": \"Botafogo\",\r\n            \"localidade\": \"Rio de Janeiro\",\r\n            \"uf\": \"RJ\",\r\n            \"estado\": \"Rio de Janeiro\"\r\n        },\r\n        \"cargo\": \"Gerente\",\r\n        \"turno\": \"Manhã\",\r\n        \"escolaridade\": \"Pós-Graduação\",\r\n        \"dataContratacao\": \"10/01/2015\",\r\n        \"dataDemissao\": \"31/12/2099\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluirTicketstarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tickets/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tickets",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tarefas",
+			"item": [
+				{
+					"name": "obterListaTarefas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorIdTarefa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluirTarefa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"Troca de Pneus\",\r\n    \"valor\": 80.0,\r\n    \"status\": \"ABERTA\",\r\n    \"ticket\": {\r\n        \"id\": 7,\r\n        \"dataAbertura\": \"02/09/2025\",\r\n        \"dataFechamento\": null,\r\n        \"status\": \"ABERTO\",\r\n        \"valorTotal\": 80.0,\r\n        \"cliente\": {\r\n            \"id\": 2,\r\n            \"nome\": \"Evelyn Castro\",\r\n            \"email\": \"evelyn.castro@cliente.com\",\r\n            \"cpf\": \"234.222.333-99\",\r\n            \"telefone\": \"(21) 98222-2001\",\r\n            \"dataNascimento\": \"09/09/1992\",\r\n            \"limiteCredito\": 0.0,\r\n            \"possuiFiado\": false,\r\n            \"pontosFidelidade\": 60,\r\n            \"dataUltimaVisita\": \"05/08/2025\",\r\n            \"endereco\": {\r\n                \"id\": 2,\r\n                \"cep\": \"20031-170\",\r\n                \"logradouro\": \"Avenida Rio Branco, 45\",\r\n                \"complemento\": \"Sala 305\",\r\n                \"numero\": \"Edificio Centro\",\r\n                \"bairro\": \"Centro\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            }\r\n        },\r\n        \"funcionario\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Ana Souza\",\r\n            \"email\": \"ana.souza@borracharia.com\",\r\n            \"cpf\": \"010.121.232-33\",\r\n            \"telefone\": \"(21) 98765-4321\",\r\n            \"dataNascimento\": \"12/04/1985\",\r\n            \"salario\": 7500.0,\r\n            \"ativo\": true,\r\n            \"endereco\": {\r\n                \"id\": 11,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A, 123\",\r\n                \"complemento\": \"Apto 301\",\r\n                \"numero\": \"Bloco A\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            },\r\n            \"cargo\": \"Gerente\",\r\n            \"turno\": \"Manhã\",\r\n            \"escolaridade\": \"Pós-Graduação\",\r\n            \"dataContratacao\": \"10/01/2015\",\r\n            \"dataDemissao\": \"31/12/2099\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterarTarefa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"descricao\": \"Balanceamento\",\r\n    \"valor\": 75.0,\r\n    \"status\": \"ABERTA\",\r\n    \"ticket\": {\r\n        \"id\": 2,\r\n        \"dataAbertura\": \"02/09/2025\",\r\n        \"dataFechamento\": null,\r\n        \"status\": \"ABERTO\",\r\n        \"valorTotal\": 0.0,\r\n        \"cliente\": {\r\n            \"id\": 2,\r\n            \"nome\": \"Beatriz Castro\",\r\n            \"email\": \"beatriz.castro@cliente.com\",\r\n            \"cpf\": \"234.222.333-44\",\r\n            \"telefone\": \"(21) 98222-2001\",\r\n            \"dataNascimento\": \"09/09/1992\",\r\n            \"limiteCredito\": 0.0,\r\n            \"possuiFiado\": false,\r\n            \"pontosFidelidade\": 60,\r\n            \"dataUltimaVisita\": \"05/08/2025\",\r\n            \"endereco\": {\r\n                \"id\": 2,\r\n                \"cep\": \"20031-170\",\r\n                \"logradouro\": \"Avenida Rio Branco, 45\",\r\n                \"complemento\": \"Sala 305\",\r\n                \"numero\": \"Edificio Centro\",\r\n                \"bairro\": \"Centro\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            }\r\n        },\r\n        \"funcionario\": {\r\n            \"id\": 1,\r\n            \"nome\": \"Ana Souza\",\r\n            \"email\": \"ana.souza@borracharia.com\",\r\n            \"cpf\": \"010.121.232-33\",\r\n            \"telefone\": \"(21) 98765-4321\",\r\n            \"dataNascimento\": \"12/04/1985\",\r\n            \"salario\": 7500.0,\r\n            \"ativo\": true,\r\n            \"endereco\": {\r\n                \"id\": 11,\r\n                \"cep\": \"22290-240\",\r\n                \"logradouro\": \"Rua A, 123\",\r\n                \"complemento\": \"Apto 301\",\r\n                \"numero\": \"Bloco A\",\r\n                \"bairro\": \"Botafogo\",\r\n                \"localidade\": \"Rio de Janeiro\",\r\n                \"uf\": \"RJ\",\r\n                \"estado\": \"Rio de Janeiro\"\r\n            },\r\n            \"cargo\": \"Gerente\",\r\n            \"turno\": \"Manhã\",\r\n            \"escolaridade\": \"Pós-Graduação\",\r\n            \"dataContratacao\": \"10/01/2015\",\r\n            \"dataDemissao\": \"31/12/2099\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExcluirTarefa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/tarefas/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tarefas",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comentarios",
+			"item": [
+				{
+					"name": "obterLista",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/comentarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"comentarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Testes de segurança",
+			"item": [
+				{
+					"name": "Sem autenticação - GET (401)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - GET lista funcionários (403)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - GET funcionário por ID (200)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - POST funcionário (201)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Teste Security User\",\r\n    \"cpf\": \"999.888.777-66\",\r\n    \"email\": \"teste.user@borracharia.com\",\r\n    \"telefone\": \"(21) 99999-9999\",\r\n    \"matricula\": \"SEC001\",\r\n    \"salario\": 3000.0,\r\n    \"cargo\": \"Atendente\",\r\n    \"turno\": \"Manhã\",\r\n    \"escolaridade\": \"Ensino Médio\",\r\n    \"dataNascimento\": \"15/05/1990\",\r\n    \"dataContratacao\": \"02/10/2025\",\r\n    \"dataDemissao\": \"\",\r\n    \"cep\": \"20040-020\",\r\n    \"numero\": 100,\r\n    \"complemento\": \"Teste\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - PUT funcionário (200)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - DELETE funcionário (403)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN - GET lista funcionários (200)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN - DELETE funcionário (204)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/funcionarios/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"funcionarios",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
