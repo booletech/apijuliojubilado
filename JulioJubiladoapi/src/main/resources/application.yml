@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: JulioJubiladoapi
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1433;databaseName=julio_db;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: SenhaForte@123
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+    open-in-view: false
+
+server:
+  port: 8081
+
+juliopedidoapi:
+  url: http://localhost:8080
+  service-subject: service-juliopedidoapi
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+
+logging:
+  level:
+    org.springframework.cloud.openfeign: DEBUG
+    feign: DEBUG
+
+feature:
+  remoteCalls:
+    enabled: true
+  fileLoaders:
+    enabled: true
+
+security:
+  jwt:
+    issuer: JulioApis
+    expiration-minutes: 60
+    secret: CHAVE_SUPER_SECRETA_JULIO_APIS_COM_NO_MINIMO_32_CARACTERES

@@ -1,0 +1,87 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "SenhaForte@123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./docs/sql/init_julio_db.sql:/var/opt/mssql/scripts/init_julio_db.sql:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -b -C -S localhost -U sa -P \"$${SA_PASSWORD}\" -i /var/opt/mssql/scripts/init_julio_db.sql > /dev/null"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+
+  juliopedidoapi:
+    build: ./juliopedidoapi
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://sqlserver:1433;databaseName=julio_db;encrypt=true;trustServerCertificate=true
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: SenhaForte@123
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "8080:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  juliojubiladoapi:
+    build: ./JulioJubiladoapi
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://sqlserver:1433;databaseName=julio_db;encrypt=true;trustServerCertificate=true
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: SenhaForte@123
+      JULIOPEDIDOAPI_URL: http://juliopedidoapi:8080
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "8081:8081"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+      juliopedidoapi:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:8081
+        VITE_PEDIDO_API_BASE_URL: http://localhost:8080
+    restart: unless-stopped
+    stop_grace_period: 1m
+    ports:
+      - "5173:80"
+    depends_on:
+      - juliojubiladoapi
+      - juliopedidoapi
+
+volumes:
+  sqlserver_data:
