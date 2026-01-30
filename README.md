@@ -1,176 +1,200 @@
-# Sistema de Gestão para Borracharia — README
-  
-> Objetivo: cadastrar e gerenciar **funcionários, clientes e tarefas**, com geração de **ticket de atendimento** e visão operacional do dia a dia.
+﻿# Sistema de Controle de Atendimento em Borracharias — README
+
+> Objetivo: cadastrar e gerenciar **funcionários, clientes e tarefas**, com geração de **tickets de atendimento** e visão operacional do dia a dia.
 
 ---
 
-## 📚 Sumário
+## Sumário
 - [Visão do Projeto](#visão-do-projeto)
-- [Introdução](#introdução)
 - [Problema](#problema)
 - [Proposta de Solução](#proposta-de-solução)
 - [Objetivos](#objetivos)
 - [Benefícios](#benefícios)
 - [Projeto](#projeto)
+- [Execução (Full Stack)](#execução-full-stack)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
+- [APIs externas e integrações](#apis-externas-e-integrações)
+- [Exemplos de endpoints das integrações](#exemplos-de-endpoints-das-integrações)
+- [Autenticação e perfis](#autenticação-e-perfis)
+- [Pagination](#pagination)
+- [Docker (Deploy)](#docker-deploy)
+- [Tests](#tests)
 
 ---
 
 ## Visão do Projeto
-Este repositório apresenta a visão geral do sistema, abordando **finalidade**, **público-alvo** e **metas**, além de contextualizar o problema enfrentado por borracharias e oficinas de pequeno porte. O documento base orienta o escopo e os atores (stakeholders), destacando os ganhos esperados para **funcionários**, **clientes** e **negócio**.
-
----
-
-## Introdução
-O sistema tem como objetivo **cadastrar e gerenciar** funcionários, clientes e tarefas executadas em uma **borracharia**, oferecendo uma estrutura **clara**, **acessível** e **escalável**. Busca-se manter o **histórico de atendimentos** e assegurar que todos os envolvidos (cliente, funcionário e serviço realizado) estejam **registrados e vinculados** adequadamente.
+Sistema Full Stack para borracharias e oficinas de pequeno porte, com foco em **organização de atendimentos**, **rastreabilidade de tarefas** e **produtividade**. A solução integra Frontend (React) e dois Backends (Spring Boot) para registrar clientes, tarefas e pedidos com busca avançada.
 
 ---
 
 ## Problema
-Em muitas borracharias/oficinas, o controle de atendimentos é disperso (cadernos, planilhas, sistemas rudimentares), causando:
+O controle de atendimentos em muitas borracharias é disperso (cadernos, planilhas, sistemas rudimentares), causando:
 
-- Falta de **padronização** nos dados de cadastro.  
-- Dificuldade em **associar atendimentos** ao funcionário e ao cliente corretos.  
-- Ausência de **histórico detalhado** de serviços.  
-- **Desorganização** que impacta finanças e **produtividade**.
+- Falta de **padronização** nos dados de cadastro
+- Dificuldade em **associar atendimentos** ao funcionário e ao cliente corretos
+- Ausência de **histórico detalhado** de serviços
+- **Desorganização** que impacta produtividade e decisões
 
 ---
 
 ## Proposta de Solução
-Centralizar e estruturar o cadastro de **clientes**, **funcionários** e **tarefas**, com a emissão de um **ticket de atendimento** que consolida as informações diárias.  
-A modelagem utiliza classes orientadas a objetos:
+Centralizar e estruturar o cadastro de **clientes**, **funcionários** e **tarefas**, com emissão de **ticket de atendimento** que consolida as informações diárias. A modelagem utiliza classes orientadas a objetos:
 
-- `Pessoa`, `Funcionario`, `Cliente`, `Endereco`, `Tarefa`, `TicketTarefa`.
+- `Pessoa`, `Funcionario`, `Cliente`, `Endereco`, `Tarefa`, `TicketTarefa`
 
-Com isso, será possível:
+Com isso, é possível:
 
-- Cadastrar/consultar **funcionários** e **clientes** de forma **padronizada**.  
-- Registrar **tarefas** vinculadas a **funcionário** e **cliente**.  
-- Obter **relatórios diários** (atendimentos do dia, total de tarefas, valor total, etc.).  
-- Preparar o terreno para evoluções: **estoque**, **recibos** e **integração com pagamentos**.
+- Cadastrar/consultar **funcionários** e **clientes** de forma **padronizada**
+- Registrar **tarefas** vinculadas a **funcionário** e **cliente**
+- Obter **relatórios diários** (atendimentos do dia, total de tarefas, valor total, etc.)
+- Preparar o terreno para evoluções: **estoque**, **recibos** e **integração com pagamentos**
 
 ---
 
 ## Objetivos
-**Objetivo geral:**  
-Desenvolver um sistema de **cadastro e gerenciamento** de tarefas e atendimentos, servindo de base para o **controle operacional** e a evolução futura.
+**Objetivo geral:**
+Desenvolver um sistema de **cadastro e gerenciamento** de tarefas e atendimentos, servindo de base para o **controle operacional** e evolução futura.
 
 **Objetivos específicos:**
-- Criar estruturas de **cadastro** para **clientes** e **funcionários**.  
-- Modelar e **associar tarefas a tickets de atendimento**, registrando execuções.  
-- Organizar dados de forma **padronizada**, facilitando **buscas** e **listagens**.  
-- Estabelecer uma **base de dados em memória** para simulação de persistência.  
-- Criar um **endpoint REST** para **consulta de funcionários**.  
-- Preparar o sistema para **controle financeiro** e **relatórios gerenciais**.
+- Criar estruturas de **cadastro** para **clientes** e **funcionários**
+- Modelar e **associar tarefas a tickets de atendimento**, registrando execuções
+- Organizar dados de forma **padronizada**, facilitando buscas e listagens
+- Disponibilizar **API REST** para integração com Frontend
+- Evoluir para **relatórios gerenciais** e controle financeiro
 
 ---
 
 ## Benefícios
 **Para os funcionários**
-- Organização centralizada dos **atendimentos**.  
-- **Histórico** de tarefas por dia.  
-- Visibilidade de **produtividade** e atribuições.
+- Organização centralizada dos atendimentos
+- Histórico de tarefas por dia
+- Visibilidade de produtividade
 
 **Para os clientes**
-- **Cadastro** facilitado e histórico de **serviços**.  
-- Mais **transparência** no atendimento e nos **valores** cobrados.
+- Cadastro facilitado e histórico de serviços
+- Transparência no atendimento e valores cobrados
 
 **Para o negócio**
-- Base sólida para **escalar** funcionalidades.  
-- Redução de **erros** e **retrabalho** no controle de informações.  
-- **Relatórios** mais fáceis e melhores **decisões operacionais**.
-
+- Base sólida para escalar funcionalidades
+- Redução de erros e retrabalho
+- Relatórios mais fáceis e decisões operacionais melhores
 
 ---
 
-## Execucao (Full Stack)
+## Projeto
+**Stack**
+- Backend: Spring Boot (Java 21)
+- Frontend: React + Vite
+- Banco: SQL Server
+- Search: Elasticsearch
+- Integrações: ViaCEP e FIPE
 
-### Backend (Spring Boot)
-- API principal: `JulioJubiladoapi` roda em `http://localhost:8081`
-- Banco: SQL Server (porta 1433). Use o `docker-compose` em `JulioJubiladoapi/docker-compose.yml`
+**Arquitetura (visão rápida)**
+```
+Frontend (React)
+    |
+    v
+JulioJubiladoapi (API principal)
+    |---> juliopedidoapi (API de pedidos) ----> ViaCEP
+    |                                  \--> FIPE
+    \---> Elasticsearch (busca de pedidos)
+```
 
-Exemplo:
+**Estrutura do repositório**
+- `JulioJubiladoapi/` → API principal (clientes, tarefas, tickets, exportação)
+- `juliopedidoapi/` → API de pedidos + integrações externas
+- `frontend/` → aplicação React
+- `docs/` → documentação, mockups, SQL e coleção Postman
+
+**Módulo de usuários**
+- A tela **Usuários** é exibida somente para ADMIN.
+- Cada funcionário possui **login, senha e perfil** (ADMIN/SUPERVISOR/FUNCIONARIO/TOTEM).
+
+---
+
+## Execução (Full Stack)
+
+### Requisitos
+- Java 21 (para os Backends)
+- Node 18+ (para o Frontend)
+- Docker Desktop (para banco e infraestrutura)
+
+### Opção 1 (recomendado): Docker Compose
+Na raiz do repositório:
+```
+docker compose up --build
+```
+Isso sobe: SQL Server, Elasticsearch, ambos os Backends e o Frontend.
+
+Acesso:
+- Frontend: http://localhost:5173
+- API principal: http://localhost:8081
+- API pedidos: http://localhost:8080
+- SQL Server: localhost:1433
+- Elasticsearch: http://localhost:9200
+
+### Opção 2: Execução local (dev)
+Suba somente a infraestrutura:
+```
+docker compose up -d sqlserver elasticsearch
+```
+
+Backend principal:
 ```
 cd JulioJubiladoapi
-docker-compose up -d
 ./mvnw spring-boot:run
 ```
 
-### Frontend (Vite + React)
-- Frontend roda em `http://localhost:5173`
+Backend de pedidos:
+```
+cd juliopedidoapi
+./mvnw spring-boot:run
+```
+
+Frontend:
 ```
 cd frontend
 npm install
 npm run dev
 ```
 
-### Variaveis de ambiente
-Crie o arquivo local copiando o exemplo:
-- `frontend/.env.example`
-- `frontend/.env.local` (nao versionado)
+---
 
-Conteudo:
+## Variáveis de ambiente
+Crie o arquivo local copiando o exemplo:
+- `frontend/.env.example` → `frontend/.env.local` (não versionado)
+
+Conteúdo:
 ```
 VITE_API_BASE_URL=http://localhost:8081
 VITE_PEDIDO_API_BASE_URL=http://localhost:8080
 ```
 
-### CORS
-CORS liberado para `http://localhost:5173` no backend em:
-`JulioJubiladoapi/src/main/java/br/edu/infnet/JulioJubiladoapi/security/SecurityConfig.java`
+---
 
-### HTTPS (SSL)
-Para rodar com HTTPS, ative o profile `ssl` nos dois backends e use as URLs HTTPS no frontend:
-
-Backend principal (porta 8443):
-```
-cd JulioJubiladoapi
-./mvnw spring-boot:run -Dspring-boot.run.profiles=ssl
-```
-
-Backend de pedidos (porta 8444):
-```
-cd juliopedidoapi
-./mvnw spring-boot:run -Dspring-boot.run.profiles=ssl
-```
-
-No frontend, copie `frontend/.env.ssl` para `frontend/.env.local` (ou replique os valores):
-```
-VITE_API_BASE_URL=https://localhost:8443
-VITE_PEDIDO_API_BASE_URL=https://localhost:8444
-```
-
-### APIs externas e integracoes
+## APIs externas e integrações
 **ViaCEP (consulta de CEP)**
-- Usada no `juliopedidoapi` via OpenFeign.
+- Usada no `juliopedidoapi` via OpenFeign
 - Config: `juliopedidoapi/src/main/resources/application.yml` (`api.viacep.url`)
-- Fluxo: Frontend -> JulioJubiladoapi -> juliopedidoapi -> ViaCEP
+- Fluxo: Frontend → JulioJubiladoapi → juliopedidoapi → ViaCEP
 
-**FIPE (dados de veiculos)**
-- Usada no `juliopedidoapi` via OpenFeign.
+**FIPE (dados de veículos)**
+- Usada no `juliopedidoapi` via OpenFeign
 - Config: `juliopedidoapi/src/main/resources/application.yml` (`api.fipe.url`)
-- Fluxo: Frontend -> JulioJubiladoapi -> juliopedidoapi -> FIPE
+- Fluxo: Frontend → JulioJubiladoapi → juliopedidoapi → FIPE
 
 **Elasticsearch (busca de pedidos)**
-- Busca full-text em `JulioJubiladoapi` e indexacao automatica no `juliopedidoapi`.
-- Config: `ELASTICSEARCH_URL` (Docker) ou `elasticsearch.url` no `application.yml`.
-- Fluxo: Frontend -> JulioJubiladoapi -> Elasticsearch.
+- Busca full‑text no `JulioJubiladoapi` e indexação automática no `juliopedidoapi`
+- Config: `ELASTICSEARCH_URL` (Docker) ou `elasticsearch.url` no `application.yml`
+- Fluxo: Frontend → JulioJubiladoapi → Elasticsearch
 
-**Integracao entre backends (API interna)**
-- `JulioJubiladoapi` consome `juliopedidoapi` via OpenFeign.
-- Config: `JulioJubiladoapi/src/main/resources/application.yml` (`juliopedidoapi.url`).
+**Integração entre Backends (API interna)**
+- `JulioJubiladoapi` consome `juliopedidoapi` via OpenFeign
+- Config: `JulioJubiladoapi/src/main/resources/application.yml` (`juliopedidoapi.url`)
 
-### Fluxo de integracoes (visao rapida)
-```
-Frontend (React)
-    |
-    v
-JulioJubiladoapi (API principal)
-    |---> juliopedidoapi (API pedidos) ----> ViaCEP
-    |                                  \--> FIPE
-    \---> Elasticsearch (busca de pedidos)
-```
+---
 
-### Exemplos de endpoints das integracoes
+## Exemplos de endpoints das integrações
 **CEP (ViaCEP via juliopedidoapi)**
 ```
 GET http://localhost:8081/api/pedidos/cep/23092031
@@ -189,14 +213,33 @@ GET http://localhost:8081/api/pedidos/search?q=troca%20de%20pneu&limit=5&source=
 GET http://localhost:8081/api/pedidos/search?q=troca%20de%20pneu&limit=5&source=db
 ```
 
-### Testes com Insomnia
-1) Login:
-   - `POST http://localhost:8081/auth/login`
-   - Body JSON: `{"username":"admin","password":"admin123"}`
-2) Use o `accessToken` como `Bearer` nas chamadas `/api/**`.
+---
 
-### Pagination
-List endpoints now return Spring `Page`:
+## Autenticação e perfis
+**Login (JWT)**
+```
+POST http://localhost:8081/auth/login
+Body: {"username":"admin","password":"admin123"}
+```
+
+**Perfis (roles)**
+- ADMIN
+- SUPERVISOR
+- FUNCIONARIO
+- TOTEM
+
+**Usuários pré‑cadastrados** (criados no startup)
+- admin / admin123 / ADMIN
+- supervisor / supervisor123 / SUPERVISOR
+- funcionario / funcionario123 / FUNCIONARIO
+- totem / totem123 / TOTEM
+
+> Observação: em produção, altere as senhas e não versionar credenciais.
+
+---
+
+## Pagination
+Endpoints com `Page`:
 - `GET /api/clientes`
 - `GET /api/tarefas`
 - `GET /api/tickets`
@@ -208,34 +251,29 @@ Query params:
 - `size` (default 10)
 - `sort` (ex: `sort=nome,asc`)
 
-Example:
+Exemplo:
 ```
 GET http://localhost:8081/api/clientes?page=0&size=10&sort=nome,asc
 ```
 
-The response body includes `content`, `totalElements`, and `totalPages`.
+Resposta inclui `content`, `totalElements` e `totalPages`.
 
 ---
 
 ## Docker (Deploy)
-Prereqs: Docker Desktop.
+Requisitos: Docker Desktop.
 
-From the repo root:
+Na raiz do repo:
 ```
 docker compose up --build
 ```
 
-Endpoints:
-- Frontend: http://localhost:5173
-- API principal: http://localhost:8081
-- API pedidos: http://localhost:8080
-- SQL Server: localhost:1433
-- Elasticsearch: http://localhost:9200
-
-To stop and clean volumes:
+Para parar e limpar volumes:
 ```
 docker compose down -v
 ```
+
+---
 
 ## Tests
 Backend (JUnit):
@@ -256,12 +294,12 @@ Opcional (informar URLs):
 ./scripts/run-postman.ps1 -JubiladoBaseUrl http://localhost:8081 -PedidoBaseUrl http://localhost:8080
 ```
 
-Relatorios gerados em:
+Relatórios gerados em:
 - `reports/postman-report.html`
 - `reports/postman-report.json`
 
 Frontend:
-- No automated test suite configured.
+- Sem suíte automatizada
 - Lint:
 ```
 cd frontend
