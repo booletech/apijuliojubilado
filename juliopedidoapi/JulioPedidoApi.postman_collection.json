@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "fccf990e-a697-4a3c-8fc7-f51ed62cfe16",
+		"name": "JulioPedidoApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46312676",
+		"_collection_link": "https://juliocesardasilvajubilado.postman.co/workspace/Julio-Cesar-da-Silva-Jubilado's~858e6360-49b0-482e-8464-622ef131c00c/collection/46312676-fccf990e-a697-4a3c-8fc7-f51ed62cfe16?action=share&source=collection_link&creator=46312676"
+	},
+	"item": [
+		{
+			"name": "ObterLocalidadePorCEP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/localidades/23092031",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"localidades",
+						"23092031"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObterMarcasDeCarros",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/veiculos/cars/marcas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"veiculos",
+						"cars",
+						"marcas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObterMarcasDeMotos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/veiculos/motorcycles/marcas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"veiculos",
+						"motorcycles",
+						"marcas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "obterModelosPorMarca",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/veiculos/cars/FIAT/modelos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"veiculos",
+						"cars",
+						"FIAT",
+						"modelos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AnosPorModelo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/veiculos/cars/FIAT/Marea City/anos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"veiculos",
+						"cars",
+						"FIAT",
+						"Marea City",
+						"anos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

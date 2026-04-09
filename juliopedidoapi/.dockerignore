@@ -1,0 +1,12 @@
+target
+.git
+.github
+docs
+k8s
+scripts
+frontend
+node_modules
+.idea
+.vscode
+README.md
+.env*

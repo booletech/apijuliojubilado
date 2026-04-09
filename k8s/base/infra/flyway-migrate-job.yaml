@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flyway-migrate
+  labels:
+    app.kubernetes.io/name: flyway-migrate
+spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 600
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flyway-migrate
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: flyway
+          image: flyway/flyway:10.17.3
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -ec
+            - |
+              until flyway \
+                -url="jdbc:sqlserver://sqlserver:1433;databaseName=$DB_NAME;encrypt=$DB_ENCRYPT;trustServerCertificate=$DB_TRUST_SERVER_CERTIFICATE" \
+                -user="$DB_MIGRATION_USERNAME" \
+                -password="$DB_MIGRATION_PASSWORD" \
+                -connectRetries=1 \
+                info >/dev/null 2>&1; do
+                echo "Aguardando bootstrap do SQL Server..."
+                sleep 5
+              done
+
+              flyway \
+                -url="jdbc:sqlserver://sqlserver:1433;databaseName=$DB_NAME;encrypt=$DB_ENCRYPT;trustServerCertificate=$DB_TRUST_SERVER_CERTIFICATE" \
+                -user="$DB_MIGRATION_USERNAME" \
+                -password="$DB_MIGRATION_PASSWORD" \
+                -baselineOnMigrate=true \
+                -connectRetries=60 \
+                -locations="filesystem:/flyway/sql" \
+                migrate
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          volumeMounts:
+            - name: flyway-sql
+              mountPath: /flyway/sql
+              readOnly: true
+      volumes:
+        - name: flyway-sql
+          configMap:
+            name: flyway-sql

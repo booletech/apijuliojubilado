@@ -1,0 +1,215 @@
+name: ${COMPOSE_PROJECT_NAME:-apijuliojubilado-dev}
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SQLSERVER_SA_PASSWORD:-SenhaForte@123}
+      MSSQL_PID: ${DB_MSSQL_PID:-Developer}
+    ports:
+      - "${SQLSERVER_PORT:-1433}:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - backend-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -b -C -S localhost -U sa -P \"$${SA_PASSWORD}\" -Q \"SELECT 1\" > /dev/null"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: ${ELASTICSEARCH_JAVA_OPTS:--Xms1g -Xmx1g}
+    ports:
+      - "${ELASTICSEARCH_PORT:-9200}:9200"
+    networks:
+      - backend-network
+
+  db-bootstrap:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: "no"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      SQLSERVER_SA_PASSWORD: ${SQLSERVER_SA_PASSWORD:-SenhaForte@123}
+      DB_NAME: ${DB_NAME:-julio_dev}
+      DB_APP_USERNAME: ${DB_APP_USERNAME:-julio_dev_app}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:-DevApp@123}
+      DB_MIGRATION_USERNAME: ${DB_MIGRATION_USERNAME:-julio_dev_migrator}
+      DB_MIGRATION_PASSWORD: ${DB_MIGRATION_PASSWORD:-DevMigrator@123}
+    volumes:
+      - ./database/init/01_bootstrap_environment.sql:/var/opt/mssql/scripts/01_bootstrap_environment.sql:ro
+    networks:
+      - backend-network
+    entrypoint:
+      - /bin/bash
+      - -lc
+      - >-
+        /opt/mssql-tools18/bin/sqlcmd -b -C -S sqlserver -U sa -P "$SQLSERVER_SA_PASSWORD"
+        -v DB_NAME="$DB_NAME"
+        DB_APP_USERNAME="$DB_APP_USERNAME"
+        DB_APP_PASSWORD="$DB_APP_PASSWORD"
+        DB_MIGRATION_USERNAME="$DB_MIGRATION_USERNAME"
+        DB_MIGRATION_PASSWORD="$DB_MIGRATION_PASSWORD"
+        -i /var/opt/mssql/scripts/01_bootstrap_environment.sql
+
+  flyway:
+    image: flyway/flyway:10.17.3
+    restart: "no"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      db-bootstrap:
+        condition: service_completed_successfully
+    command:
+      - -url=jdbc:sqlserver://sqlserver:1433;databaseName=${DB_NAME:-julio_dev};encrypt=${DB_ENCRYPT:-true};trustServerCertificate=${DB_TRUST_SERVER_CERTIFICATE:-true}
+      - -user=${DB_MIGRATION_USERNAME:-julio_dev_migrator}
+      - -password=${DB_MIGRATION_PASSWORD:-DevMigrator@123}
+      - -baselineOnMigrate=true
+      - -connectRetries=60
+      - -locations=filesystem:/flyway/sql
+      - migrate
+    volumes:
+      - ./database/flyway/sql:/flyway/sql:ro
+    networks:
+      - backend-network
+
+  juliopedidoapi:
+    build: ./juliopedidoapi
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DB_HOST: sqlserver
+      DB_PORT: 1433
+      DB_NAME: ${DB_NAME:-julio_dev}
+      DB_APP_USERNAME: ${DB_APP_USERNAME:-julio_dev_app}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:-DevApp@123}
+      DB_ENCRYPT: ${DB_ENCRYPT:-true}
+      DB_TRUST_SERVER_CERTIFICATE: ${DB_TRUST_SERVER_CERTIFICATE:-true}
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      JWT_ISSUER: ${JWT_ISSUER:-JulioApis}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-60}
+      JWT_SECRET: ${JWT_SECRET:-CHAVE_SUPER_SECRETA_JULIO_APIS_COM_NO_MINIMO_32_CARACTERES}
+      APP_CORS_ALLOWED_ORIGINS: ${APP_CORS_ALLOWED_ORIGINS:-http://localhost:5173,https://localhost:5173}
+      PEDIDO_API_ADMIN_USERNAME: ${PEDIDO_API_ADMIN_USERNAME:-admin}
+      PEDIDO_API_ADMIN_PASSWORD: ${PEDIDO_API_ADMIN_PASSWORD:-admin123}
+      PEDIDO_API_SUPERVISOR_USERNAME: ${PEDIDO_API_SUPERVISOR_USERNAME:-supervisor}
+      PEDIDO_API_SUPERVISOR_PASSWORD: ${PEDIDO_API_SUPERVISOR_PASSWORD:-supervisor123}
+      PEDIDO_API_FUNCIONARIO_USERNAME: ${PEDIDO_API_FUNCIONARIO_USERNAME:-funcionario}
+      PEDIDO_API_FUNCIONARIO_PASSWORD: ${PEDIDO_API_FUNCIONARIO_PASSWORD:-funcionario123}
+      PEDIDO_API_TOTEM_USERNAME: ${PEDIDO_API_TOTEM_USERNAME:-totem}
+      PEDIDO_API_TOTEM_PASSWORD: ${PEDIDO_API_TOTEM_PASSWORD:-totem123}
+      VIACEP_API_URL: ${VIACEP_API_URL:-https://viacep.com.br/}
+      FIPE_API_URL: ${FIPE_API_URL:-https://fipe.parallelum.com.br/api/v2}
+      ELASTICSEARCH_PEDIDO_INDEX: ${ELASTICSEARCH_PEDIDO_INDEX:-pedido}
+    ports:
+      - "${JULIOPEDIDOAPI_PORT:-8080}:8080"
+    networks:
+      - backend-network
+      - frontend-network
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+      flyway:
+        condition: service_completed_successfully
+
+  juliojubiladoapi:
+    build: ./JulioJubiladoapi
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DB_HOST: sqlserver
+      DB_PORT: 1433
+      DB_NAME: ${DB_NAME:-julio_dev}
+      DB_APP_USERNAME: ${DB_APP_USERNAME:-julio_dev_app}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:-DevApp@123}
+      DB_ENCRYPT: ${DB_ENCRYPT:-true}
+      DB_TRUST_SERVER_CERTIFICATE: ${DB_TRUST_SERVER_CERTIFICATE:-true}
+      JULIOPEDIDOAPI_URL: http://juliopedidoapi:8080
+      JULIOPEDIDOAPI_SERVICE_SUBJECT: ${JULIOPEDIDOAPI_SERVICE_SUBJECT:-service-juliopedidoapi}
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      JWT_ISSUER: ${JWT_ISSUER:-JulioApis}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-60}
+      JWT_SECRET: ${JWT_SECRET:-CHAVE_SUPER_SECRETA_JULIO_APIS_COM_NO_MINIMO_32_CARACTERES}
+      APP_CORS_ALLOWED_ORIGINS: ${APP_CORS_ALLOWED_ORIGINS:-http://localhost:5173,https://localhost:5173}
+      APP_SEED_DEFAULT_USERS: ${APP_SEED_DEFAULT_USERS:-true}
+    ports:
+      - "${JULIOJUBILADOAPI_PORT:-8081}:8081"
+    networks:
+      - backend-network
+      - frontend-network
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+      flyway:
+        condition: service_completed_successfully
+      juliopedidoapi:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+        VITE_PEDIDO_API_BASE_URL: ${VITE_PEDIDO_API_BASE_URL:-/pedido-api}
+    restart: unless-stopped
+    stop_grace_period: 1m
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    networks:
+      - frontend-network
+    depends_on:
+      - juliojubiladoapi
+      - juliopedidoapi
+
+  jenkins:
+    build: ./jenkins
+    profiles:
+      - ci
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      JAVA_OPTS: ${JENKINS_JAVA_OPTS:--Djenkins.install.runSetupWizard=false}
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs/jenkins.yaml
+    ports:
+      - "${JENKINS_PORT:-8088}:8080"
+      - "${JENKINS_AGENT_PORT:-50000}:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./jenkins/casc:/var/jenkins_home/casc_configs:ro
+      - ./:/workspace:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend-network
+      - frontend-network
+
+volumes:
+  sqlserver_data:
+  jenkins_home:
+
+networks:
+  backend-network:
+    driver: bridge
+  frontend-network:
+    driver: bridge

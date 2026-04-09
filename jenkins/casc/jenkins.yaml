@@ -1,0 +1,16 @@
+jenkins:
+  systemMessage: "Jenkins do projeto Julio Jubilado."
+  numExecutors: 2
+  mode: NORMAL
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin123"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+unclassified:
+  location:
+    url: "http://localhost:8088/"

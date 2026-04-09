@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: Julio Observability
+    orgId: 1
+    folder: DevOps Trabalho
+    type: file
+    disableDeletion: false
+    editable: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

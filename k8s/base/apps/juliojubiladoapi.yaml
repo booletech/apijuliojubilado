@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: juliojubiladoapi
+  labels:
+    app.kubernetes.io/name: juliojubiladoapi
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: juliojubiladoapi
+  ports:
+    - name: http
+      port: 8081
+      targetPort: http
+      nodePort: 30081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: juliojubiladoapi
+  labels:
+    app.kubernetes.io/name: juliojubiladoapi
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: juliojubiladoapi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: juliojubiladoapi
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8081"
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: juliojubiladoapi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: juliojubiladoapi
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: docker.io/example/juliojubiladoapi:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 192Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: juliojubiladoapi
+  labels:
+    app.kubernetes.io/name: juliojubiladoapi
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: juliojubiladoapi

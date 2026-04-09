@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sqlserver-init
+  labels:
+    app.kubernetes.io/name: sqlserver-init
+spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 600
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sqlserver-init
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: bootstrap
+          image: mcr.microsoft.com/mssql/server:2022-latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/bash
+            - -ec
+            - |
+              for i in $(seq 1 60); do
+                /opt/mssql-tools18/bin/sqlcmd -C -S sqlserver -U sa -P "$SQLSERVER_SA_PASSWORD" -Q "SELECT 1" >/dev/null 2>&1 && break
+                echo "Aguardando SQL Server ficar pronto..."
+                sleep 5
+              done
+
+              /opt/mssql-tools18/bin/sqlcmd -b -C -S sqlserver -U sa -P "$SQLSERVER_SA_PASSWORD" \
+                -v DB_NAME="$DB_NAME" \
+                DB_APP_USERNAME="$DB_APP_USERNAME" \
+                DB_APP_PASSWORD="$DB_APP_PASSWORD" \
+                DB_MIGRATION_USERNAME="$DB_MIGRATION_USERNAME" \
+                DB_MIGRATION_PASSWORD="$DB_MIGRATION_PASSWORD" \
+                -i /scripts/01_bootstrap_environment.sql
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          volumeMounts:
+            - name: bootstrap-script
+              mountPath: /scripts
+              readOnly: true
+      volumes:
+        - name: bootstrap-script
+          configMap:
+            name: sqlserver-bootstrap-sql

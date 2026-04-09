@@ -1,0 +1,102 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      run_stress_test:
+        description: "Executar stress test com k6 apos o deploy"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    env:
+      K8S_NAMESPACE: devops-trabalho
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Test JulioJubiladoapi
+        shell: pwsh
+        working-directory: JulioJubiladoapi
+        run: .\mvnw.cmd test
+
+      - name: Test juliopedidoapi
+        shell: pwsh
+        working-directory: juliopedidoapi
+        run: .\mvnw.cmd test
+
+      - name: Build frontend
+        shell: pwsh
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Compute image tag
+        id: meta
+        shell: pwsh
+        run: |
+          $shortSha = "${{ github.sha }}".Substring(0, 7)
+          "image_tag=$shortSha" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      - name: Build and push application images
+        shell: pwsh
+        run: |
+          .\scripts\publish-images.ps1 `
+            -DockerHubUsername "${{ secrets.DOCKERHUB_USERNAME }}" `
+            -DockerHubToken "${{ secrets.DOCKERHUB_TOKEN }}" `
+            -Tag "${{ steps.meta.outputs.image_tag }}"
+
+      - name: Prepare Kubernetes runtime files
+        shell: pwsh
+        run: |
+          .\scripts\prepare-k8s-runtime.ps1 `
+            -FrontendImage "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/juliojubiladofrontend:${{ steps.meta.outputs.image_tag }}" `
+            -JulioJubiladoApiImage "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/juliojubiladoapi:${{ steps.meta.outputs.image_tag }}" `
+            -JulioPedidoApiImage "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/juliopedidoapi:${{ steps.meta.outputs.image_tag }}" `
+            -SqlServerSaPassword "${{ secrets.DB_PASSWORD }}" `
+            -DbAppPassword "${{ secrets.DB_PASSWORD }}" `
+            -DbMigrationPassword "${{ secrets.DB_PASSWORD }}" `
+            -JwtSecret "${{ secrets.JWT_SECRET }}" `
+            -GrafanaAdminPassword "${{ secrets.DB_PASSWORD }}"
+
+      - name: Deploy to Kubernetes
+        shell: pwsh
+        run: .\scripts\deploy-k8s.ps1 -Namespace $env:K8S_NAMESPACE
+
+      - name: Smoke test JulioJubiladoapi
+        shell: pwsh
+        run: .\scripts\smoke-test.ps1 -BaseUrl "http://localhost:30081"
+
+      - name: Stress test with k6
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_stress_test }}
+        shell: pwsh
+        run: .\scripts\run-stress-test.ps1 -BaseUrl "http://localhost:30081"
+
+      - name: Collect deployment evidence
+        shell: pwsh
+        run: .\scripts\collect-k8s-evidence.ps1 -Namespace $env:K8S_NAMESPACE -OutputDirectory "docs/evidencias/ci-latest"
+
+      - name: Upload evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: devops-evidence
+          path: docs/evidencias/ci-latest

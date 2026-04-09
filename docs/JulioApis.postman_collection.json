@@ -1,0 +1,715 @@
+{
+  "info": {
+    "_postman_id": "4f8a8b1a-6b06-4b37-9e09-6b7b7f7fb001",
+    "name": "JulioApis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "JulioJubiladoapi",
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{accessToken}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Auth Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"admin\", \"password\": \"admin123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o token de acesso",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.accessToken) { pm.collectionVariables.set('accessToken', json.accessToken); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Clientes - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/clientes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\": \"Cliente Exemplo\", \"email\": \"cliente@example.com\", \"cpf\": \"12345678900\", \"telefone\": \"21999990000\", \"dataNascimento\": \"01/01/1990\", \"dataUltimaVisita\": \"\", \"limiteCredito\": 500.0, \"pontosFidelidade\": 0, \"possuiFiado\": false, \"endereco\": {\"cep\": \"01001-000\", \"logradouro\": \"Rua Exemplo\", \"complemento\": \"\", \"numero\": \"100\", \"bairro\": \"Centro\", \"localidade\": \"Sao Paulo\", \"uf\": \"SP\", \"estado\": \"Sao Paulo\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o ID do cliente",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) { pm.collectionVariables.set('clienteId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Clientes - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/clientes/{{clienteId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\": \"Cliente Exemplo\", \"email\": \"cliente@example.com\", \"cpf\": \"12345678900\", \"telefone\": \"21999990000\", \"dataNascimento\": \"01/01/1990\", \"dataUltimaVisita\": \"\", \"limiteCredito\": 500.0, \"pontosFidelidade\": 0, \"possuiFiado\": false, \"endereco\": {\"cep\": \"01001-000\", \"logradouro\": \"Rua Exemplo\", \"complemento\": \"\", \"numero\": \"100\", \"bairro\": \"Centro\", \"localidade\": \"Sao Paulo\", \"uf\": \"SP\", \"estado\": \"Sao Paulo\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Clientes - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/clientes/{{clienteId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Clientes - Alternar Fiado",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/clientes/{{clienteId}}/fiado"
+          },
+          "response": []
+        },
+        {
+          "name": "Clientes - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/clientes?page=0&size=10&sort=nome,asc"
+          },
+          "response": []
+        },
+        {
+          "name": "Clientes - Por CPF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/clientes/por-cpf?cpf={{cpf}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Clientes - Por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/clientes/{{clienteId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/funcionarios",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\": \"Funcionario Exemplo\", \"email\": \"funcionario@example.com\", \"cpf\": \"98765432100\", \"telefone\": \"21988880000\", \"cargo\": \"Atendente\", \"turno\": \"Manha\", \"escolaridade\": \"Medio\", \"dataNascimento\": \"10/10/1995\", \"dataContratacao\": \"01/01/2024\", \"dataDemissao\": \"\", \"salario\": 2500.0, \"ativo\": true, \"endereco\": {\"cep\": \"01001-000\", \"logradouro\": \"Rua Exemplo\", \"complemento\": \"\", \"numero\": \"200\", \"bairro\": \"Centro\", \"localidade\": \"Sao Paulo\", \"uf\": \"SP\", \"estado\": \"Sao Paulo\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o ID do funcionario",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) { pm.collectionVariables.set('funcionarioId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Funcionarios - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/funcionarios/{{funcionarioId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\": \"Funcionario Exemplo\", \"email\": \"funcionario@example.com\", \"cpf\": \"98765432100\", \"telefone\": \"21988880000\", \"cargo\": \"Atendente\", \"turno\": \"Manha\", \"escolaridade\": \"Medio\", \"dataNascimento\": \"10/10/1995\", \"dataContratacao\": \"01/01/2024\", \"dataDemissao\": \"\", \"salario\": 2500.0, \"ativo\": true, \"endereco\": {\"cep\": \"01001-000\", \"logradouro\": \"Rua Exemplo\", \"complemento\": \"\", \"numero\": \"200\", \"bairro\": \"Centro\", \"localidade\": \"Sao Paulo\", \"uf\": \"SP\", \"estado\": \"Sao Paulo\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/funcionarios/{{funcionarioId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Inativar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/funcionarios/{{funcionarioId}}/inativar"
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/funcionarios?page=0&size=10&sort=nome,asc"
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Por CPF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/funcionarios/por-cpf?cpf={{cpf}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Funcionarios - Por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/funcionarios/{{funcionarioId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tarefas - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/tarefas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"descricao\": \"Servico de exemplo\", \"codigo\": \"TAR-001\", \"tipo\": \"PNEUS_RODAS\", \"valor\": 150.0, \"status\": \"ABERTO\", \"tickettarefa\": {\"id\": \"{{ticketId}}\"}, \"cliente\": {\"id\": \"{{clienteId}}\"}, \"funcionario\": {\"id\": \"{{funcionarioId}}\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o ID da tarefa",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) { pm.collectionVariables.set('tarefaId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tarefas - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/tarefas/{{tarefaId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"descricao\": \"Servico de exemplo\", \"codigo\": \"TAR-001\", \"tipo\": \"PNEUS_RODAS\", \"valor\": 150.0, \"status\": \"ABERTO\", \"tickettarefa\": {\"id\": \"{{ticketId}}\"}, \"cliente\": {\"id\": \"{{clienteId}}\"}, \"funcionario\": {\"id\": \"{{funcionarioId}}\"}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tarefas - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tarefas/{{tarefaId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tarefas - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tarefas?page=0&size=10&sort=descricao,asc"
+          },
+          "response": []
+        },
+        {
+          "name": "Tarefas - Por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tarefas/{{tarefaId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/tickets",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"codigo\": \"TICKET-001\", \"status\": \"ABERTO\", \"valorTotal\": 0, \"cliente\": {\"id\": \"{{clienteId}}\"}, \"funcionario\": {\"id\": \"{{funcionarioId}}\"}, \"dataAbertura\": \"01/01/2024\", \"dataFechamento\": \"\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o ID do ticket",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) { pm.collectionVariables.set('ticketId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Tickets - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jubilado_base_url}}/api/tickets/{{ticketId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"codigo\": \"TICKET-001\", \"status\": \"ABERTO\", \"valorTotal\": 0, \"cliente\": {\"id\": \"{{clienteId}}\"}, \"funcionario\": {\"id\": \"{{funcionarioId}}\"}, \"dataAbertura\": \"01/01/2024\", \"dataFechamento\": \"\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tickets/{{ticketId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tickets?page=0&size=10"
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Por CPF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tickets/por-cpf?cpf={{cpf}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Por Codigo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tickets/por-codigo?codigo={{codigoTicket}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Tickets - Por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/tickets/{{ticketId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - CEP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/pedidos/cep/{{cep}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Fabricantes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/pedidos/fabricantes/{{tipoVeiculo}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Modelos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/pedidos/fabricantes/{{tipoVeiculo}}/{{nomeFabricante}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Anos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jubilado_base_url}}/api/pedidos/fabricantes/{{tipoVeiculo}}/{{nomeFabricante}}/{{nomeModelo}}/anos"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "juliopedidoapi",
+      "item": [
+        {
+          "name": "Pedidos - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{pedido_base_url}}/api/pedidos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"codigo\": \"PED-001\", \"cliente\": \"Cliente Exemplo\", \"funcionario\": \"Funcionario Exemplo\", \"status\": \"PENDENTE\", \"itens\": [{\"quantidade\": 1, \"tarefa\": {\"id\": \"{{tarefaId}}\", \"descricao\": \"Servico de exemplo\", \"codigo\": \"TAR-001\", \"tipo\": \"ALINHAMENTO\", \"valor\": 150.0, \"status\": \"ABERTO\"}}]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Salva o ID do pedido",
+                  "if (pm.response && pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.id) { pm.collectionVariables.set('pedidoId', json.id); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pedidos - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{pedido_base_url}}/api/pedidos/{{pedidoId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"codigo\": \"PED-001\", \"cliente\": \"Cliente Exemplo\", \"funcionario\": \"Funcionario Exemplo\", \"status\": \"PENDENTE\", \"itens\": [{\"quantidade\": 1, \"tarefa\": {\"id\": \"{{tarefaId}}\", \"descricao\": \"Servico de exemplo\", \"codigo\": \"TAR-001\", \"tipo\": \"ALINHAMENTO\", \"valor\": 150.0, \"status\": \"ABERTO\"}}]}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/pedidos/{{pedidoId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Inativar",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/pedidos/{{pedidoId}}/inativar"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/pedidos?page=0&size=10&sort=codigo,asc"
+          },
+          "response": []
+        },
+        {
+          "name": "Pedidos - Por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/pedidos/{{pedidoId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Veiculos - Marcas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/veiculos/{{vehicleType}}/marcas"
+          },
+          "response": []
+        },
+        {
+          "name": "Veiculos - Modelos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/veiculos/{{vehicleType}}/{{brandName}}/modelos"
+          },
+          "response": []
+        },
+        {
+          "name": "Veiculos - Anos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/veiculos/{{vehicleType}}/{{brandName}}/{{modelName}}/anos"
+          },
+          "response": []
+        },
+        {
+          "name": "Localidades - CEP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pedido_base_url}}/api/localidades/{{cep}}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "jubilado_base_url",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "pedido_base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "clienteId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "key": "funcionarioId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "key": "tarefaId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "key": "ticketId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "key": "pedidoId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "key": "cep",
+      "value": "01001000"
+    },
+    {
+      "key": "cpf",
+      "value": "12345678900"
+    },
+    {
+      "key": "codigoTicket",
+      "value": "TICKET-001"
+    },
+    {
+      "key": "tipoVeiculo",
+      "value": "cars"
+    },
+    {
+      "key": "nomeFabricante",
+      "value": "FIAT"
+    },
+    {
+      "key": "nomeModelo",
+      "value": "Marea City"
+    },
+    {
+      "key": "vehicleType",
+      "value": "cars"
+    },
+    {
+      "key": "brandName",
+      "value": "FIAT"
+    },
+    {
+      "key": "modelName",
+      "value": "Marea City"
+    }
+  ]
+}

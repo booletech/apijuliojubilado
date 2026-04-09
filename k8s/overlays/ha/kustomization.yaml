@@ -1,0 +1,163 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: devops-trabalho-ha
+
+resources:
+  - namespace.yaml
+  - ../../base/apps
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: app-config
+    envs:
+      - runtime/app-config.env
+  - name: deployment-images
+    envs:
+      - runtime/deploy.env
+
+secretGenerator:
+  - name: app-secrets
+    envs:
+      - runtime/runtime.env
+
+patches:
+  - target:
+      kind: Deployment
+      name: frontend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: add
+        path: /spec/minReadySeconds
+        value: 10
+      - op: add
+        path: /spec/strategy
+        value:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 0
+            maxSurge: 1
+      - op: replace
+        path: /spec/template/spec/topologySpreadConstraints/0/whenUnsatisfiable
+        value: DoNotSchedule
+  - target:
+      kind: Deployment
+      name: juliopedidoapi
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: add
+        path: /spec/minReadySeconds
+        value: 10
+      - op: add
+        path: /spec/strategy
+        value:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 0
+            maxSurge: 1
+      - op: replace
+        path: /spec/template/spec/topologySpreadConstraints/0/whenUnsatisfiable
+        value: DoNotSchedule
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 512Mi
+  - target:
+      kind: Deployment
+      name: juliojubiladoapi
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: add
+        path: /spec/minReadySeconds
+        value: 10
+      - op: add
+        path: /spec/strategy
+        value:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 0
+            maxSurge: 1
+      - op: replace
+        path: /spec/template/spec/topologySpreadConstraints/0/whenUnsatisfiable
+        value: DoNotSchedule
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 512Mi
+  - target:
+      kind: PodDisruptionBudget
+      name: frontend
+    patch: |-
+      - op: replace
+        path: /spec
+        value:
+          minAvailable: 1
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: frontend
+  - target:
+      kind: PodDisruptionBudget
+      name: juliopedidoapi
+    patch: |-
+      - op: replace
+        path: /spec
+        value:
+          minAvailable: 1
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: juliopedidoapi
+  - target:
+      kind: PodDisruptionBudget
+      name: juliojubiladoapi
+    patch: |-
+      - op: replace
+        path: /spec
+        value:
+          minAvailable: 1
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: juliojubiladoapi
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: deployment-images
+      fieldPath: data.FRONTEND_IMAGE
+    targets:
+      - select:
+          kind: Deployment
+          name: frontend
+        fieldPaths:
+          - spec.template.spec.containers.[name=app].image
+  - source:
+      kind: ConfigMap
+      name: deployment-images
+      fieldPath: data.JULIOJUBILADOAPI_IMAGE
+    targets:
+      - select:
+          kind: Deployment
+          name: juliojubiladoapi
+        fieldPaths:
+          - spec.template.spec.containers.[name=app].image
+  - source:
+      kind: ConfigMap
+      name: deployment-images
+      fieldPath: data.JULIOPEDIDOAPI_IMAGE
+    targets:
+      - select:
+          kind: Deployment
+          name: juliopedidoapi
+        fieldPaths:
+          - spec.template.spec.containers.[name=app].image

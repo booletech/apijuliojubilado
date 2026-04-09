@@ -1,0 +1,37 @@
+﻿# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Java
+**/target/
+**/build/
+
+# Logs
+logs/
+*.log
+
+# Env
+.env
+.env.*
+!.env*.example
+k8s/base/runtime/*.env
+!k8s/base/runtime/*.env.example
+k8s/overlays/ha/runtime/*.env
+!k8s/overlays/ha/runtime/*.env.example
+docs/evidencias/*
+!docs/evidencias/README.md
+reports/
+docker-*.ok
+docker-*.json
+docker-*.txt
+docker-recovery-status.json
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

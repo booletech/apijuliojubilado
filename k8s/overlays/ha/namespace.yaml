@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-trabalho-ha
+  labels:
+    app.kubernetes.io/name: devops-trabalho-ha
+    app.kubernetes.io/part-of: apijuliojubilado
