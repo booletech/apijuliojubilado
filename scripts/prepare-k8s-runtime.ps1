@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet("base", "ha")]
+    [ValidateSet("base", "ha", "rubrica")]
     [string]$Profile = "base",
 
     [Parameter(Mandatory = $true)]
@@ -78,10 +78,10 @@ $ErrorActionPreference = "Stop"
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 if ([string]::IsNullOrWhiteSpace($RuntimeDirectory)) {
-    $RuntimeDirectory = if ($Profile -eq "ha") {
-        Join-Path $repoRoot "k8s\overlays\ha\runtime"
-    } else {
-        Join-Path $repoRoot "k8s\base\runtime"
+    $RuntimeDirectory = switch ($Profile) {
+        "ha" { Join-Path $repoRoot "k8s\overlays\ha\runtime" }
+        "rubrica" { Join-Path $repoRoot "k8s\overlays\rubrica\runtime" }
+        default { Join-Path $repoRoot "k8s\base\runtime" }
     }
 }
 
@@ -112,6 +112,8 @@ if ([string]::IsNullOrWhiteSpace($DbTrustServerCertificate)) {
 if ([string]::IsNullOrWhiteSpace($AppCorsAllowedOrigins)) {
     $AppCorsAllowedOrigins = if ($Profile -eq "ha") {
         "https://julio.example.com"
+    } elseif ($Profile -eq "rubrica") {
+        "http://localhost:30081,http://127.0.0.1:30081"
     } else {
         "http://localhost:5173,http://127.0.0.1:5173,http://localhost:30080,http://127.0.0.1:30080"
     }
@@ -133,7 +135,7 @@ if ([string]::IsNullOrWhiteSpace($JwtSecret)) {
     throw "Parametro obrigatorio ausente: JwtSecret"
 }
 
-if ($Profile -eq "base") {
+if ($Profile -in @("base", "rubrica")) {
     foreach ($requiredPair in @(
         @{ Name = "SqlServerSaPassword"; Value = $SqlServerSaPassword },
         @{ Name = "DbMigrationPassword"; Value = $DbMigrationPassword },
@@ -171,7 +173,7 @@ $runtimeEnvContent.Add("DB_APP_USERNAME=$DbAppUsername")
 $runtimeEnvContent.Add("DB_APP_PASSWORD=$DbAppPassword")
 $runtimeEnvContent.Add("JWT_SECRET=$JwtSecret")
 
-if ($Profile -eq "base") {
+if ($Profile -in @("base", "rubrica")) {
     $runtimeEnvContent.Add("SQLSERVER_SA_PASSWORD=$SqlServerSaPassword")
     $runtimeEnvContent.Add("DB_MIGRATION_USERNAME=$DbMigrationUsername")
     $runtimeEnvContent.Add("DB_MIGRATION_PASSWORD=$DbMigrationPassword")

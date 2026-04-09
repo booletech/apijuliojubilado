@@ -13,9 +13,13 @@
   - Validacao local: `docker compose --profile ci config`
 
 - Publicacao da imagem no Docker Hub:
-  - Implementado no repositorio
+  - Atendido
   - Automacao: `scripts/publish-images.ps1`, `.github/workflows/cd.yml`, `Jenkinsfile`
-  - Falta executar com credenciais reais
+  - Evidencia operacional: `docs/evidencias/20260409-185720/image-summary.txt`
+  - Tags publicadas:
+    - `docker.io/juliocsj/juliojubiladoapi:rubrica-20260409`
+    - `docker.io/juliocsj/juliopedidoapi:rubrica-20260409`
+    - `docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409`
 
 - Alta disponibilidade pragmatica da camada de aplicacao no Kubernetes:
   - Atendido
@@ -31,6 +35,16 @@
   - Frontend: `30080`
   - API principal: `30081`
   - Grafana: `30300`
+
+- Perfil dedicado para demonstracao literal da rubrica:
+  - Atendido em codigo
+  - Evidencia tecnica: `k8s/overlays/rubrica/`
+  - Esse perfil sobe:
+    - `JulioJubiladoapi` com `Deployment` de 4 replicas e `NodePort` em `31081`
+    - `juliopedidoapi` interno em `ClusterIP`
+    - `sqlserver` em `ClusterIP`
+    - `prometheus` interno com `PVC`
+    - `grafana` em `NodePort` em `31300`, com dashboard inicial e acesso anonimo somente para facilitar a captura da evidencia visual
 
 - Banco em pod separado com `ClusterIP`:
   - Atendido em codigo
@@ -74,7 +88,8 @@
   - Script: `scripts/api-stress-test.js`
   - Wrapper: `scripts/run-stress-test.ps1`
   - Fallback via Docker: `grafana/k6`
-  - Falta executar com o cluster em pe para gerar os prints
+  - Captura automatizada do dashboard: `scripts/capture-grafana-under-load.ps1`
+  - Evidencia operacional: `docs/evidencias/20260409-185720/grafana-under-load.png`
 
 - Teste com JMeter:
   - Atendido
@@ -82,18 +97,31 @@
   - Execucao automatizada: `scripts/run-jmeter.ps1`
   - Validacao local: geracao de `reports/jmeter/results.jtl` e `reports/jmeter/dashboard/index.html`
 
-## O que falta executar para fechar 100%
-1. Habilitar o Kubernetes no Docker Desktop.
-2. Fazer login no Docker Hub com as credenciais reais.
-3. Publicar as imagens reais.
-4. Escolher o perfil do deploy:
-   - `base` para laboratorio local completo
-   - `ha` para demonstracao de alta disponibilidade da aplicacao
-5. Rodar `scripts/prepare-k8s-runtime.cmd` com valores reais do perfil escolhido.
-6. Rodar `scripts/deploy-k8s.cmd` com o perfil escolhido.
-7. Validar o frontend no endpoint correspondente.
-8. Rodar `scripts/smoke-test.ps1`.
-9. Rodar `scripts/run-stress-test.cmd`.
-10. Abrir o plano `jmeter/julio-devops-test-plan.jmx` na interface grafica e registrar print do teste.
-11. Capturar os prints do frontend, do Grafana, do Jenkins e do pipeline.
-12. Rodar `scripts/collect-k8s-evidence.cmd`.
+## Auditoria final
+
+- Status consolidado:
+  - Atendido tecnicamente para a apresentacao da atividade no perfil `rubrica`
+  - Evidencias principais concentradas em `docs/evidencias/20260409-185720/`
+
+- Evidencias operacionais ja geradas:
+  - Publicacao no Docker Hub
+  - Deploy Kubernetes do perfil `rubrica`
+  - `Deployment` da API principal com 4 replicas
+  - Banco em pod separado com `ClusterIP`
+  - `PVC` e `PV` do Prometheus
+  - Prometheus e Grafana ativos
+  - Stress test com print do Grafana sob carga
+
+- Observacao importante sobre a redacao da atividade:
+  - A exigencia de expor a aplicacao por `NodePort` e, ao mesmo tempo, manter apenas o Grafana acessivel externamente e contraditoria.
+  - No perfil `rubrica`, adotamos a interpretacao pragmatica:
+    - API principal exposta por `NodePort` para demonstrar a aplicacao fora do cluster
+    - Grafana exposto por `NodePort` para demonstrar observabilidade
+    - `juliopedidoapi`, `sqlserver` e `prometheus` mantidos internos em `ClusterIP`
+
+- Itens opcionais de apresentacao que ainda podem ser capturados manualmente:
+  - Print da API principal respondendo pelo `NodePort`
+  - Print do Grafana antes do stress test
+  - Print do `Deployment` da API principal com 4 replicas
+  - Print do `SQL Server` com `Service ClusterIP`
+  - Print do pipeline concluido

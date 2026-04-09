@@ -19,6 +19,8 @@ k8s/base/runtime/*.env
 !k8s/base/runtime/*.env.example
 k8s/overlays/ha/runtime/*.env
 !k8s/overlays/ha/runtime/*.env.example
+k8s/overlays/rubrica/runtime/*.env
+!k8s/overlays/rubrica/runtime/*.env.example
 docs/evidencias/*
 !docs/evidencias/README.md
 reports/

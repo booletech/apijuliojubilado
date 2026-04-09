@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet("base", "ha")]
+    [ValidateSet("base", "ha", "rubrica")]
     [string]$Profile = "base",
 
     [string]$Namespace,
@@ -25,24 +25,31 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $dockerCliPath = "C:\Program Files\Docker\Docker\resources\bin\docker.exe"
+$apiNodePort = if ($Profile -eq "rubrica") { "31081" } else { "30081" }
+$frontendNodePort = "30080"
+$grafanaNodePort = if ($Profile -eq "rubrica") { "31300" } else { "30300" }
 
 if ([string]::IsNullOrWhiteSpace($Namespace)) {
-    $Namespace = if ($Profile -eq "ha") { "devops-trabalho-ha" } else { "devops-trabalho" }
+    $Namespace = switch ($Profile) {
+        "ha" { "devops-trabalho-ha" }
+        "rubrica" { "devops-trabalho-rubrica" }
+        default { "devops-trabalho" }
+    }
 }
 
 if ([string]::IsNullOrWhiteSpace($KustomizePath)) {
-    $KustomizePath = if ($Profile -eq "ha") {
-        Join-Path $repoRoot "k8s\overlays\ha"
-    } else {
-        Join-Path $repoRoot "k8s\base"
+    $KustomizePath = switch ($Profile) {
+        "ha" { Join-Path $repoRoot "k8s\overlays\ha" }
+        "rubrica" { Join-Path $repoRoot "k8s\overlays\rubrica" }
+        default { Join-Path $repoRoot "k8s\base" }
     }
 }
 
 if ([string]::IsNullOrWhiteSpace($RuntimeDirectory)) {
-    $RuntimeDirectory = if ($Profile -eq "ha") {
-        Join-Path $repoRoot "k8s\overlays\ha\runtime"
-    } else {
-        Join-Path $repoRoot "k8s\base\runtime"
+    $RuntimeDirectory = switch ($Profile) {
+        "ha" { Join-Path $repoRoot "k8s\overlays\ha\runtime" }
+        "rubrica" { Join-Path $repoRoot "k8s\overlays\rubrica\runtime" }
+        default { Join-Path $repoRoot "k8s\base\runtime" }
     }
 }
 
@@ -133,7 +140,7 @@ if (-not $SkipClusterChecks) {
     }
 }
 
-if ($Profile -eq "base") {
+if ($Profile -in @("base", "rubrica")) {
     foreach ($jobName in @("sqlserver-init", "flyway-migrate")) {
         Invoke-Kubectl -Arguments @("delete", "job", $jobName, "-n", $Namespace, "--ignore-not-found") | Out-Null
     }
@@ -141,7 +148,7 @@ if ($Profile -eq "base") {
 
 Invoke-Kubectl -Arguments @("apply", "-k", $KustomizePath, "--validate=false") | Out-Null
 
-if ($Profile -eq "base") {
+if ($Profile -in @("base", "rubrica")) {
     foreach ($deploymentScale in @(
         @{ Name = "juliopedidoapi"; Replicas = "0" },
         @{ Name = "juliojubiladoapi"; Replicas = "0" }
@@ -157,17 +164,29 @@ if ($Profile -eq "base") {
         Invoke-Kubectl -Arguments @("wait", "--for=condition=complete", "job/$jobName", "-n", $Namespace, "--timeout=10m") | Out-Null
     }
 
-    foreach ($deploymentScale in @(
-        @{ Name = "juliopedidoapi"; Replicas = "1" },
-        @{ Name = "juliopedidoapi"; Replicas = "2" },
-        @{ Name = "juliojubiladoapi"; Replicas = "1" },
-        @{ Name = "juliojubiladoapi"; Replicas = "4" }
-    )) {
+    $deploymentRampUp = if ($Profile -eq "rubrica") {
+        @(
+            @{ Name = "juliopedidoapi"; Replicas = "1" },
+            @{ Name = "juliojubiladoapi"; Replicas = "1" },
+            @{ Name = "juliojubiladoapi"; Replicas = "4" }
+        )
+    } else {
+        @(
+            @{ Name = "juliopedidoapi"; Replicas = "1" },
+            @{ Name = "juliopedidoapi"; Replicas = "2" },
+            @{ Name = "juliojubiladoapi"; Replicas = "1" },
+            @{ Name = "juliojubiladoapi"; Replicas = "4" }
+        )
+    }
+
+    foreach ($deploymentScale in $deploymentRampUp) {
         Invoke-Kubectl -Arguments @("scale", "deployment/$($deploymentScale.Name)", "-n", $Namespace, "--replicas=$($deploymentScale.Replicas)") | Out-Null
         Invoke-Kubectl -Arguments @("rollout", "status", "deployment/$($deploymentScale.Name)", "-n", $Namespace, "--timeout=10m") | Out-Null
     }
 
-    Invoke-Kubectl -Arguments @("rollout", "status", "deployment/frontend", "-n", $Namespace, "--timeout=10m") | Out-Null
+    if ($Profile -eq "base") {
+        Invoke-Kubectl -Arguments @("rollout", "status", "deployment/frontend", "-n", $Namespace, "--timeout=10m") | Out-Null
+    }
 
     foreach ($deploymentName in @("kube-state-metrics", "prometheus", "grafana")) {
         Invoke-Kubectl -Arguments @("rollout", "status", "deployment/$deploymentName", "-n", $Namespace, "--timeout=10m") | Out-Null
@@ -178,67 +197,69 @@ if ($Profile -eq "base") {
     Invoke-Kubectl -Arguments @("get", "deploy,svc,pods,pdb,pvc", "-n", $Namespace) | Out-Null
 
     try {
-        $apiHealth = Invoke-WebRequest -Uri "http://localhost:30081/actuator/health/readiness" -UseBasicParsing -TimeoutSec 15
+        $apiHealth = Invoke-WebRequest -Uri "http://localhost:$apiNodePort/actuator/health/readiness" -UseBasicParsing -TimeoutSec 15
         Write-Host ""
         Write-Host "API NodePort respondeu com status $($apiHealth.StatusCode)."
     } catch {
-        Write-Warning "Nao foi possivel validar a API via NodePort em http://localhost:30081 ainda."
+        Write-Warning "Nao foi possivel validar a API via NodePort em http://localhost:$apiNodePort ainda."
     }
 
     try {
-        $frontendPage = Invoke-WebRequest -Uri "http://localhost:30080/login" -UseBasicParsing -TimeoutSec 15
-        Write-Host "Frontend NodePort respondeu com status $($frontendPage.StatusCode)."
-    } catch {
-        Write-Warning "Nao foi possivel validar o frontend via NodePort em http://localhost:30080 ainda."
-    }
-
-    try {
-        $grafanaPage = Invoke-WebRequest -Uri "http://localhost:30300/login" -UseBasicParsing -TimeoutSec 15
+        $grafanaPage = Invoke-WebRequest -Uri "http://localhost:$grafanaNodePort/" -UseBasicParsing -TimeoutSec 15
         Write-Host "Grafana NodePort respondeu com status $($grafanaPage.StatusCode)."
     } catch {
-        Write-Warning "Nao foi possivel validar o Grafana via NodePort em http://localhost:30300 ainda."
+        Write-Warning "Nao foi possivel validar o Grafana via NodePort em http://localhost:$grafanaNodePort ainda."
     }
 
-    try {
-        $frontendLoginBody = @{
-            username = "admin"
-            password = "admin123"
-        } | ConvertTo-Json
-
-        $frontendLogin = Invoke-RestMethod `
-            -Method Post `
-            -Uri "http://localhost:30080/api/auth/login" `
-            -ContentType "application/json" `
-            -Body $frontendLoginBody `
-            -TimeoutSec 30
-
-        if (-not $frontendLogin.accessToken) {
-            throw "O proxy do frontend nao retornou accessToken no login."
+    if ($Profile -eq "base") {
+        try {
+            $frontendPage = Invoke-WebRequest -Uri "http://localhost:$frontendNodePort/login" -UseBasicParsing -TimeoutSec 15
+            Write-Host "Frontend NodePort respondeu com status $($frontendPage.StatusCode)."
+        } catch {
+            Write-Warning "Nao foi possivel validar o frontend via NodePort em http://localhost:$frontendNodePort ainda."
         }
 
-        $frontendHeaders = @{
-            Authorization = "Bearer $($frontendLogin.accessToken)"
+        try {
+            $frontendLoginBody = @{
+                username = "admin"
+                password = "admin123"
+            } | ConvertTo-Json
+
+            $frontendLogin = Invoke-RestMethod `
+                -Method Post `
+                -Uri "http://localhost:$frontendNodePort/api/auth/login" `
+                -ContentType "application/json" `
+                -Body $frontendLoginBody `
+                -TimeoutSec 30
+
+            if (-not $frontendLogin.accessToken) {
+                throw "O proxy do frontend nao retornou accessToken no login."
+            }
+
+            $frontendHeaders = @{
+                Authorization = "Bearer $($frontendLogin.accessToken)"
+            }
+
+            $frontendClientes = Invoke-RestMethod `
+                -Method Get `
+                -Uri "http://localhost:$frontendNodePort/api/clientes?page=0&size=1" `
+                -Headers $frontendHeaders `
+                -TimeoutSec 30
+
+            if ($null -eq $frontendClientes.content) {
+                throw "O proxy do frontend nao retornou o campo 'content' para /api/clientes."
+            }
+
+            Invoke-RestMethod `
+                -Method Get `
+                -Uri "http://localhost:$frontendNodePort/pedido-api/api/pedidos?page=0&size=1" `
+                -Headers $frontendHeaders `
+                -TimeoutSec 30 | Out-Null
+
+            Write-Host "Proxy do frontend validado com sucesso para as duas APIs."
+        } catch {
+            Write-Warning "Nao foi possivel validar o proxy do frontend ponta a ponta: $($_.Exception.Message)"
         }
-
-        $frontendClientes = Invoke-RestMethod `
-            -Method Get `
-            -Uri "http://localhost:30080/api/clientes?page=0&size=1" `
-            -Headers $frontendHeaders `
-            -TimeoutSec 30
-
-        if ($null -eq $frontendClientes.content) {
-            throw "O proxy do frontend nao retornou o campo 'content' para /api/clientes."
-        }
-
-        Invoke-RestMethod `
-            -Method Get `
-            -Uri "http://localhost:30080/pedido-api/api/pedidos?page=0&size=1" `
-            -Headers $frontendHeaders `
-            -TimeoutSec 30 | Out-Null
-
-        Write-Host "Proxy do frontend validado com sucesso para as duas APIs."
-    } catch {
-        Write-Warning "Nao foi possivel validar o proxy do frontend ponta a ponta: $($_.Exception.Message)"
     }
 } else {
     foreach ($deploymentName in @("frontend", "juliopedidoapi", "juliojubiladoapi")) {

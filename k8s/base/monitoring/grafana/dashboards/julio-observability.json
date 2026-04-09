@@ -284,8 +284,8 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "sum by (pod) (kube_pod_container_status_restarts_total{namespace=\"devops-trabalho\", pod=~\"juliojubiladoapi-.*|juliopedidoapi-.*\"})",
-          "legendFormat": "{{pod}}",
+          "expr": "sum by (namespace, pod) (kube_pod_container_status_restarts_total{namespace=~\"devops-trabalho(-[a-z0-9]+)?\", pod=~\"juliojubiladoapi-.*|juliopedidoapi-.*\"})",
+          "legendFormat": "{{namespace}} / {{pod}}",
           "range": true,
           "refId": "A"
         }

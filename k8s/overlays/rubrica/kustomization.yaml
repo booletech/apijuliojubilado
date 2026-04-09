@@ -1,0 +1,119 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: devops-trabalho-rubrica
+
+resources:
+  - namespace.yaml
+  - ../../base
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: deployment-images
+    behavior: replace
+    envs:
+      - runtime/deploy.env
+
+secretGenerator:
+  - name: app-secrets
+    behavior: replace
+    envs:
+      - runtime/runtime.env
+
+patches:
+  - path: patches/delete-base-namespace.yaml
+  - path: patches/delete-frontend-service.yaml
+  - path: patches/delete-frontend-deployment.yaml
+  - path: patches/delete-frontend-pdb.yaml
+  - target:
+      kind: Deployment
+      name: juliopedidoapi
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 512Mi
+  - target:
+      kind: Deployment
+      name: juliojubiladoapi
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 512Mi
+  - target:
+      kind: Service
+      name: juliojubiladoapi
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 31081
+  - target:
+      kind: Service
+      name: grafana
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 31300
+  - target:
+      kind: Deployment
+      name: grafana
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: GF_AUTH_ANONYMOUS_ENABLED
+          value: "true"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          value: Viewer
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: GF_AUTH_DISABLE_LOGIN_FORM
+          value: "true"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH
+          value: /var/lib/grafana/dashboards/julio-observability.json
+  - target:
+      kind: ClusterRoleBinding
+      name: prometheus-discovery
+    patch: |-
+      - op: replace
+        path: /subjects/0/namespace
+        value: devops-trabalho-rubrica
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: deployment-images
+      fieldPath: data.JULIOJUBILADOAPI_IMAGE
+    targets:
+      - select:
+          kind: Deployment
+          name: juliojubiladoapi
+        fieldPaths:
+          - spec.template.spec.containers.[name=app].image
+  - source:
+      kind: ConfigMap
+      name: deployment-images
+      fieldPath: data.JULIOPEDIDOAPI_IMAGE
+    targets:
+      - select:
+          kind: Deployment
+          name: juliopedidoapi
+        fieldPaths:
+          - spec.template.spec.containers.[name=app].image

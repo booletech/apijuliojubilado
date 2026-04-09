@@ -129,6 +129,13 @@ patches:
           selector:
             matchLabels:
               app.kubernetes.io/name: juliojubiladoapi
+  - target:
+      kind: ClusterRoleBinding
+      name: prometheus-discovery
+    patch: |-
+      - op: replace
+        path: /subjects/0/namespace
+        value: devops-trabalho-ha
 
 replacements:
   - source:

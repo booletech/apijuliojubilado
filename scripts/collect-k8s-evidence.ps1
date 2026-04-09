@@ -2,7 +2,7 @@
 param(
     [string]$Namespace,
 
-    [ValidateSet("base", "ha")]
+    [ValidateSet("base", "ha", "rubrica")]
     [string]$Profile = "base",
 
     [string]$RuntimeDirectory,
@@ -18,14 +18,18 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 if ([string]::IsNullOrWhiteSpace($Namespace)) {
-    $Namespace = if ($Profile -eq "ha") { "devops-trabalho-ha" } else { "devops-trabalho" }
+    $Namespace = switch ($Profile) {
+        "ha" { "devops-trabalho-ha" }
+        "rubrica" { "devops-trabalho-rubrica" }
+        default { "devops-trabalho" }
+    }
 }
 
 if ([string]::IsNullOrWhiteSpace($RuntimeDirectory)) {
-    $RuntimeDirectory = if ($Profile -eq "ha") {
-        Join-Path $repoRoot "k8s\overlays\ha\runtime"
-    } else {
-        Join-Path $repoRoot "k8s\base\runtime"
+    $RuntimeDirectory = switch ($Profile) {
+        "ha" { Join-Path $repoRoot "k8s\overlays\ha\runtime" }
+        "rubrica" { Join-Path $repoRoot "k8s\overlays\rubrica\runtime" }
+        default { Join-Path $repoRoot "k8s\base\runtime" }
     }
 }
 
@@ -42,11 +46,15 @@ $appConfigEnvPath = Join-Path $RuntimeDirectory "app-config.env"
 $kubectlOutputs = [ordered]@{
     "deploy-svc-pods-pdb.txt"      = @("get", "deploy,svc,pods,pdb", "-n", $Namespace)
     "namespace-events.txt"         = @("get", "events", "-n", $Namespace, "--sort-by=.lastTimestamp")
-    "frontend-service.txt"         = @("get", "svc", "frontend", "-n", $Namespace, "-o", "yaml")
     "juliojubiladoapi-service.txt" = @("get", "svc", "juliojubiladoapi", "-n", $Namespace, "-o", "yaml")
 }
 
 if ($Profile -eq "base") {
+    $kubectlOutputs["frontend-service.txt"] = @("get", "svc", "frontend", "-n", $Namespace, "-o", "yaml")
+    $kubectlOutputs["persistent-volumes.txt"] = @("get", "pv")
+    $kubectlOutputs["deploy-svc-pods-pdb-pvc.txt"] = @("get", "deploy,svc,pods,pdb,pvc", "-n", $Namespace)
+    $kubectlOutputs["grafana-service.txt"] = @("get", "svc", "grafana", "-n", $Namespace, "-o", "yaml")
+} elseif ($Profile -eq "rubrica") {
     $kubectlOutputs["persistent-volumes.txt"] = @("get", "pv")
     $kubectlOutputs["deploy-svc-pods-pdb-pvc.txt"] = @("get", "deploy,svc,pods,pdb,pvc", "-n", $Namespace)
     $kubectlOutputs["grafana-service.txt"] = @("get", "svc", "grafana", "-n", $Namespace, "-o", "yaml")
@@ -86,13 +94,13 @@ $checklistContent = @(
     "Arquivos gerados automaticamente:"
     "- deploy-svc-pods-pdb.txt"
     "- namespace-events.txt"
-    "- frontend-service.txt"
     "- juliojubiladoapi-service.txt"
     "- image-summary.txt"
 )
 
 if ($Profile -eq "base") {
     $checklistContent += @(
+        "- frontend-service.txt"
         "- persistent-volumes.txt"
         "- deploy-svc-pods-pdb-pvc.txt"
         "- grafana-service.txt"
@@ -109,6 +117,24 @@ if ($Profile -eq "base") {
         "- Frontend: http://localhost:30080"
         "- API principal: http://localhost:30081"
         "- Grafana: http://localhost:30300"
+    )
+} elseif ($Profile -eq "rubrica") {
+    $checklistContent += @(
+        "- persistent-volumes.txt"
+        "- deploy-svc-pods-pdb-pvc.txt"
+        "- grafana-service.txt"
+        ""
+        "Itens para capturar manualmente:"
+        "- [ ] Print da API principal respondendo pelo NodePort"
+        "- [ ] Print do Grafana antes do stress test"
+        "- [ ] Print do Grafana durante o stress test"
+        "- [ ] Print do Deployment da API principal com 4 replicas"
+        "- [ ] Print do SQL Server com Service ClusterIP"
+        "- [ ] Print do pipeline concluido"
+        ""
+        "URLs esperadas:"
+        "- API principal: http://localhost:31081"
+        "- Grafana: http://localhost:31300"
     )
 } else {
     $checklistContent += @(
