@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Este checklist prioriza os prints que mais fortalecem a entrega do projeto **BorrachariaAPI** na disciplina **Integração Continua e DevOps**.
+Este checklist prioriza os prints que mais fortalecem a entrega do projeto **BorrachariaAPI** na disciplina **Integração Contínua e DevOps**.
 
 Os itens abaixo foram organizados por impacto de comprovacao. Se o tempo estiver curto, comece pelos prints de prioridade alta.
 

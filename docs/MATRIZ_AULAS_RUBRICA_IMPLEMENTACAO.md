@@ -4,7 +4,7 @@
 
 Este documento consolida a relacao entre:
 
-- as aulas transcritas da disciplina **Integração Continua e DevOps**
+- as aulas transcritas da disciplina **Integração Contínua e DevOps**
 - os principais topicos efetivamente abordados pelo professor
 - os itens da rubrica de avaliacao
 - e a implementacao realizada no projeto **BorrachariaAPI**
@@ -16,7 +16,7 @@ Este documento consolida a relacao entre:
 | Aula | Tema central interpretado | Itens da rubrica relacionados | Evidencias no projeto | Situacao no projeto |
 |---|---|---|---|---|
 | 16/03/2026 | Introducao a DevOps, cultura, pipeline, CI/CD, testes, monitoramento e ferramentas como GitHub, GitLab e Jenkins | Pipeline de entrega; testes automatizados; observabilidade; monitoramento | `.github/workflows/ci.yml`, `.github/workflows/cd.yml`, `Jenkinsfile`, `k8s/base/monitoring/prometheus.yaml`, `k8s/base/monitoring/grafana.yaml` | Atendido |
-| 18/03/2026 | Integracao continua, entrega continua versus deploy continuo, build automatizado, testes automatizados e observabilidade | Pipeline de entrega; testes; metricas; Prometheus e Grafana | `.github/workflows/ci.yml`, `.github/workflows/cd.yml`, `JulioJubiladoapi/pom.xml`, `juliopedidoapi/pom.xml`, `k8s/base/monitoring/prometheus.yml`, `k8s/base/monitoring/grafana/dashboards/julio-observability.json` | Atendido |
+| 18/03/2026 | Integração contínua, entrega contínua versus deploy contínuo, build automatizado, testes automatizados e observabilidade | Pipeline de entrega; testes; métricas; Prometheus e Grafana | `.github/workflows/ci.yml`, `.github/workflows/cd.yml`, `JulioJubiladoapi/pom.xml`, `juliopedidoapi/pom.xml`, `k8s/base/monitoring/prometheus.yml`, `k8s/base/monitoring/grafana/dashboards/julio-observability.json` | Atendido |
 | 23/03/2026 | Docker, imagens, containers, volumes, bind mounts, persistencia e Docker Hub | Docker com imagem personalizada; uso de volumes/binds; publicacao no Docker Hub | `frontend/Dockerfile`, `JulioJubiladoapi/Dockerfile`, `juliopedidoapi/Dockerfile`, `docker-compose.yml`, `scripts/publish-images.ps1`, `docs/evidencias/20260409-185720/image-summary.txt` | Atendido |
 | 25/03/2026 | Apresentacao do trabalho e leitura tecnica da rubrica: deployment, probes, Grafana, Prometheus, PVC/PV, Docker Hub, pipeline e stress test | Todos os itens centrais da rubrica | `docs/RUBRICA_DEVOPS.md`, `k8s/base`, `k8s/overlays/rubrica`, `scripts/run-stress-test.ps1`, `scripts/run-jmeter.ps1`, `scripts/capture-grafana-under-load.ps1` | Atendido |
 | 30/03/2026 | Fundamentos de Kubernetes: Pods, Deployment, ReplicaSet, Service, NodePort, disponibilidade e escalabilidade | K8s; Deployment; replicas; exposicao externa; services | `k8s/base/apps/juliojubiladoapi.yaml`, `k8s/base/apps/juliopedidoapi.yaml`, `k8s/base/apps/frontend.yaml`, `k8s/overlays/rubrica/kustomization.yaml` | Atendido |

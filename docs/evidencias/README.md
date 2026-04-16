@@ -6,9 +6,9 @@ Use esta pasta para guardar os artefatos finais da apresentacao:
 - prints do Grafana antes e durante o stress test
 - print do pipeline concluido
 - print da API principal respondendo pelo NodePort
-- saidas do `kubectl get deploy,svc,pods,pdb,pvc -n devops-trabalho`
-- saida do `kubectl get pv`
-- para o perfil `ha`, saidas de `kubectl get deploy,svc,pods,pdb -n devops-trabalho-ha`
+- saídas do `kubectl get deploy,svc,pods,pdb,pvc -n devops-trabalho`
+- saída do `kubectl get pv`
+- para o perfil `ha`, saídas de `kubectl get deploy,svc,pods,pdb -n devops-trabalho-ha`
 - para o perfil `ha`, print do endpoint publico do frontend
 - para o perfil `ha`, evidencias de replicas e `PodDisruptionBudget`
 

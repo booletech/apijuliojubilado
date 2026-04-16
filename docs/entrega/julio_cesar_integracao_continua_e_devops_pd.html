@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Julio Cesar da Silva Jubilado - Integração Continua e DevOps</title>
+  <title>Julio Cesar da Silva Jubilado - Integração Contínua e DevOps</title>
   <style>
     :root {
       --ink: #1a2433;
@@ -300,7 +300,7 @@
 
     @page {
       size: A4;
-      margin: 10mm;
+      margin: 0;
     }
 
     @media print {
@@ -310,6 +310,12 @@
       .page {
         box-shadow: none;
         margin: 0;
+        width: 210mm;
+        min-height: 297mm;
+        page-break-after: always;
+      }
+      .page:last-child {
+        page-break-after: auto;
       }
     }
   </style>
@@ -323,10 +329,10 @@
       </div>
 
       <h1>Relatório Técnico do Projeto BorrachariaAPI</h1>
-      <h2>Disciplina: Integração Continua e DevOps</h2>
+      <h2>Disciplina: Integração Contínua e DevOps</h2>
 
       <div class="cover-card">
-        Documento elaborado para a disciplina <strong>Integração Continua e DevOps</strong>,
+        Documento elaborado para a disciplina <strong>Integração Contínua e DevOps</strong>,
         no contexto da <strong>Pós-graduação em Engenharia de Software em Java</strong>, com o objetivo
         de demonstrar a implementação prática dos requisitos de Docker, Docker Hub, Kubernetes,
         monitoramento, pipeline de entrega e testes de carga.
@@ -343,7 +349,7 @@
         </div>
         <div>
           <span class="meta-label">Disciplina</span>
-          Integração Continua e DevOps
+          Integração Contínua e DevOps
         </div>
         <div>
           <span class="meta-label">Turma / Código</span>
@@ -389,14 +395,14 @@
     <h2 class="section">1. Introdução e objetivo do trabalho</h2>
     <p>
       Este relatório apresenta, de forma técnica e estruturada, a implementação realizada para o
-      trabalho prático da disciplina <strong>Integração Continua e DevOps</strong>. O objetivo
+      trabalho prático da disciplina <strong>Integração Contínua e DevOps</strong>. O objetivo
       principal foi comprovar, por meio de código, infraestrutura versionada e evidências operacionais,
       a aplicação integrada de práticas modernas de containerização, orquestração, observabilidade,
       automação de entrega e testes de carga.
     </p>
     <p>
-      Para atender ao enunciado, foi utilizado o projeto <strong>BorrachariaAPI</strong>, um monorepo
-      baseado em Java com Spring Boot, complementado por frontend web e infraestrutura em Docker e
+      Para atender ao enunciado, foi utilizado o projeto <strong>BorrachariaAPI</strong>, um monorrepositório
+      baseado em Java com Spring Boot, complementado por front-end web e infraestrutura em Docker e
       Kubernetes. Além da implementação, este documento também consolida as rubricas atendidas e os
       materiais comprobatórios gerados durante a execução.
     </p>
@@ -411,9 +417,9 @@
     <div class="callout">
       <strong>Síntese do enunciado:</strong> a atividade solicitou o uso de Docker para criação e
       publicação de imagens, implantação em Kubernetes com Deployment e NodePort, uso de banco de
-      dados em ClusterIP, probes de saúde, monitoramento com Prometheus e Grafana, persistência via
+      dados por meio de Service do tipo ClusterIP, probes de saúde, monitoramento com Prometheus e Grafana, persistência via
       PVC, criação de dashboards, pipeline de entrega com Jenkins ou ferramenta equivalente, e
-      execução de stress test com evidência visual do dashboard sofrendo alterações.
+      execução de teste de estresse com evidência visual do dashboard sofrendo alterações.
     </div>
 
     <figure>
@@ -428,7 +434,7 @@
         <img src="./infnet-logo.png" alt="Infnet">
         Instituto Infnet
       </div>
-      <div class="course">Integração Continua e DevOps</div>
+      <div class="course">Integração Contínua e DevOps</div>
     </div>
 
     <h2 class="section">3. Visão geral da solução implementada</h2>
@@ -443,24 +449,24 @@
       </div>
       <div class="summary-card">
         <strong>5</strong>
-        <span>evidências visuais incluídas no relatório final</span>
+        <span>categorias principais de evidências no relatório final</span>
       </div>
     </div>
     <ul>
-      <li>Dockerfiles próprios para frontend, API principal e API de pedidos.</li>
+      <li>Dockerfiles próprios para front-end, API principal e API de pedidos.</li>
       <li>Publicação das três imagens em repositório Docker Hub.</li>
       <li>Perfil Kubernetes chamado <strong>rubrica</strong>, criado para a apresentação da disciplina.</li>
-      <li>Banco de dados em pod separado com <strong>Service ClusterIP</strong>.</li>
-      <li>API principal externa por <strong>NodePort</strong> e Grafana também exposto para evidência.</li>
-      <li>Prometheus configurado para scrape das métricas das APIs Spring Boot.</li>
-      <li>Dashboard Grafana provisionado com CPU, memória heap, disponibilidade e taxa HTTP.</li>
+      <li>Banco de dados em pod separado com <strong>Service do tipo ClusterIP</strong>.</li>
+      <li>API principal exposta por <strong>NodePort</strong> e o Grafana também exposto para fins de evidência.</li>
+      <li>Prometheus configurado para coleta (scrape) das métricas das APIs Spring Boot.</li>
+      <li>Dashboard do Grafana provisionado com CPU, memória heap, disponibilidade e taxa HTTP.</li>
       <li>Pipeline de entrega com GitHub Actions e Jenkinsfile.</li>
-      <li>Stress test com <strong>k6</strong> e evidência complementar com <strong>JMeter</strong>.</li>
+      <li>Teste de estresse com <strong>k6</strong> e evidência complementar com <strong>JMeter</strong>.</li>
     </ul>
 
     <h2 class="section">4. Arquitetura técnica do projeto</h2>
     <p>
-      A solução é composta por um frontend web, duas APIs baseadas em Spring Boot e componentes de
+      A solução é composta por um front-end web, duas APIs baseadas em Spring Boot e componentes de
       infraestrutura responsáveis por persistência e observabilidade. Para fins de apresentação, foi
       criado um perfil dedicado que materializa de forma objetiva os requisitos do enunciado.
     </p>
@@ -474,7 +480,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>Frontend</td>
+          <td>Front-end</td>
           <td>React + Vite + Nginx</td>
           <td>Interface web e proxy reverso para as APIs.</td>
         </tr>
@@ -491,7 +497,7 @@
         <tr>
           <td>SQL Server</td>
           <td>Container oficial</td>
-          <td>Banco relacional acessível internamente via ClusterIP.</td>
+          <td>Banco relacional acessível internamente por ClusterIP.</td>
         </tr>
         <tr>
           <td>Prometheus</td>
@@ -506,7 +512,7 @@
         <tr>
           <td>Jenkins</td>
           <td>Jenkins + CasC</td>
-          <td>Pipeline de entrega alternativo exigido pela disciplina.</td>
+          <td>Pipeline de entrega alternativo aceito pela disciplina.</td>
         </tr>
       </tbody>
     </table>
@@ -517,7 +523,7 @@
       externamente. Como essas exigências entram em conflito, o perfil <strong>rubrica</strong>
       adotou a interpretação pragmática: a API principal e o Grafana ficaram expostos para
       demonstração, enquanto <strong>Prometheus</strong>, <strong>SQL Server</strong> e
-      <strong>juliopedidoapi</strong> permaneceram internos via ClusterIP.
+      <strong>juliopedidoapi</strong> permaneceram internos por meio de ClusterIP.
     </div>
   </section>
 
@@ -535,8 +541,8 @@
     <h3>5.1 Docker e publicação no Docker Hub</h3>
     <p>
       Foram criadas imagens personalizadas para as três aplicações do projeto. A publicação no Docker Hub
-      foi automatizada via script e pipeline, e também executada operacionalmente com sucesso para
-      as tags finais de entrega.
+      foi automatizada por script e pipeline, e também executada operacionalmente com sucesso para
+      as tags finais da entrega.
     </p>
     <figure>
       <img src="./dockerhub-summary.png" alt="Resumo visual das imagens publicadas no Docker Hub">
@@ -546,9 +552,9 @@
     <h3>5.2 Kubernetes com Deployment, Service, PV, PVC e probes</h3>
     <p>
       O perfil <strong>rubrica</strong> foi preparado especificamente para a apresentação. Nesse perfil,
-      a API principal executa com quatro réplicas, o banco de dados fica em pod separado com ClusterIP,
+      a API principal executa com quatro réplicas, o banco de dados fica em pod separado com Service do tipo ClusterIP,
       e Prometheus e SQL Server utilizam volumes persistentes. Além disso, as APIs possuem probes de
-      prontidão e de vivacidade via Spring Boot Actuator.
+      prontidão e de vivacidade por meio do Spring Boot Actuator.
     </p>
 
     <figure>
@@ -579,7 +585,7 @@
     <h3>5.3 Monitoramento com Prometheus e Grafana</h3>
     <p>
       O Prometheus foi configurado para descobrir e raspar automaticamente os pods das APIs que possuem
-      anotações de métricas. O Grafana foi provisionado com um dashboard voltado à observabilidade das
+      anotações de métricas. O Grafana foi provisionado com um dashboard voltado para a observabilidade das
       aplicações, incluindo CPU por pod, memória heap, taxa de requisições HTTP, latência p95 e disponibilidade.
     </p>
 
@@ -591,7 +597,7 @@
 
     <h3>5.5 Testes de carga com k6 e JMeter</h3>
     <p>
-      O stress test principal foi realizado com <strong>k6</strong> e usado para acionar alterações reais
+      O teste de carga principal foi realizado com <strong>k6</strong> e usado para acionar alterações reais
       no dashboard do Grafana. Em paralelo, o projeto também possui um plano gráfico em JMeter e relatório
       HTML gerado localmente, atendendo aos itens relacionados à ferramenta.
     </p>
@@ -608,8 +614,8 @@
 
     <h2 class="section">6. Evidências visuais e operacionais</h2>
     <figure>
-      <img src="../evidencias/20260409-185720/grafana-under-load.png" alt="Grafana durante o stress test">
-      <figcaption>Figura 8. Dashboard do Grafana durante o stress test, evidenciando alteração real dos indicadores de CPU, memória, disponibilidade e taxa HTTP.</figcaption>
+      <img src="../evidencias/20260409-185720/grafana-under-load.png" alt="Grafana durante o teste de estresse">
+      <figcaption>Figura 8. Dashboard do Grafana durante o teste de estresse, evidenciando alteração real dos indicadores de CPU, memória, disponibilidade e taxa HTTP.</figcaption>
     </figure>
 
     <figure>
@@ -653,12 +659,12 @@ docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
         <tr>
           <td>Docker para criar containers com imagens da aplicação</td>
           <td class="status-ok">Atendido</td>
-          <td>Dockerfiles próprios para frontend e APIs Spring Boot.</td>
+          <td>Dockerfiles próprios para front-end e APIs Spring Boot.</td>
         </tr>
         <tr>
           <td>Recursos básicos do Docker (binds e volumes)</td>
           <td class="status-ok">Atendido</td>
-          <td>Docker Compose com volumes e mounts para banco, Jenkins e evidências.</td>
+          <td>Docker Compose com volumes e montagens para banco, Jenkins e evidências.</td>
         </tr>
         <tr>
           <td>Kubernetes para execução da solução</td>
@@ -666,7 +672,7 @@ docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
           <td>Perfis base, HA e rubrica versionados no repositório.</td>
         </tr>
         <tr>
-          <td>Primitivos do Kubernetes (pods, services, volumes)</td>
+          <td>Primitivos do Kubernetes (pods, services e volumes)</td>
           <td class="status-ok">Atendido</td>
           <td>Deployments, Services, PVs, PVCs, Jobs e PDBs implementados.</td>
         </tr>
@@ -701,12 +707,12 @@ docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
           <td>Liveness configurada nos backends e componentes de monitoramento.</td>
         </tr>
         <tr>
-          <td>Stress test via interface gráfica</td>
+          <td>Teste de estresse via interface gráfica</td>
           <td class="status-ok">Atendido</td>
           <td>JMeter com plano gráfico (.jmx) e dashboard HTML.</td>
         </tr>
         <tr>
-          <td>Stress test via script</td>
+          <td>Teste de estresse via script</td>
           <td class="status-ok">Atendido</td>
           <td>Script k6 com wrapper PowerShell.</td>
         </tr>
@@ -718,7 +724,7 @@ docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
         <tr>
           <td>Prometheus realizando scrape</td>
           <td class="status-ok">Atendido</td>
-          <td>Targets das APIs ativos e coletados no namespace rubrica.</td>
+          <td>Alvos das APIs ativos e coletados no namespace rubrica.</td>
         </tr>
         <tr>
           <td>Grafana instanciado no cluster</td>
@@ -773,7 +779,7 @@ docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
     </p>
     <p>
       Do ponto de vista acadêmico, a entrega demonstra domínio prático de conceitos centrais de
-      Integração Continua e DevOps aplicados a um projeto Java com Spring Boot. Do ponto de vista
+      Integração Contínua e DevOps aplicados a um projeto Java com Spring Boot. Do ponto de vista
       profissional, o resultado se aproxima de um fluxo real de engenharia de software, com
       versionamento de infraestrutura, automação de execução e rastreabilidade por evidências.
     </p>
