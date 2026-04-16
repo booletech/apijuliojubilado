@@ -1,0 +1,222 @@
+﻿LAST SEEN   TYPE      REASON              OBJECT                                    MESSAGE
+49m         Normal    Scheduled           pod/sqlserver-init-ct542                  Successfully assigned devops-trabalho-rubrica/sqlserver-init-ct542 to desktop-control-plane
+35m         Normal    Scheduled           pod/juliopedidoapi-654696d9c-b56mf        Successfully assigned devops-trabalho-rubrica/juliopedidoapi-654696d9c-b56mf to desktop-control-plane
+48m         Normal    Scheduled           pod/juliojubiladoapi-78ffcdd46c-czp4l     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-78ffcdd46c-czp4l to desktop-control-plane
+13m         Normal    Scheduled           pod/grafana-7b88b8d89c-r8bgq              Successfully assigned devops-trabalho-rubrica/grafana-7b88b8d89c-r8bgq to desktop-control-plane
+48m         Normal    Scheduled           pod/flyway-migrate-fd5w6                  Successfully assigned devops-trabalho-rubrica/flyway-migrate-fd5w6 to desktop-control-plane
+35m         Normal    Scheduled           pod/juliojubiladoapi-55b966965d-jzw8q     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-55b966965d-jzw8q to desktop-control-plane
+48m         Normal    Scheduled           pod/juliopedidoapi-5f7798f7fc-gs29q       Successfully assigned devops-trabalho-rubrica/juliopedidoapi-5f7798f7fc-gs29q to desktop-control-plane
+6m37s       Normal    Scheduled           pod/prometheus-77bc5b8447-wm4lv           Successfully assigned devops-trabalho-rubrica/prometheus-77bc5b8447-wm4lv to desktop-control-plane
+35m         Normal    Scheduled           pod/juliojubiladoapi-55b966965d-tshw9     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-55b966965d-tshw9 to desktop-control-plane
+35m         Normal    Scheduled           pod/juliojubiladoapi-55b966965d-7n6r4     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-55b966965d-7n6r4 to desktop-control-plane
+35m         Normal    Scheduled           pod/juliojubiladoapi-55b966965d-nnrpp     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-55b966965d-nnrpp to desktop-control-plane
+13m         Normal    Scheduled           pod/prometheus-648b9bcc7b-sfdxv           Successfully assigned devops-trabalho-rubrica/prometheus-648b9bcc7b-sfdxv to desktop-control-plane
+48m         Normal    Scheduled           pod/juliojubiladoapi-78ffcdd46c-rxrpt     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-78ffcdd46c-rxrpt to desktop-control-plane
+48m         Normal    Scheduled           pod/sqlserver-init-nq62q                  Successfully assigned devops-trabalho-rubrica/sqlserver-init-nq62q to desktop-control-plane
+48m         Normal    Scheduled           pod/juliojubiladoapi-78ffcdd46c-sccsk     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-78ffcdd46c-sccsk to desktop-control-plane
+48m         Normal    Scheduled           pod/juliojubiladoapi-78ffcdd46c-9gd2s     Successfully assigned devops-trabalho-rubrica/juliojubiladoapi-78ffcdd46c-9gd2s to desktop-control-plane
+49m         Normal    Scheduled           pod/flyway-migrate-xctkx                  Successfully assigned devops-trabalho-rubrica/flyway-migrate-xctkx to desktop-control-plane
+47m         Normal    Scheduled           pod/juliopedidoapi-5f7798f7fc-9ln8b       Successfully assigned devops-trabalho-rubrica/juliopedidoapi-5f7798f7fc-9ln8b to desktop-control-plane
+35m         Normal    Scheduled           pod/juliopedidoapi-9f8c69b68-m4gqg        Successfully assigned devops-trabalho-rubrica/juliopedidoapi-9f8c69b68-m4gqg to desktop-control-plane
+6m39s       Normal    Scheduled           pod/grafana-655488cbcf-nxqzz              Successfully assigned devops-trabalho-rubrica/grafana-655488cbcf-nxqzz to desktop-control-plane
+59m         Normal    Pulled              pod/elasticsearch-7c6748c55b-hv67b        Successfully pulled image "docker.elastic.co/elasticsearch/elasticsearch:8.13.4" in 4m43.303s (4m48.593s including waiting). Image size: 638245197 bytes.
+59m         Normal    Created             pod/elasticsearch-7c6748c55b-hv67b        Created container: elasticsearch
+59m         Normal    Started             pod/elasticsearch-7c6748c55b-hv67b        Started container elasticsearch
+58m         Normal    Pulled              pod/grafana-5c44645c77-7q7lk              Successfully pulled image "grafana/grafana:11.2.0" in 57.908s (5m46.301s including waiting). Image size: 128445559 bytes.
+58m         Normal    Created             pod/grafana-5c44645c77-7q7lk              Created container: grafana
+58m         Normal    Started             pod/grafana-5c44645c77-7q7lk              Started container grafana
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-vnf9f     Error: ErrImagePull
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-vnf9f     Failed to pull image "docker.io/example/juliojubiladoapi:test": failed to pull and unpack image "docker.io/example/juliojubiladoapi:test": failed to resolve reference "docker.io/example/juliojubiladoapi:test": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-jfrbk     Error: ErrImagePull
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-jfrbk     Failed to pull image "docker.io/example/juliojubiladoapi:test": failed to pull and unpack image "docker.io/example/juliojubiladoapi:test": failed to resolve reference "docker.io/example/juliojubiladoapi:test": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-cg499     Failed to pull image "docker.io/example/juliojubiladoapi:test": failed to pull and unpack image "docker.io/example/juliojubiladoapi:test": failed to resolve reference "docker.io/example/juliojubiladoapi:test": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+58m         Warning   Failed              pod/juliojubiladoapi-664d55656d-cg499     Error: ErrImagePull
+58m         Warning   Failed              pod/juliopedidoapi-74c6c6bbc6-k5qcj       Failed to pull image "docker.io/example/juliopedidoapi:test": failed to pull and unpack image "docker.io/example/juliopedidoapi:test": failed to resolve reference "docker.io/example/juliopedidoapi:test": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+58m         Warning   Failed              pod/juliopedidoapi-74c6c6bbc6-k5qcj       Error: ErrImagePull
+58m         Normal    NoPods              poddisruptionbudget/juliopedidoapi        No matching pods found
+58m         Normal    Pulled              pod/kube-state-metrics-595d66d74c-rdmp8   Successfully pulled image "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.13.0" in 7.543s (5m57.753s including waiting). Image size: 14427610 bytes.
+58m         Normal    Created             pod/kube-state-metrics-595d66d74c-rdmp8   Created container: kube-state-metrics
+58m         Normal    Started             pod/kube-state-metrics-595d66d74c-rdmp8   Started container kube-state-metrics
+58m         Warning   Unhealthy           pod/kube-state-metrics-595d66d74c-rdmp8   Readiness probe failed: Get "http://10.244.0.52:8080/healthz": dial tcp 10.244.0.52:8080: connect: connection refused
+57m         Warning   Unhealthy           pod/grafana-5c44645c77-7q7lk              Startup probe failed: Get "http://10.244.0.46:3000/api/health": dial tcp 10.244.0.46:3000: connect: connection refused
+57m         Normal    NoPods              poddisruptionbudget/juliopedidoapi        No matching pods found
+56m         Normal    Pulled              pod/flyway-migrate-gx4xk                  Successfully pulled image "flyway/flyway:10.17.3" in 2m6.379s (8m3.244s including waiting). Image size: 450472109 bytes.
+56m         Normal    Created             pod/flyway-migrate-gx4xk                  Created container: flyway
+56m         Normal    Started             pod/flyway-migrate-gx4xk                  Started container flyway
+56m         Normal    Killing             pod/flyway-migrate-gx4xk                  Stopping container flyway
+54m         Normal    NoPods              poddisruptionbudget/juliopedidoapi        No matching pods found
+54m         Warning   Unhealthy           pod/elasticsearch-7c6748c55b-hv67b        Startup probe failed: Get "http://10.244.0.45:9200/": dial tcp 10.244.0.45:9200: connect: connection refused
+52m         Normal    Pulled              pod/sqlserver-init-9gxjw                  Successfully pulled image "mcr.microsoft.com/mssql/server:2022-latest" in 4m11.654s (12m14.798s including waiting). Image size: 604241716 bytes.
+52m         Normal    Created             pod/sqlserver-init-9gxjw                  Created container: bootstrap
+52m         Normal    Started             pod/sqlserver-init-9gxjw                  Started container bootstrap
+52m         Normal    Killing             pod/sqlserver-init-9gxjw                  Stopping container bootstrap
+52m         Normal    NoPods              poddisruptionbudget/juliopedidoapi        No matching pods found
+52m         Normal    SuccessfulDelete    job/flyway-migrate                        Deleted pod: flyway-migrate-ld9qv
+52m         Normal    SuccessfulDelete    job/sqlserver-init                        Deleted pod: sqlserver-init-6jl9q
+52m         Normal    Created             pod/prometheus-68d797f6cf-lgr6f           Created container: init-prometheus-volume
+52m         Normal    Pulled              pod/prometheus-68d797f6cf-lgr6f           Successfully pulled image "busybox:1.36" in 12.111s (12m25.528s including waiting). Image size: 2217006 bytes.
+52m         Normal    Started             pod/prometheus-68d797f6cf-lgr6f           Started container init-prometheus-volume
+52m         Normal    Pulling             pod/prometheus-68d797f6cf-lgr6f           Pulling image "prom/prometheus:v2.54.1"
+52m         Normal    Pulled              pod/sqlserver-fc76bfd7b-x96z8             Successfully pulled image "busybox:1.36" in 4.656s (12m30.119s including waiting). Image size: 2217006 bytes.
+52m         Normal    Created             pod/sqlserver-fc76bfd7b-x96z8             Created container: init-sqlserver-volume
+52m         Normal    Started             pod/sqlserver-fc76bfd7b-x96z8             Started container init-sqlserver-volume
+52m         Warning   Failed              pod/juliojubiladoapi-664d55656d-5pf9q     Error: ErrImagePull
+52m         Normal    Pulled              pod/sqlserver-fc76bfd7b-x96z8             Container image "mcr.microsoft.com/mssql/server:2022-latest" already present on machine
+52m         Normal    Created             pod/sqlserver-fc76bfd7b-x96z8             Created container: sqlserver
+52m         Warning   Failed              pod/juliojubiladoapi-664d55656d-5pf9q     Failed to pull image "docker.io/example/juliojubiladoapi:test": failed to pull and unpack image "docker.io/example/juliojubiladoapi:test": failed to resolve reference "docker.io/example/juliojubiladoapi:test": pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+51m         Normal    Pulled              pod/sqlserver-init-6jl9q                  Successfully pulled image "mcr.microsoft.com/mssql/server:2022-latest" in 230ms (10m50.095s including waiting). Image size: 604241716 bytes.
+51m         Normal    Pulled              pod/flyway-migrate-ld9qv                  Successfully pulled image "flyway/flyway:10.17.3" in 317ms (10m50.098s including waiting). Image size: 450472109 bytes.
+51m         Normal    Started             pod/sqlserver-fc76bfd7b-x96z8             Started container sqlserver
+51m         Normal    Created             pod/flyway-migrate-ld9qv                  Created container: flyway
+51m         Normal    Created             pod/sqlserver-init-6jl9q                  Created container: bootstrap
+51m         Normal    Started             pod/flyway-migrate-ld9qv                  Started container flyway
+51m         Normal    Killing             pod/flyway-migrate-ld9qv                  Stopping container flyway
+51m         Normal    NoPods              poddisruptionbudget/juliojubiladoapi      No matching pods found
+51m         Normal    Killing             pod/sqlserver-init-6jl9q                  Stopping container bootstrap
+51m         Normal    Started             pod/sqlserver-init-6jl9q                  Started container bootstrap
+50m         Normal    Pulled              pod/prometheus-68d797f6cf-lgr6f           Successfully pulled image "prom/prometheus:v2.54.1" in 1m28.928s (1m32.154s including waiting). Image size: 108262778 bytes.
+50m         Normal    Created             pod/prometheus-68d797f6cf-lgr6f           Created container: prometheus
+50m         Normal    Started             pod/prometheus-68d797f6cf-lgr6f           Started container prometheus
+49m         Warning   Unhealthy           pod/sqlserver-fc76bfd7b-x96z8             Startup probe failed: dial tcp 10.244.0.56:1433: connect: connection refused
+49m         Normal    SuccessfulCreate    job/flyway-migrate                        Created pod: flyway-migrate-xctkx
+49m         Normal    SuccessfulCreate    job/sqlserver-init                        Created pod: sqlserver-init-ct542
+49m         Normal    Pulled              pod/sqlserver-init-ct542                  Container image "mcr.microsoft.com/mssql/server:2022-latest" already present on machine
+49m         Normal    Pulled              pod/flyway-migrate-xctkx                  Container image "flyway/flyway:10.17.3" already present on machine
+49m         Normal    Created             pod/sqlserver-init-ct542                  Created container: bootstrap
+49m         Normal    Created             pod/flyway-migrate-xctkx                  Created container: flyway
+49m         Normal    Started             pod/sqlserver-init-ct542                  Started container bootstrap
+49m         Normal    Started             pod/flyway-migrate-xctkx                  Started container flyway
+48m         Normal    Completed           job/sqlserver-init                        Job completed
+48m         Normal    Completed           job/flyway-migrate                        Job completed
+48m         Normal    ScalingReplicaSet   deployment/juliojubiladoapi               Scaled up replica set juliojubiladoapi-78ffcdd46c from 0 to 4
+48m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-78ffcdd46c    Created pod: juliojubiladoapi-78ffcdd46c-rxrpt
+48m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-78ffcdd46c    Created pod: juliojubiladoapi-78ffcdd46c-9gd2s
+48m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-78ffcdd46c    Created pod: juliojubiladoapi-78ffcdd46c-czp4l
+48m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-78ffcdd46c    Created pod: juliojubiladoapi-78ffcdd46c-sccsk
+48m         Normal    SuccessfulCreate    job/flyway-migrate                        Created pod: flyway-migrate-fd5w6
+48m         Normal    SuccessfulCreate    replicaset/juliopedidoapi-5f7798f7fc      Created pod: juliopedidoapi-5f7798f7fc-gs29q
+48m         Normal    SuccessfulCreate    job/sqlserver-init                        Created pod: sqlserver-init-nq62q
+47m         Normal    SuccessfulDelete    replicaset/juliopedidoapi-5f7798f7fc      Deleted pod: juliopedidoapi-5f7798f7fc-gs29q
+47m         Normal    ScalingReplicaSet   deployment/juliojubiladoapi               Scaled down replica set juliojubiladoapi-78ffcdd46c from 4 to 0
+47m         Normal    Pulled              pod/juliojubiladoapi-78ffcdd46c-czp4l     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+47m         Normal    Pulled              pod/juliojubiladoapi-78ffcdd46c-sccsk     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+47m         Normal    SuccessfulDelete    replicaset/juliojubiladoapi-78ffcdd46c    Deleted pod: juliojubiladoapi-78ffcdd46c-sccsk
+47m         Normal    Created             pod/juliojubiladoapi-78ffcdd46c-sccsk     Created container: app
+47m         Normal    SuccessfulDelete    replicaset/juliojubiladoapi-78ffcdd46c    Deleted pod: juliojubiladoapi-78ffcdd46c-czp4l
+47m         Normal    SuccessfulDelete    replicaset/juliojubiladoapi-78ffcdd46c    Deleted pod: juliojubiladoapi-78ffcdd46c-rxrpt
+47m         Normal    SuccessfulDelete    replicaset/juliojubiladoapi-78ffcdd46c    Deleted pod: juliojubiladoapi-78ffcdd46c-9gd2s
+47m         Normal    Created             pod/juliojubiladoapi-78ffcdd46c-czp4l     Created container: app
+47m         Normal    Pulled              pod/juliojubiladoapi-78ffcdd46c-rxrpt     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+47m         Normal    Created             pod/juliojubiladoapi-78ffcdd46c-rxrpt     Created container: app
+47m         Normal    Pulled              pod/juliojubiladoapi-78ffcdd46c-9gd2s     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+47m         Normal    Pulled              pod/juliopedidoapi-5f7798f7fc-gs29q       Container image "local/juliopedidoapi:ha-20260409" already present on machine
+47m         Normal    Created             pod/juliojubiladoapi-78ffcdd46c-9gd2s     Created container: app
+47m         Normal    Created             pod/juliopedidoapi-5f7798f7fc-gs29q       Created container: app
+47m         Normal    Started             pod/juliojubiladoapi-78ffcdd46c-czp4l     Started container app
+47m         Normal    Started             pod/juliojubiladoapi-78ffcdd46c-rxrpt     Started container app
+47m         Normal    Pulled              pod/sqlserver-init-nq62q                  Container image "mcr.microsoft.com/mssql/server:2022-latest" already present on machine
+47m         Normal    Killing             pod/juliojubiladoapi-78ffcdd46c-sccsk     Stopping container app
+47m         Normal    Killing             pod/juliojubiladoapi-78ffcdd46c-czp4l     Stopping container app
+47m         Normal    Killing             pod/juliojubiladoapi-78ffcdd46c-rxrpt     Stopping container app
+47m         Normal    Started             pod/juliojubiladoapi-78ffcdd46c-sccsk     Started container app
+47m         Normal    Created             pod/flyway-migrate-fd5w6                  Created container: flyway
+47m         Normal    Pulled              pod/flyway-migrate-fd5w6                  Container image "flyway/flyway:10.17.3" already present on machine
+47m         Normal    Created             pod/sqlserver-init-nq62q                  Created container: bootstrap
+47m         Normal    Started             pod/juliopedidoapi-5f7798f7fc-gs29q       Started container app
+47m         Normal    Started             pod/juliojubiladoapi-78ffcdd46c-9gd2s     Started container app
+47m         Normal    Killing             pod/juliojubiladoapi-78ffcdd46c-9gd2s     Stopping container app
+47m         Normal    Killing             pod/juliopedidoapi-5f7798f7fc-gs29q       Stopping container app
+47m         Normal    Started             pod/flyway-migrate-fd5w6                  Started container flyway
+47m         Normal    Started             pod/sqlserver-init-nq62q                  Started container bootstrap
+47m         Normal    NoPods              poddisruptionbudget/juliopedidoapi        No matching pods found
+47m         Normal    Completed           job/sqlserver-init                        Job completed
+47m         Normal    NoPods              poddisruptionbudget/juliojubiladoapi      No matching pods found
+47m         Normal    Completed           job/flyway-migrate                        Job completed
+47m         Normal    SuccessfulCreate    replicaset/juliopedidoapi-5f7798f7fc      Created pod: juliopedidoapi-5f7798f7fc-9ln8b
+47m         Normal    ScalingReplicaSet   deployment/juliopedidoapi                 Scaled up replica set juliopedidoapi-5f7798f7fc from 0 to 1
+42m         Warning   Unhealthy           pod/juliopedidoapi-5f7798f7fc-9ln8b       Startup probe failed: Get "http://10.244.0.68:8080/actuator/health/liveness": dial tcp 10.244.0.68:8080: connect: connection refused
+37m         Warning   BackOff             pod/juliopedidoapi-5f7798f7fc-9ln8b       Back-off restarting failed container app in pod juliopedidoapi-5f7798f7fc-9ln8b_devops-trabalho-rubrica(35b5b51b-fcda-4aef-921a-07b84d767c37)
+35m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-55b966965d    Created pod: juliojubiladoapi-55b966965d-jzw8q
+35m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-55b966965d    Created pod: juliojubiladoapi-55b966965d-tshw9
+35m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-55b966965d    Created pod: juliojubiladoapi-55b966965d-nnrpp
+35m         Normal    ScalingReplicaSet   deployment/juliojubiladoapi               Scaled up replica set juliojubiladoapi-55b966965d from 0 to 4
+35m         Normal    SuccessfulCreate    replicaset/juliopedidoapi-9f8c69b68       Created pod: juliopedidoapi-9f8c69b68-m4gqg
+35m         Normal    ScalingReplicaSet   deployment/juliopedidoapi                 Scaled up replica set juliopedidoapi-9f8c69b68 from 0 to 1
+35m         Normal    SuccessfulCreate    replicaset/juliojubiladoapi-55b966965d    Created pod: juliojubiladoapi-55b966965d-7n6r4
+35m         Normal    Pulled              pod/juliojubiladoapi-55b966965d-jzw8q     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+35m         Normal    Pulled              pod/juliopedidoapi-9f8c69b68-m4gqg        Container image "local/juliopedidoapi:ha-20260409" already present on machine
+35m         Normal    Created             pod/juliojubiladoapi-55b966965d-jzw8q     Created container: app
+35m         Normal    Created             pod/juliopedidoapi-9f8c69b68-m4gqg        Created container: app
+35m         Normal    Started             pod/juliojubiladoapi-55b966965d-jzw8q     Started container app
+35m         Normal    Started             pod/juliopedidoapi-9f8c69b68-m4gqg        Started container app
+35m         Normal    Killing             pod/juliopedidoapi-5f7798f7fc-9ln8b       Container app failed startup probe, will be restarted
+35m         Normal    Pulled              pod/juliopedidoapi-5f7798f7fc-9ln8b       Container image "local/juliopedidoapi:ha-20260409" already present on machine
+35m         Normal    Created             pod/juliopedidoapi-5f7798f7fc-9ln8b       Created container: app
+35m         Normal    Started             pod/juliopedidoapi-5f7798f7fc-9ln8b       Started container app
+35m         Normal    ScalingReplicaSet   deployment/juliopedidoapi                 Scaled down replica set juliopedidoapi-5f7798f7fc from 1 to 0
+35m         Normal    SuccessfulDelete    replicaset/juliopedidoapi-5f7798f7fc      Deleted pod: juliopedidoapi-5f7798f7fc-9ln8b
+35m         Normal    Killing             pod/juliopedidoapi-5f7798f7fc-9ln8b       Stopping container app
+35m         Normal    ScalingReplicaSet   deployment/juliopedidoapi                 Scaled up replica set juliopedidoapi-654696d9c from 0 to 1
+35m         Normal    SuccessfulCreate    replicaset/juliopedidoapi-654696d9c       Created pod: juliopedidoapi-654696d9c-b56mf
+35m         Normal    Pulled              pod/juliopedidoapi-654696d9c-b56mf        Container image "local/juliopedidoapi:ha-20260409" already present on machine
+35m         Normal    Created             pod/juliopedidoapi-654696d9c-b56mf        Created container: app
+35m         Normal    Started             pod/juliopedidoapi-654696d9c-b56mf        Started container app
+31m         Warning   Unhealthy           pod/juliojubiladoapi-55b966965d-jzw8q     Startup probe failed: Get "http://10.244.0.71:8081/actuator/health/liveness": dial tcp 10.244.0.71:8081: connect: connection refused
+31m         Warning   Unhealthy           pod/juliopedidoapi-9f8c69b68-m4gqg        Startup probe failed: Get "http://10.244.0.73:8080/actuator/health/liveness": dial tcp 10.244.0.73:8080: connect: connection refused
+31m         Warning   Unhealthy           pod/juliopedidoapi-654696d9c-b56mf        Startup probe failed: Get "http://10.244.0.74:8080/actuator/health/liveness": dial tcp 10.244.0.74:8080: connect: connection refused
+30m         Normal    Pulled              pod/juliojubiladoapi-55b966965d-tshw9     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+30m         Normal    Pulled              pod/juliojubiladoapi-55b966965d-nnrpp     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+30m         Normal    Pulled              pod/juliojubiladoapi-55b966965d-7n6r4     Container image "local/juliojubiladoapi:ha-20260409" already present on machine
+30m         Normal    Started             pod/juliojubiladoapi-55b966965d-nnrpp     Started container app
+30m         Normal    Started             pod/juliojubiladoapi-55b966965d-tshw9     Started container app
+30m         Normal    Created             pod/juliojubiladoapi-55b966965d-tshw9     Created container: app
+30m         Normal    Created             pod/juliojubiladoapi-55b966965d-nnrpp     Created container: app
+30m         Normal    Created             pod/juliojubiladoapi-55b966965d-7n6r4     Created container: app
+30m         Normal    Started             pod/juliojubiladoapi-55b966965d-7n6r4     Started container app
+30m         Normal    SuccessfulDelete    replicaset/juliopedidoapi-9f8c69b68       Deleted pod: juliopedidoapi-9f8c69b68-m4gqg
+30m         Normal    ScalingReplicaSet   deployment/juliopedidoapi                 Scaled down replica set juliopedidoapi-9f8c69b68 from 1 to 0
+30m         Normal    Killing             pod/juliopedidoapi-9f8c69b68-m4gqg        Stopping container app
+30m         Warning   Unhealthy           pod/juliojubiladoapi-55b966965d-tshw9     Startup probe failed: Get "http://10.244.0.69:8081/actuator/health/liveness": dial tcp 10.244.0.69:8081: connect: connection refused
+30m         Warning   Unhealthy           pod/juliojubiladoapi-55b966965d-nnrpp     Startup probe failed: Get "http://10.244.0.70:8081/actuator/health/liveness": dial tcp 10.244.0.70:8081: connect: connection refused
+30m         Warning   Unhealthy           pod/juliojubiladoapi-55b966965d-7n6r4     Startup probe failed: Get "http://10.244.0.72:8081/actuator/health/liveness": dial tcp 10.244.0.72:8081: connect: connection refused
+13m         Normal    ScalingReplicaSet   deployment/prometheus                     Scaled down replica set prometheus-68d797f6cf from 1 to 0
+13m         Normal    SuccessfulDelete    replicaset/prometheus-68d797f6cf          Deleted pod: prometheus-68d797f6cf-lgr6f
+13m         Normal    Killing             pod/prometheus-68d797f6cf-lgr6f           Stopping container prometheus
+13m         Normal    ScalingReplicaSet   deployment/grafana                        Scaled up replica set grafana-7b88b8d89c from 0 to 1
+13m         Normal    SuccessfulCreate    replicaset/grafana-7b88b8d89c             Created pod: grafana-7b88b8d89c-r8bgq
+13m         Normal    ScalingReplicaSet   deployment/prometheus                     Scaled up replica set prometheus-648b9bcc7b from 0 to 1
+13m         Normal    SuccessfulCreate    replicaset/prometheus-648b9bcc7b          Created pod: prometheus-648b9bcc7b-sfdxv
+13m         Normal    Pulled              pod/grafana-7b88b8d89c-r8bgq              Container image "grafana/grafana:11.2.0" already present on machine
+13m         Normal    Created             pod/grafana-7b88b8d89c-r8bgq              Created container: grafana
+13m         Normal    Pulled              pod/prometheus-648b9bcc7b-sfdxv           Container image "busybox:1.36" already present on machine
+13m         Normal    Created             pod/prometheus-648b9bcc7b-sfdxv           Created container: init-prometheus-volume
+13m         Normal    Started             pod/grafana-7b88b8d89c-r8bgq              Started container grafana
+13m         Normal    Started             pod/prometheus-648b9bcc7b-sfdxv           Started container init-prometheus-volume
+13m         Normal    Pulled              pod/prometheus-648b9bcc7b-sfdxv           Container image "prom/prometheus:v2.54.1" already present on machine
+13m         Normal    Created             pod/prometheus-648b9bcc7b-sfdxv           Created container: prometheus
+13m         Normal    Started             pod/prometheus-648b9bcc7b-sfdxv           Started container prometheus
+12m         Warning   Unhealthy           pod/grafana-7b88b8d89c-r8bgq              Startup probe failed: Get "http://10.244.0.75:3000/api/health": dial tcp 10.244.0.75:3000: connect: connection refused
+12m         Normal    SuccessfulDelete    replicaset/grafana-5c44645c77             Deleted pod: grafana-5c44645c77-7q7lk
+12m         Normal    Killing             pod/grafana-5c44645c77-7q7lk              Stopping container grafana
+12m         Normal    ScalingReplicaSet   deployment/grafana                        Scaled down replica set grafana-5c44645c77 from 1 to 0
+12m         Warning   Unhealthy           pod/grafana-5c44645c77-7q7lk              Readiness probe failed: Get "http://10.244.0.46:3000/api/health": dial tcp 10.244.0.46:3000: connect: connection refused
+6m41s       Normal    ScalingReplicaSet   deployment/prometheus                     Scaled down replica set prometheus-648b9bcc7b from 1 to 0
+6m40s       Normal    Killing             pod/prometheus-648b9bcc7b-sfdxv           Stopping container prometheus
+6m40s       Normal    SuccessfulDelete    replicaset/prometheus-648b9bcc7b          Deleted pod: prometheus-648b9bcc7b-sfdxv
+6m39s       Normal    ScalingReplicaSet   deployment/grafana                        Scaled up replica set grafana-655488cbcf from 0 to 1
+6m39s       Normal    SuccessfulCreate    replicaset/grafana-655488cbcf             Created pod: grafana-655488cbcf-nxqzz
+6m37s       Normal    SuccessfulCreate    replicaset/prometheus-77bc5b8447          Created pod: prometheus-77bc5b8447-wm4lv
+6m37s       Normal    ScalingReplicaSet   deployment/prometheus                     Scaled up replica set prometheus-77bc5b8447 from 0 to 1
+6m35s       Normal    Pulled              pod/grafana-655488cbcf-nxqzz              Container image "grafana/grafana:11.2.0" already present on machine
+6m34s       Normal    Created             pod/grafana-655488cbcf-nxqzz              Created container: grafana
+6m33s       Normal    Pulled              pod/prometheus-77bc5b8447-wm4lv           Container image "busybox:1.36" already present on machine
+6m33s       Normal    Created             pod/prometheus-77bc5b8447-wm4lv           Created container: init-prometheus-volume
+6m33s       Normal    Started             pod/grafana-655488cbcf-nxqzz              Started container grafana
+6m32s       Normal    Started             pod/prometheus-77bc5b8447-wm4lv           Started container prometheus
+6m32s       Normal    Pulled              pod/prometheus-77bc5b8447-wm4lv           Container image "prom/prometheus:v2.54.1" already present on machine
+6m32s       Normal    Created             pod/prometheus-77bc5b8447-wm4lv           Created container: prometheus
+6m32s       Normal    Started             pod/prometheus-77bc5b8447-wm4lv           Started container init-prometheus-volume
+6m8s        Warning   Unhealthy           pod/grafana-655488cbcf-nxqzz              Startup probe failed: Get "http://10.244.0.77:3000/api/health": dial tcp 10.244.0.77:3000: connect: connection refused
+5m58s       Normal    SuccessfulDelete    replicaset/grafana-7b88b8d89c             Deleted pod: grafana-7b88b8d89c-r8bgq
+5m58s       Normal    ScalingReplicaSet   deployment/grafana                        Scaled down replica set grafana-7b88b8d89c from 1 to 0
+5m58s       Normal    Killing             pod/grafana-7b88b8d89c-r8bgq              Stopping container grafana

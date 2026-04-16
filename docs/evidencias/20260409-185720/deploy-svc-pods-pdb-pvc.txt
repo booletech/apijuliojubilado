@@ -1,0 +1,39 @@
+﻿NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/elasticsearch        1/1     1            1           64m
+deployment.apps/grafana              1/1     1            1           64m
+deployment.apps/juliojubiladoapi     4/4     4            4           64m
+deployment.apps/juliopedidoapi       1/1     1            1           64m
+deployment.apps/kube-state-metrics   1/1     1            1           64m
+deployment.apps/prometheus           1/1     1            1           64m
+deployment.apps/sqlserver            1/1     1            1           64m
+
+NAME                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/elasticsearch        ClusterIP   10.96.60.93     <none>        9200/TCP         64m
+service/grafana              NodePort    10.96.170.6     <none>        3000:31300/TCP   64m
+service/juliojubiladoapi     NodePort    10.96.232.156   <none>        8081:31081/TCP   63m
+service/juliopedidoapi       ClusterIP   10.96.167.140   <none>        8080/TCP         64m
+service/kube-state-metrics   ClusterIP   10.96.236.173   <none>        8080/TCP         64m
+service/prometheus           ClusterIP   10.96.147.197   <none>        9090/TCP         64m
+service/sqlserver            ClusterIP   10.96.126.156   <none>        1433/TCP         64m
+
+NAME                                      READY   STATUS      RESTARTS      AGE
+pod/elasticsearch-7c6748c55b-hv67b        1/1     Running     0             64m
+pod/flyway-migrate-fd5w6                  0/1     Completed   0             48m
+pod/grafana-655488cbcf-nxqzz              1/1     Running     0             6m42s
+pod/juliojubiladoapi-55b966965d-7n6r4     1/1     Running     1 (30m ago)   35m
+pod/juliojubiladoapi-55b966965d-jzw8q     1/1     Running     0             35m
+pod/juliojubiladoapi-55b966965d-nnrpp     1/1     Running     1 (30m ago)   35m
+pod/juliojubiladoapi-55b966965d-tshw9     1/1     Running     1 (30m ago)   35m
+pod/juliopedidoapi-654696d9c-b56mf        1/1     Running     0             35m
+pod/kube-state-metrics-595d66d74c-rdmp8   1/1     Running     0             64m
+pod/prometheus-77bc5b8447-wm4lv           1/1     Running     0             6m40s
+pod/sqlserver-fc76bfd7b-x96z8             1/1     Running     0             64m
+pod/sqlserver-init-nq62q                  0/1     Completed   0             48m
+
+NAME                                          MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+poddisruptionbudget.policy/juliojubiladoapi   N/A             1                 1                     64m
+poddisruptionbudget.policy/juliopedidoapi     N/A             1                 1                     64m
+
+NAME                                    STATUS   VOLUME          CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/prometheus-data   Bound    prometheus-pv   2Gi        RWO            manual         <unset>                 64m
+persistentvolumeclaim/sqlserver-data    Bound    sqlserver-pv    2Gi        RWO            manual         <unset>                 64m

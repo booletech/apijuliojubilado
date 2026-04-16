@@ -1,0 +1,3 @@
+﻿NAME            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                     STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+prometheus-pv   2Gi        RWO            Retain           Bound    devops-trabalho-rubrica/prometheus-data   manual         <unset>                          64m
+sqlserver-pv    2Gi        RWO            Retain           Bound    devops-trabalho-rubrica/sqlserver-data    manual         <unset>                          64m

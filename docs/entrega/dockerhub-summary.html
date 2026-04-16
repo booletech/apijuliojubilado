@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docker Hub - Imagens Publicadas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #f5f8fd 0%, #edf4fb 100%);
+      color: #1f2937;
+    }
+    .sheet {
+      width: 1400px;
+      margin: 0 auto;
+      padding: 36px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      color: #123d67;
+    }
+    p {
+      margin: 0 0 24px;
+      color: #5c687a;
+      font-size: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #d8e1eb;
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 8px 18px rgba(18, 61, 103, 0.06);
+    }
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .value {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 22px;
+      color: #0f172a;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <h1>Imagens publicadas no Docker Hub</h1>
+    <p>Publicação operacional concluída com sucesso para o namespace <strong>juliocsj</strong>.</p>
+    <div class="grid">
+      <section class="card">
+        <div class="label">API principal</div>
+        <div class="value">docker.io/juliocsj/juliojubiladoapi:rubrica-20260409</div>
+      </section>
+      <section class="card">
+        <div class="label">API de pedidos</div>
+        <div class="value">docker.io/juliocsj/juliopedidoapi:rubrica-20260409</div>
+      </section>
+      <section class="card">
+        <div class="label">Frontend</div>
+        <div class="value">docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

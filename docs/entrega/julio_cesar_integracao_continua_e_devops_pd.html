@@ -1,0 +1,786 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Julio Cesar da Silva Jubilado - Integração Continua e DevOps</title>
+  <style>
+    :root {
+      --ink: #1a2433;
+      --muted: #5f6b7a;
+      --accent: #173a63;
+      --accent-2: #365b8c;
+      --accent-soft: #edf4fb;
+      --line: #d7dee8;
+      --paper: #ffffff;
+      --bg: #f4f7fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 24px;
+      background: var(--paper);
+      padding: 20mm 18mm 18mm;
+      box-shadow: 0 14px 34px rgba(23, 58, 99, 0.08);
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .page-header .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .page-header img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .page-header .course {
+      color: var(--muted);
+      font-size: 11px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 258mm;
+      background:
+        linear-gradient(135deg, rgba(23, 58, 99, 0.04), transparent 30%),
+        radial-gradient(circle at top right, rgba(54, 91, 140, 0.10), transparent 30%);
+      border: 1px solid var(--line);
+    }
+
+    .cover-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .cover-top img {
+      width: 58px;
+      height: 58px;
+    }
+
+    .cover-top .institution {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .cover h1 {
+      margin: 12px 0 14px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #122f4f;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .cover h2 {
+      margin: 0 0 26px;
+      font-size: 21px;
+      font-weight: 500;
+      color: #324962;
+    }
+
+    .cover-card {
+      padding: 18px 20px;
+      border: 1px solid #c8d6e7;
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.8);
+      font-size: 15px;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 28px;
+      margin-top: 30px;
+      font-size: 15px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 4px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .cover-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    h2.section {
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent-soft);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 24px;
+      color: #123252;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    p {
+      margin: 10px 0;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 10px 0 10px 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .toc {
+      margin-top: 12px;
+      columns: 2;
+      column-gap: 26px;
+    }
+
+    .callout {
+      margin: 18px 0;
+      padding: 14px 16px;
+      background: #f7fbff;
+      border: 1px solid #c9d8e8;
+      border-radius: 10px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 18px 0 8px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 28px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .summary-card span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 22px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 9px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf4fb;
+      color: #123252;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .status-ok {
+      color: #0c6a42;
+      font-weight: 700;
+    }
+
+    .status-note {
+      color: #9a6700;
+      font-weight: 700;
+    }
+
+    pre {
+      margin: 12px 0 22px;
+      padding: 14px;
+      overflow: hidden;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 10px;
+      border: 1px solid #d7e0ea;
+      background: #0f1720;
+      color: #e7eef8;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    figure {
+      margin: 18px 0 24px;
+      page-break-inside: avoid;
+    }
+
+    figure img {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    figcaption {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+      .page {
+        box-shadow: none;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div>
+      <div class="cover-top">
+        <img src="./infnet-logo.png" alt="Instituto Infnet">
+        <div class="institution">Instituto Infnet</div>
+      </div>
+
+      <h1>Relatório Técnico do Projeto BorrachariaAPI</h1>
+      <h2>Disciplina: Integração Continua e DevOps</h2>
+
+      <div class="cover-card">
+        Documento elaborado para a disciplina <strong>Integração Continua e DevOps</strong>,
+        no contexto da <strong>Pós-graduação em Engenharia de Software em Java</strong>, com o objetivo
+        de demonstrar a implementação prática dos requisitos de Docker, Docker Hub, Kubernetes,
+        monitoramento, pipeline de entrega e testes de carga.
+      </div>
+
+      <div class="cover-meta">
+        <div>
+          <span class="meta-label">Aluno</span>
+          Julio Cesar da Silva Jubilado
+        </div>
+        <div>
+          <span class="meta-label">Instituição</span>
+          Instituto Infnet
+        </div>
+        <div>
+          <span class="meta-label">Disciplina</span>
+          Integração Continua e DevOps
+        </div>
+        <div>
+          <span class="meta-label">Turma / Código</span>
+          25E3-25E3
+        </div>
+        <div>
+          <span class="meta-label">Projeto</span>
+          BorrachariaAPI
+        </div>
+        <div>
+          <span class="meta-label">Data</span>
+          16 de abril de 2026
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      Nome sugerido para envio: <strong>julio_cesar_integracao_continua_e_devops_pd.pdf</strong>
+    </div>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Pós-graduação em Engenharia de Software em Java</div>
+    </div>
+
+    <h2 class="section">Sumário</h2>
+    <ol class="toc">
+      <li>Introdução e objetivo do trabalho</li>
+      <li>Enunciado e escopo da atividade</li>
+      <li>Visão geral da solução implementada</li>
+      <li>Arquitetura técnica do projeto</li>
+      <li>Implementação DevOps por requisito</li>
+      <li>Evidências visuais e operacionais</li>
+      <li>Matriz final de atendimento da rubrica</li>
+      <li>Conclusão</li>
+    </ol>
+
+    <h2 class="section">1. Introdução e objetivo do trabalho</h2>
+    <p>
+      Este relatório apresenta, de forma técnica e estruturada, a implementação realizada para o
+      trabalho prático da disciplina <strong>Integração Continua e DevOps</strong>. O objetivo
+      principal foi comprovar, por meio de código, infraestrutura versionada e evidências operacionais,
+      a aplicação integrada de práticas modernas de containerização, orquestração, observabilidade,
+      automação de entrega e testes de carga.
+    </p>
+    <p>
+      Para atender ao enunciado, foi utilizado o projeto <strong>BorrachariaAPI</strong>, um monorepo
+      baseado em Java com Spring Boot, complementado por frontend web e infraestrutura em Docker e
+      Kubernetes. Além da implementação, este documento também consolida as rubricas atendidas e os
+      materiais comprobatórios gerados durante a execução.
+    </p>
+    <p>
+      Nas evidências operacionais e em alguns artefatos de infraestrutura, ainda aparecem nomes
+      legados do repositório, como <strong>juliojubiladoapi</strong>. Esses identificadores são
+      apenas nomes técnicos do ambiente e não alteram o fato de que o projeto acadêmico entregue
+      neste relatório corresponde ao <strong>BorrachariaAPI</strong>.
+    </p>
+
+    <h2 class="section">2. Enunciado e escopo da atividade</h2>
+    <div class="callout">
+      <strong>Síntese do enunciado:</strong> a atividade solicitou o uso de Docker para criação e
+      publicação de imagens, implantação em Kubernetes com Deployment e NodePort, uso de banco de
+      dados em ClusterIP, probes de saúde, monitoramento com Prometheus e Grafana, persistência via
+      PVC, criação de dashboards, pipeline de entrega com Jenkins ou ferramenta equivalente, e
+      execução de stress test com evidência visual do dashboard sofrendo alterações.
+    </div>
+
+    <figure>
+      <img src="./pdf-previews/curso-page1-render.png" alt="Capa oficial do projeto da disciplina">
+      <figcaption>Figura 1. Capa oficial do projeto da disciplina, utilizada como referência institucional deste relatório.</figcaption>
+    </figure>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Integração Continua e DevOps</div>
+    </div>
+
+    <h2 class="section">3. Visão geral da solução implementada</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <strong>3</strong>
+        <span>imagens publicadas no Docker Hub</span>
+      </div>
+      <div class="summary-card">
+        <strong>4</strong>
+        <span>réplicas da API principal no perfil de entrega</span>
+      </div>
+      <div class="summary-card">
+        <strong>5</strong>
+        <span>evidências visuais incluídas no relatório final</span>
+      </div>
+    </div>
+    <ul>
+      <li>Dockerfiles próprios para frontend, API principal e API de pedidos.</li>
+      <li>Publicação das três imagens em repositório Docker Hub.</li>
+      <li>Perfil Kubernetes chamado <strong>rubrica</strong>, criado para a apresentação da disciplina.</li>
+      <li>Banco de dados em pod separado com <strong>Service ClusterIP</strong>.</li>
+      <li>API principal externa por <strong>NodePort</strong> e Grafana também exposto para evidência.</li>
+      <li>Prometheus configurado para scrape das métricas das APIs Spring Boot.</li>
+      <li>Dashboard Grafana provisionado com CPU, memória heap, disponibilidade e taxa HTTP.</li>
+      <li>Pipeline de entrega com GitHub Actions e Jenkinsfile.</li>
+      <li>Stress test com <strong>k6</strong> e evidência complementar com <strong>JMeter</strong>.</li>
+    </ul>
+
+    <h2 class="section">4. Arquitetura técnica do projeto</h2>
+    <p>
+      A solução é composta por um frontend web, duas APIs baseadas em Spring Boot e componentes de
+      infraestrutura responsáveis por persistência e observabilidade. Para fins de apresentação, foi
+      criado um perfil dedicado que materializa de forma objetiva os requisitos do enunciado.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Tecnologia</th>
+          <th>Função</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Frontend</td>
+          <td>React + Vite + Nginx</td>
+          <td>Interface web e proxy reverso para as APIs.</td>
+        </tr>
+        <tr>
+          <td>BorrachariaAPI (API principal)</td>
+          <td>Spring Boot 3 / Java 21</td>
+          <td>API principal, autenticação, cadastros e endpoints centrais.</td>
+        </tr>
+        <tr>
+          <td>juliopedidoapi</td>
+          <td>Spring Boot 3 / Java 21</td>
+          <td>Gestão de pedidos e integrações externas.</td>
+        </tr>
+        <tr>
+          <td>SQL Server</td>
+          <td>Container oficial</td>
+          <td>Banco relacional acessível internamente via ClusterIP.</td>
+        </tr>
+        <tr>
+          <td>Prometheus</td>
+          <td>Prometheus 2.54</td>
+          <td>Coleta e armazenamento persistente de métricas.</td>
+        </tr>
+        <tr>
+          <td>Grafana</td>
+          <td>Grafana</td>
+          <td>Dashboards e visualização dos indicadores operacionais.</td>
+        </tr>
+        <tr>
+          <td>Jenkins</td>
+          <td>Jenkins + CasC</td>
+          <td>Pipeline de entrega alternativo exigido pela disciplina.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Observação técnica importante.</strong> O enunciado pede, simultaneamente, que a
+      aplicação fique acessível fora do cluster por NodePort e que apenas o Grafana seja exposto
+      externamente. Como essas exigências entram em conflito, o perfil <strong>rubrica</strong>
+      adotou a interpretação pragmática: a API principal e o Grafana ficaram expostos para
+      demonstração, enquanto <strong>Prometheus</strong>, <strong>SQL Server</strong> e
+      <strong>juliopedidoapi</strong> permaneceram internos via ClusterIP.
+    </div>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Implementação DevOps</div>
+    </div>
+
+    <h2 class="section">5. Implementação DevOps por requisito</h2>
+
+    <h3>5.1 Docker e publicação no Docker Hub</h3>
+    <p>
+      Foram criadas imagens personalizadas para as três aplicações do projeto. A publicação no Docker Hub
+      foi automatizada via script e pipeline, e também executada operacionalmente com sucesso para
+      as tags finais de entrega.
+    </p>
+    <figure>
+      <img src="./dockerhub-summary.png" alt="Resumo visual das imagens publicadas no Docker Hub">
+      <figcaption>Figura 2. Resumo visual das imagens publicadas no Docker Hub para a entrega da atividade.</figcaption>
+    </figure>
+
+    <h3>5.2 Kubernetes com Deployment, Service, PV, PVC e probes</h3>
+    <p>
+      O perfil <strong>rubrica</strong> foi preparado especificamente para a apresentação. Nesse perfil,
+      a API principal executa com quatro réplicas, o banco de dados fica em pod separado com ClusterIP,
+      e Prometheus e SQL Server utilizam volumes persistentes. Além disso, as APIs possuem probes de
+      prontidão e de vivacidade via Spring Boot Actuator.
+    </p>
+
+    <figure>
+      <img src="./k8s-status.png" alt="Status do cluster Kubernetes no perfil rubrica">
+      <figcaption>Figura 3. Estado do cluster Kubernetes no perfil rubrica, incluindo réplicas, serviços, PDB e persistência.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../evidencias/20260409-185720/deployment-4-replicas.png" alt="Deployment com quatro réplicas">
+      <figcaption>Figura 4. Evidência do Deployment da API principal com quatro réplicas disponíveis.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../evidencias/20260409-185720/services-nodeport-clusterip.png" alt="Services NodePort e ClusterIP">
+      <figcaption>Figura 5. Serviços do perfil rubrica, demonstrando API e Grafana em NodePort e componentes internos em ClusterIP.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../evidencias/20260409-185720/sqlserver-clusterip.png" alt="SQL Server em ClusterIP">
+      <figcaption>Figura 6. Banco de dados SQL Server em pod separado, acessível internamente por ClusterIP.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="../evidencias/20260409-185720/pv-pvc-bound.png" alt="PV e PVC em estado Bound">
+      <figcaption>Figura 7. Volumes persistentes do Prometheus e do SQL Server vinculados em estado Bound.</figcaption>
+    </figure>
+
+    <h3>5.3 Monitoramento com Prometheus e Grafana</h3>
+    <p>
+      O Prometheus foi configurado para descobrir e raspar automaticamente os pods das APIs que possuem
+      anotações de métricas. O Grafana foi provisionado com um dashboard voltado à observabilidade das
+      aplicações, incluindo CPU por pod, memória heap, taxa de requisições HTTP, latência p95 e disponibilidade.
+    </p>
+
+    <h3>5.4 Pipeline e automação</h3>
+    <p>
+      O projeto contém pipeline de entrega com GitHub Actions e também um Jenkinsfile. Essa dupla abordagem
+      atende à exigência do curso e demonstra o uso de automação de build, teste, publicação de imagens e deploy.
+    </p>
+
+    <h3>5.5 Testes de carga com k6 e JMeter</h3>
+    <p>
+      O stress test principal foi realizado com <strong>k6</strong> e usado para acionar alterações reais
+      no dashboard do Grafana. Em paralelo, o projeto também possui um plano gráfico em JMeter e relatório
+      HTML gerado localmente, atendendo aos itens relacionados à ferramenta.
+    </p>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Evidências Operacionais</div>
+    </div>
+
+    <h2 class="section">6. Evidências visuais e operacionais</h2>
+    <figure>
+      <img src="../evidencias/20260409-185720/grafana-under-load.png" alt="Grafana durante o stress test">
+      <figcaption>Figura 8. Dashboard do Grafana durante o stress test, evidenciando alteração real dos indicadores de CPU, memória, disponibilidade e taxa HTTP.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./jmeter-dashboard.png" alt="Dashboard HTML do JMeter">
+      <figcaption>Figura 9. Dashboard HTML do JMeter gerado a partir do plano de teste da aplicação.</figcaption>
+    </figure>
+
+    <h3>6.1 Artefatos gerados para comprovação</h3>
+    <ul>
+      <li><strong>docs/evidencias/20260409-185720/image-summary.txt</strong>: resumo das imagens publicadas no Docker Hub.</li>
+      <li><strong>docs/evidencias/20260409-185720/deploy-svc-pods-pdb-pvc.txt</strong>: estado do namespace Kubernetes da rubrica.</li>
+      <li><strong>docs/evidencias/20260409-185720/persistent-volumes.txt</strong>: comprovação de PV e PVC.</li>
+      <li><strong>docs/evidencias/20260409-185720/grafana-under-load.png</strong>: print do dashboard sob carga.</li>
+      <li><strong>reports/jmeter/dashboard/index.html</strong>: dashboard HTML do JMeter.</li>
+    </ul>
+
+    <pre>docker.io/juliocsj/juliojubiladoapi:rubrica-20260409
+docker.io/juliocsj/juliopedidoapi:rubrica-20260409
+docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409</pre>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Rubrica de Avaliação</div>
+    </div>
+
+    <h2 class="section">7. Matriz final de atendimento da rubrica</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item da rubrica</th>
+          <th>Status</th>
+          <th>Evidência resumida</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Docker para criar containers com imagens da aplicação</td>
+          <td class="status-ok">Atendido</td>
+          <td>Dockerfiles próprios para frontend e APIs Spring Boot.</td>
+        </tr>
+        <tr>
+          <td>Recursos básicos do Docker (binds e volumes)</td>
+          <td class="status-ok">Atendido</td>
+          <td>Docker Compose com volumes e mounts para banco, Jenkins e evidências.</td>
+        </tr>
+        <tr>
+          <td>Kubernetes para execução da solução</td>
+          <td class="status-ok">Atendido</td>
+          <td>Perfis base, HA e rubrica versionados no repositório.</td>
+        </tr>
+        <tr>
+          <td>Primitivos do Kubernetes (pods, services, volumes)</td>
+          <td class="status-ok">Atendido</td>
+          <td>Deployments, Services, PVs, PVCs, Jobs e PDBs implementados.</td>
+        </tr>
+        <tr>
+          <td>Networks no Docker</td>
+          <td class="status-ok">Atendido</td>
+          <td>Redes explícitas no docker-compose.</td>
+        </tr>
+        <tr>
+          <td>Envio da imagem para o Docker Hub</td>
+          <td class="status-ok">Atendido</td>
+          <td>Publicação operacional concluída para três imagens.</td>
+        </tr>
+        <tr>
+          <td>PV no Kubernetes</td>
+          <td class="status-ok">Atendido</td>
+          <td>prometheus-pv e sqlserver-pv criados e vinculados.</td>
+        </tr>
+        <tr>
+          <td>PVC no Kubernetes</td>
+          <td class="status-ok">Atendido</td>
+          <td>prometheus-data e sqlserver-data em estado Bound.</td>
+        </tr>
+        <tr>
+          <td>Readiness Probe</td>
+          <td class="status-ok">Atendido</td>
+          <td>Readiness configurada nos backends e componentes de monitoramento.</td>
+        </tr>
+        <tr>
+          <td>Liveness Probe</td>
+          <td class="status-ok">Atendido</td>
+          <td>Liveness configurada nos backends e componentes de monitoramento.</td>
+        </tr>
+        <tr>
+          <td>Stress test via interface gráfica</td>
+          <td class="status-ok">Atendido</td>
+          <td>JMeter com plano gráfico (.jmx) e dashboard HTML.</td>
+        </tr>
+        <tr>
+          <td>Stress test via script</td>
+          <td class="status-ok">Atendido</td>
+          <td>Script k6 com wrapper PowerShell.</td>
+        </tr>
+        <tr>
+          <td>Exportação de métricas do projeto</td>
+          <td class="status-ok">Atendido</td>
+          <td>Actuator + Micrometer + endpoints /actuator/prometheus.</td>
+        </tr>
+        <tr>
+          <td>Prometheus realizando scrape</td>
+          <td class="status-ok">Atendido</td>
+          <td>Targets das APIs ativos e coletados no namespace rubrica.</td>
+        </tr>
+        <tr>
+          <td>Grafana instanciado no cluster</td>
+          <td class="status-ok">Atendido</td>
+          <td>Deployment e Service ativos no ambiente de entrega.</td>
+        </tr>
+        <tr>
+          <td>Dashboards no Grafana</td>
+          <td class="status-ok">Atendido</td>
+          <td>Dashboard provisionado com CPU, memória, latência e disponibilidade.</td>
+        </tr>
+        <tr>
+          <td>Testes com JMeter</td>
+          <td class="status-ok">Atendido</td>
+          <td>Plano .jmx e relatório HTML gerado.</td>
+        </tr>
+        <tr>
+          <td>Script de teste com JMeter</td>
+          <td class="status-ok">Atendido</td>
+          <td>Wrapper PowerShell disponível no repositório.</td>
+        </tr>
+        <tr>
+          <td>Jenkins instanciado</td>
+          <td class="status-ok">Atendido</td>
+          <td>Serviço Docker e configuração como código presentes no projeto.</td>
+        </tr>
+        <tr>
+          <td>Pipeline de entrega com Jenkins</td>
+          <td class="status-ok">Atendido</td>
+          <td>Jenkinsfile com build, testes, publicação e deploy.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page page-break">
+    <div class="page-header">
+      <div class="brand">
+        <img src="./infnet-logo.png" alt="Infnet">
+        Instituto Infnet
+      </div>
+      <div class="course">Conclusão</div>
+    </div>
+
+    <h2 class="section">8. Conclusão</h2>
+    <p>
+      O trabalho proposto pela disciplina foi atendido por meio de uma solução integrada que cobre
+      containerização, publicação de imagens, implantação em Kubernetes, observabilidade, pipeline de
+      entrega e testes de carga. A implementação não ficou restrita ao código: foi acompanhada de
+      evidências operacionais reais, incluindo a publicação das imagens no Docker Hub e o dashboard do
+      Grafana sofrendo alterações durante a carga.
+    </p>
+    <p>
+      Do ponto de vista acadêmico, a entrega demonstra domínio prático de conceitos centrais de
+      Integração Continua e DevOps aplicados a um projeto Java com Spring Boot. Do ponto de vista
+      profissional, o resultado se aproxima de um fluxo real de engenharia de software, com
+      versionamento de infraestrutura, automação de execução e rastreabilidade por evidências.
+    </p>
+    <div class="callout">
+      <strong>Arquivo final de entrega:</strong><br>
+      <span class="small">julio_cesar_integracao_continua_e_devops_pd.pdf</span>
+    </div>
+  </section>
+</body>
+</html>

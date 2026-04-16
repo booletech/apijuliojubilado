@@ -23,11 +23,15 @@ k8s/overlays/rubrica/runtime/*.env
 !k8s/overlays/rubrica/runtime/*.env.example
 docs/evidencias/*
 !docs/evidencias/README.md
+!docs/evidencias/20260409-185720/
+!docs/evidencias/20260409-185720/**
 reports/
 docker-*.ok
 docker-*.json
 docker-*.txt
 docker-recovery-status.json
+.edge-headless-profile/
+.chrome-headless-profile/
 
 # IDE
 .idea/

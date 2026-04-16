@@ -1,0 +1,3 @@
+FRONTEND_IMAGE=docker.io/juliocsj/juliojubiladofrontend:rubrica-20260409
+JULIOJUBILADOAPI_IMAGE=docker.io/juliocsj/juliojubiladoapi:rubrica-20260409
+JULIOPEDIDOAPI_IMAGE=docker.io/juliocsj/juliopedidoapi:rubrica-20260409
