@@ -614,13 +614,18 @@
 
     <h2 class="section">6. Evidências visuais e operacionais</h2>
     <figure>
-      <img src="../evidencias/20260409-185720/grafana-under-load.png" alt="Grafana durante o teste de estresse">
-      <figcaption>Figura 8. Dashboard do Grafana durante o teste de estresse, evidenciando alteração real dos indicadores de CPU, memória, disponibilidade e taxa HTTP.</figcaption>
+      <img src="../evidencias/20260419-stress-captures/grafana-during-stress-dashboard.png" alt="Grafana durante o teste de estresse">
+      <figcaption>Figura 8. Dashboard do Grafana durante o teste de estresse, evidenciando alteração real dos indicadores de CPU, memória, taxa HTTP e latência.</figcaption>
     </figure>
 
     <figure>
       <img src="./jmeter-dashboard.png" alt="Dashboard HTML do JMeter">
-      <figcaption>Figura 9. Dashboard HTML do JMeter gerado a partir do plano de teste da aplicação.</figcaption>
+      <figcaption>Figura 9. Dashboard HTML do JMeter atualizado após execução do plano de teste contra a API principal.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./jenkins-login.png" alt="Jenkins instanciado localmente">
+      <figcaption>Figura 10. Jenkins instanciado localmente por Docker Compose, acessível para execução do pipeline de entrega.</figcaption>
     </figure>
 
     <h3>6.1 Artefatos gerados para comprovação</h3>
@@ -628,8 +633,9 @@
       <li><strong>docs/evidencias/20260409-185720/image-summary.txt</strong>: resumo das imagens publicadas no Docker Hub.</li>
       <li><strong>docs/evidencias/20260409-185720/deploy-svc-pods-pdb-pvc.txt</strong>: estado do namespace Kubernetes da rubrica.</li>
       <li><strong>docs/evidencias/20260409-185720/persistent-volumes.txt</strong>: comprovação de PV e PVC.</li>
-      <li><strong>docs/evidencias/20260409-185720/grafana-under-load.png</strong>: print do dashboard sob carga.</li>
-      <li><strong>reports/jmeter/dashboard/index.html</strong>: dashboard HTML do JMeter.</li>
+      <li><strong>docs/evidencias/20260419-stress-captures/grafana-during-stress-dashboard.png</strong>: print do dashboard sob carga.</li>
+      <li><strong>docs/evidencias/20260419-stress-captures/jmeter-dashboard.png</strong>: dashboard HTML do JMeter atualizado.</li>
+      <li><strong>docs/evidencias/20260419-stress-captures/jenkins-login.png</strong>: Jenkins instanciado para comprovação do pipeline.</li>
     </ul>
 
     <pre>docker.io/juliocsj/juliojubiladoapi:rubrica-20260409
