@@ -1,0 +1,11 @@
+Stress test executado com container grafana/k6:0.49.0.
+
+Base URL usada:
+http://host.docker.internal:31081
+
+O container inicial foi executado com remocao automatica ao fim da execucao, por isso o log completo do k6 nao ficou disponivel no Docker depois do encerramento.
+
+A evidencia visual principal desta execucao e o arquivo:
+grafana-during-stress-dashboard.png
+
+Esse print mostra o dashboard do Grafana durante a carga, com alteracao nos graficos de CPU, memoria, taxa de requisicoes HTTP e latencia.
