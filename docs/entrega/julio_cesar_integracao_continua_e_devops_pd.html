@@ -619,8 +619,8 @@
     </figure>
 
     <figure>
-      <img src="./jenkins-login.png" alt="Jenkins instanciado localmente">
-      <figcaption>Figura 9. Jenkins instanciado localmente por Docker Compose, acessível para execução do pipeline de entrega.</figcaption>
+      <img src="./jenkins-pipeline-evidence.png" alt="Jenkins ativo e Jenkinsfile com pipeline de entrega">
+      <figcaption>Figura 9. Jenkins instanciado por Docker Compose e pipeline de entrega versionado no Jenkinsfile.</figcaption>
     </figure>
 
     <h3>6.1 Artefatos gerados para comprovação</h3>
@@ -630,7 +630,8 @@
       <li><strong>docs/evidencias/20260409-185720/persistent-volumes.txt</strong>: comprovação de PV e PVC.</li>
       <li><strong>docs/evidencias/20260419-stress-captures/grafana-during-stress-dashboard.png</strong>: print do dashboard sob carga.</li>
       <li><strong>docs/evidencias/20260419-stress-captures/jmeter-dashboard.png</strong>: dashboard HTML do JMeter atualizado.</li>
-      <li><strong>docs/evidencias/20260419-stress-captures/jenkins-login.png</strong>: Jenkins instanciado para comprovação do pipeline.</li>
+      <li><strong>Jenkinsfile</strong>: pipeline de entrega com etapas de testes, build, publicação de imagens, deploy e validações.</li>
+      <li><strong>docs/evidencias/20260419-stress-captures/jenkins-login.png</strong>: Jenkins instanciado e acessível localmente.</li>
     </ul>
 
     <pre>docker.io/juliocsj/juliojubiladoapi:rubrica-20260409
